@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Major;
+import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.MajorRepository;
+import com.recruitmentbe.repository.SkillRepository;
 import com.recruitmentbe.service.CandidateService;
 
 @Service
@@ -22,6 +24,9 @@ public class CandidateServiceImpl implements CandidateService{
 	@Autowired
 	private MajorRepository majorRepo;
 
+	@Autowired
+	private SkillRepository skillRepo;
+	
 	@Override
 	public List<Candidate> getAllCandidate() {
 		return candidateRepo.findAll();
@@ -101,4 +106,36 @@ public class CandidateServiceImpl implements CandidateService{
 		}
 		return resultListCandidates;
 	}
+
+	@Override
+	public Candidate updateProfileCandidates(String body) {
+		JSONObject requestObj = new JSONObject(body);
+		String ungVienId = requestObj.getString("id");
+		Candidate updatedCandidate = candidateRepo.findById(ungVienId);
+		updatedCandidate.setDiaDiem(requestObj.getString("diaDiemLamViec"));
+		updatedCandidate.setEmail(requestObj.getString("email"));
+		updatedCandidate.setMoTa(requestObj.getString("moTa"));
+		updatedCandidate.setNganh(majorRepo.findByTenNganhContaining(requestObj.getString("nganh")).get(0));
+		updatedCandidate.setDiaChi(requestObj.getString("diaChi"));
+		updatedCandidate.setSdt(requestObj.getString("sdt"));
+		updatedCandidate.setLuongMongMuon(requestObj.getBigDecimal("luongMongMuon").longValue());
+		String[] cacKiNang = requestObj.getString("kiNang").split(",");
+		ArrayList<Skill> listKiNang = new ArrayList<>();
+		for(String s : cacKiNang) {
+			try {
+				listKiNang.add(skillRepo.findByTenKiNang(s).get(0));
+			}catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+		updatedCandidate.setKiNang(listKiNang);
+		try {
+			candidateRepo.save(updatedCandidate);
+			return updatedCandidate;
+		}catch(Exception e) {
+			return null;
+		}
+	}
+	
+	
 }

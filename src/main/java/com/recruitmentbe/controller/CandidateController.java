@@ -63,48 +63,11 @@ public class CandidateController {
 	@PostMapping(value = "/searchCandidates")
 	public List<Candidate> searchCandidates(@RequestBody String body) {
 		return candidateServiceImpl.findCandidateByConditions(body);
-//		JSONObject obj = new JSONObject(body);
-//		String username;
-//		List<Candidate> resultListCandidates = candidateServiceImpl.getAllCandidate();
-//		List<Candidate> searchByCondition = new ArrayList<>();
-//		List<Candidate> notContained = new ArrayList<>();
-//		try {
-//			username = obj.getString("username");
-//			searchByCondition = candidateServiceImpl.findByTenUngVien();
-//			notContained = new ArrayList<>(resultListCandidates);
-//			notContained.removeAll(searchByCondition);
-//			resultListCandidates.removeAll(notContained);
-//			notContained.clear();
-//			searchByCondition.clear();
-//		} catch (Exception e1) {
-//			username = "";
-//		}
-//		String email;
-//		try {
-//			email = obj.getString("email");
-//			searchByCondition = candidateServiceImpl.findByEmail();
-//			notContained = new ArrayList<>(resultListCandidates);
-//			notContained.removeAll(searchByCondition);
-//			resultListCandidates.removeAll(notContained);
-//			notContained.clear();
-//			searchByCondition.clear();
-//		} catch (Exception e1) {
-//			email = "";
-//		}
-//		String tenNganh;
-//		try {
-//			tenNganh = obj.getString("major");
-//			searchByCondition = candidateServiceImpl.findByEmail();
-//			notContained = new ArrayList<>(resultListCandidates);
-//			notContained.removeAll(searchByCondition);
-//			resultListCandidates.removeAll(notContained);
-//			notContained.clear();
-//			searchByCondition.clear();
-//		} catch (Exception e1) {
-//			password = "";
-//		}
-//		
-//		return "";
+	}
+	
+	@PostMapping(value = "/updateProfileCandidates")
+	public List<Candidate> updateProfileCandidates(@RequestBody String body) {
+		return candidateServiceImpl.findCandidateByConditions(body);
 	}
 
 }

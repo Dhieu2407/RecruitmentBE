@@ -7,4 +7,5 @@ import com.recruitmentbe.model.Company;
 public interface CompanyService {
 	public List<Company> getAllCompany();
 	public byte[] registerCompany(String body);
+	public Company updateProfileCompany(String body);
 }

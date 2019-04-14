@@ -10,4 +10,5 @@ import com.recruitmentbe.model.Company;
 @Repository
 public interface CompanyRepository extends JpaRepository<Company, Integer>{
 	public List<Company> findAll();
+	public Company findById(String companyId);
 }
