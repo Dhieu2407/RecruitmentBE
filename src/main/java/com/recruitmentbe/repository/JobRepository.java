@@ -7,4 +7,7 @@ import java.util.List;
 
 public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findAll();
+    public List<Job> findByTenJobContaining(String tenUngVien);
+    public List<Job> findByDiaChiContaining(String diachi);
+
 }

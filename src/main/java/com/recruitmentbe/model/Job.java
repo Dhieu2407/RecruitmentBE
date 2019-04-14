@@ -24,7 +24,7 @@ public class Job {
 	@Column(name="tenJob")
 	private String tenJob;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "congTyId")
 	private Company congTy;
 	
@@ -52,11 +52,11 @@ public class Job {
 	@Column(name="ngayDang")
 	private Date ngayDang;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
 	private Major nganh;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "chucVuId")
 	private Position chucVu;
 	

@@ -11,4 +11,6 @@ import com.recruitmentbe.model.Company;
 public interface CompanyRepository extends JpaRepository<Company, Integer>{
 	public List<Company> findAll();
 	public Company findByCongtyId(long companyId);
+
+    public List<Company> findByTenCongTyContaining(String tenCongTy);
 }

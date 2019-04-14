@@ -8,5 +8,5 @@ import java.util.List;
 
 public interface JobService{
     public List<Job> getAllJob();
-
+    public List<Job> findJob(String body);
 }

@@ -8,9 +8,7 @@ import com.recruitmentbe.service.CandidateService;
 import com.recruitmentbe.service.JobService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -36,6 +34,11 @@ public class JobController {
         System.out.println("all");
         List<Job> allJOb = jobService.getAllJob();
         return allJOb;
+    }
+
+    @PostMapping(value = "/searchJobs")
+    public List<Job> searchCandidates(@RequestBody String body) {
+        return jobService.findJob(body);
     }
 
 
