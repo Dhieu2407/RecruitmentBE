@@ -72,5 +72,132 @@ public class Job {
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tinTuyenDung")
 	private List<Candidate> tinTuyenDung = new ArrayList<>();
-	
+
+    public long getJobId() {
+        return jobId;
+    }
+
+    public void setJobId(long jobId) {
+        this.jobId = jobId;
+    }
+
+    public String getTenJob() {
+        return tenJob;
+    }
+
+    public void setTenJob(String tenJob) {
+        this.tenJob = tenJob;
+    }
+
+    public Company getCongTy() {
+        return congTy;
+    }
+
+    public void setCongTy(Company congTy) {
+        this.congTy = congTy;
+    }
+
+    public long getLuongToiThieu() {
+        return luongToiThieu;
+    }
+
+    public void setLuongToiThieu(long luongToiThieu) {
+        this.luongToiThieu = luongToiThieu;
+    }
+
+    public long getLuongToiDa() {
+        return luongToiDa;
+    }
+
+    public void setLuongToiDa(long luongToiDa) {
+        this.luongToiDa = luongToiDa;
+    }
+
+    public int getKnToiThieu() {
+        return knToiThieu;
+    }
+
+    public void setKnToiThieu(int knToiThieu) {
+        this.knToiThieu = knToiThieu;
+    }
+
+    public String getDiaChi() {
+        return diaChi;
+    }
+
+    public void setDiaChi(String diaChi) {
+        this.diaChi = diaChi;
+    }
+
+    public String getChiTiet() {
+        return chiTiet;
+    }
+
+    public void setChiTiet(String chiTiet) {
+        this.chiTiet = chiTiet;
+    }
+
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public Date getHanCuoi() {
+        return hanCuoi;
+    }
+
+    public void setHanCuoi(Date hanCuoi) {
+        this.hanCuoi = hanCuoi;
+    }
+
+    public Date getNgayDang() {
+        return ngayDang;
+    }
+
+    public void setNgayDang(Date ngayDang) {
+        this.ngayDang = ngayDang;
+    }
+
+    public Major getNganh() {
+        return nganh;
+    }
+
+    public void setNganh(Major nganh) {
+        this.nganh = nganh;
+    }
+
+    public Position getChucVu() {
+        return chucVu;
+    }
+
+    public void setChucVu(Position chucVu) {
+        this.chucVu = chucVu;
+    }
+
+    public List<Skill> getKiNang() {
+        return kiNang;
+    }
+
+    public void setKiNang(List<Skill> kiNang) {
+        this.kiNang = kiNang;
+    }
+
+    public List<Language> getNgoaiNgu() {
+        return ngoaiNgu;
+    }
+
+    public void setNgoaiNgu(List<Language> ngoaiNgu) {
+        this.ngoaiNgu = ngoaiNgu;
+    }
+
+    public List<Candidate> getTinTuyenDung() {
+        return tinTuyenDung;
+    }
+
+    public void setTinTuyenDung(List<Candidate> tinTuyenDung) {
+        this.tinTuyenDung = tinTuyenDung;
+    }
 }
