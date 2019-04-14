@@ -1,0 +1,7 @@
+use datn;
+alter table ungvien
+add nganhId int references nganh(nganhId);
+ADD COLUMN luongMongMuon INT(45) NULL
+ADD COLUMN diaDiem VARCHAR(45) NULL
+ADD COLUMN moTA VARCHAR(45) NULL
+CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL ;
