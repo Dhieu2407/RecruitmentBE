@@ -4,4 +4,6 @@ add nganhId int references nganh(nganhId);
 ADD COLUMN luongMongMuon INT(45) NULL
 ADD COLUMN diaDiem VARCHAR(45) NULL
 ADD COLUMN moTA VARCHAR(45) NULL
-CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL ;
+CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL;
+
+alter table congTy add column password varchar(30);
