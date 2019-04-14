@@ -8,7 +8,7 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.repository.CompanyRepository;
@@ -50,11 +50,11 @@ public class CompanyServiceImpl implements CompanyService{
 		newCompany.setEmail(email);
 		newCompany.setTenCongTy(username);
 		newCompany.setPassword(password);
-		List<Company> allCandidates= companyRepo.findAll();
-		if(allCandidates.size() == 0) {
+		List<Company> allCompanys= companyRepo.findAll();
+		if(allCompanys.size() == 0) {
 			newCompany.setCongtyId(0);
 		}else {
-			newCompany.setCongtyId(allCandidates.get(allCandidates.size() - 1).getCongtyId() + 1);
+			newCompany.setCongtyId(allCompanys.get(allCompanys.size() - 1).getCongtyId() + 1);
 		}
 		try {
 			companyRepo.save(newCompany);
@@ -68,32 +68,18 @@ public class CompanyServiceImpl implements CompanyService{
 	
 	@Override
 	public Company updateProfileCompany(String body) {
-//		JSONObject requestObj = new JSONObject(body);
-//		String ungVienId = requestObj.getString("id");
-//		Candidate updatedCandidate = companyRepo.findById(ungVienId);
-//		updatedCandidate.setDiaDiem(requestObj.getString("diaDiemLamViec"));
-//		updatedCandidate.setEmail(requestObj.getString("email"));
-//		updatedCandidate.setMoTa(requestObj.getString("moTa"));
-//		updatedCandidate.setNganh(majorRepo.findByTenNganhContaining(requestObj.getString("nganh")).get(0));
-//		updatedCandidate.setDiaChi(requestObj.getString("diaChi"));
-//		updatedCandidate.setSdt(requestObj.getString("sdt"));
-//		updatedCandidate.setLuongMongMuon(requestObj.getBigDecimal("luongMongMuon").longValue());
-//		String[] cacKiNang = requestObj.getString("kiNang").split(",");
-//		ArrayList<Skill> listKiNang = new ArrayList<>();
-//		for(String s : cacKiNang) {
-//			try {
-//				listKiNang.add(skillRepo.findByTenKiNang(s).get(0));
-//			}catch(Exception e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		updatedCandidate.setKiNang(listKiNang);
-//		try {
-//			companyRepo.save(updatedCandidate);
-//			return updatedCandidate;
-//		}catch(Exception e) {
+		JSONObject requestObj = new JSONObject(body);
+		String companyId = requestObj.getString("id");
+		Company updatedCompany = companyRepo.findById(companyId);
+		updatedCompany.setEmail(requestObj.getString("email"));
+		updatedCompany.setDiaChi(requestObj.getString("diaChi"));
+		updatedCompany.setSdt(requestObj.getString("sdt"));
+		try {
+			companyRepo.save(updatedCompany);
+			return updatedCompany;
+		}catch(Exception e) {
 			return null;
-//		}
+		}
 	}
 	
 
