@@ -66,8 +66,8 @@ public class CandidateController {
 	}
 	
 	@PostMapping(value = "/updateProfileCandidates")
-	public List<Candidate> updateProfileCandidates(@RequestBody String body) {
-		return candidateServiceImpl.findCandidateByConditions(body);
+	public Candidate updateProfileCandidates(@RequestBody String body) {
+		return candidateServiceImpl.updateProfileCandidates(body);
 	}
 
 }

@@ -28,4 +28,9 @@ public class CompanyController {
 		List<Company> allCompanies = companyServiceImpl.getAllCompany();
 		return allCompanies;
 	}
+	
+	@PostMapping(value = "/updateProfileCompany")
+	public Company updateProfileCompany(@RequestBody String body) {
+		return companyServiceImpl.updateProfileCompany(body);
+	}
 }
