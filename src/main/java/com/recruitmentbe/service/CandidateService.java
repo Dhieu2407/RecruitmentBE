@@ -7,4 +7,5 @@ import com.recruitmentbe.model.Candidate;
 public interface CandidateService {
 	public Candidate registerCandidate(String username, String email, String password);
 	public List<Candidate> getAllCandidate();
+	public List<Candidate> findCandidateByConditions(String body);
 }

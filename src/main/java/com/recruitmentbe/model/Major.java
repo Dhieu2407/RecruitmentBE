@@ -29,6 +29,9 @@ public class Major {
 	@OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Job> tinTuyenDung = new ArrayList<>();
 
+	@OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Candidate> ungvien = new ArrayList<>();
+
 	public long getNganhId() {
 		return nganhId;
 	}
@@ -52,6 +55,28 @@ public class Major {
 	public void setKiNang(List<Skill> kiNang) {
 		this.kiNang = kiNang;
 	}
-	
-	
+
+	public List<Position> getChucVu() {
+		return chucVu;
+	}
+
+	public void setChucVu(List<Position> chucVu) {
+		this.chucVu = chucVu;
+	}
+
+	public List<Job> getTinTuyenDung() {
+		return tinTuyenDung;
+	}
+
+	public void setTinTuyenDung(List<Job> tinTuyenDung) {
+		this.tinTuyenDung = tinTuyenDung;
+	}
+
+	public List<Candidate> getUngvien() {
+		return ungvien;
+	}
+
+	public void setUngvien(List<Candidate> ungvien) {
+		this.ungvien = ungvien;
+	}
 }

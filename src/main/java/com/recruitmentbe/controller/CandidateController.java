@@ -60,13 +60,14 @@ public class CandidateController {
 		return allCandidates;
 	}
 
-	@GetMapping(value = "/searchCandidates")
-	public String searchCandidates(@RequestBody String body) {
-		JSONObject obj = new JSONObject(body);
-		String username;
-		List<Candidate> resultListCandidates = candidateServiceImpl.getAllCandidate();
-		List<Candidate> searchByCondition = new ArrayList<>();
-		List<Candidate> notContained = new ArrayList<>();
+	@PostMapping(value = "/searchCandidates")
+	public List<Candidate> searchCandidates(@RequestBody String body) {
+		return candidateServiceImpl.findCandidateByConditions(body);
+//		JSONObject obj = new JSONObject(body);
+//		String username;
+//		List<Candidate> resultListCandidates = candidateServiceImpl.getAllCandidate();
+//		List<Candidate> searchByCondition = new ArrayList<>();
+//		List<Candidate> notContained = new ArrayList<>();
 //		try {
 //			username = obj.getString("username");
 //			searchByCondition = candidateServiceImpl.findByTenUngVien();
@@ -103,7 +104,7 @@ public class CandidateController {
 //			password = "";
 //		}
 //		
-		return "";
+//		return "";
 	}
 
 }

@@ -10,6 +10,7 @@ import com.recruitmentbe.model.Candidate;
 @Repository
 public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
 	public List<Candidate> findAll();
-	public List<Candidate> findByEmail(String email);
+	public List<Candidate> findByEmailContaining(String email);
+	public List<Candidate> findByTenUngVienContaining(String email);
 
 }
