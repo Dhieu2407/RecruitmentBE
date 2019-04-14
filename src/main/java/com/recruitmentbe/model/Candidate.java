@@ -24,7 +24,7 @@ public class Candidate {
 	@Column(name="ungVienId")
 	private long ungVienId;
 	
-	@Column(name = "ten")
+	@Column(name = "tenUngVien")
 	private String tenUngVien;
 	
 
