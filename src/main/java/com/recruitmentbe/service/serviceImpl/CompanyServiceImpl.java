@@ -70,7 +70,7 @@ public class CompanyServiceImpl implements CompanyService{
 	public Company updateProfileCompany(String body) {
 		JSONObject requestObj = new JSONObject(body);
 		String companyId = requestObj.getString("id");
-		Company updatedCompany = companyRepo.findById(companyId);
+		Company updatedCompany = companyRepo.findByCongtyId(Long.parseLong(companyId));
 		updatedCompany.setEmail(requestObj.getString("email"));
 		updatedCompany.setDiaChi(requestObj.getString("diaChi"));
 		updatedCompany.setSdt(requestObj.getString("sdt"));

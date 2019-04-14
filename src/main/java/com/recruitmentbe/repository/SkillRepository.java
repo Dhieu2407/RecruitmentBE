@@ -10,7 +10,6 @@ import com.recruitmentbe.model.Skill;
 @Repository
 public interface SkillRepository extends JpaRepository<Skill, Integer>{
 	public List<Skill> findAll();
-	public List<Skill> findById();
 	public List<Skill> findByTenKiNang(String tenKiNang);
 	
 }

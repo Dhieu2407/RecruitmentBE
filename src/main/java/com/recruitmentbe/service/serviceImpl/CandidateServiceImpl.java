@@ -111,7 +111,7 @@ public class CandidateServiceImpl implements CandidateService{
 	public Candidate updateProfileCandidates(String body) {
 		JSONObject requestObj = new JSONObject(body);
 		String ungVienId = requestObj.getString("id");
-		Candidate updatedCandidate = candidateRepo.findById(ungVienId);
+		Candidate updatedCandidate = candidateRepo.findByUngVienId(Long.parseLong(ungVienId));
 		updatedCandidate.setDiaDiem(requestObj.getString("diaDiemLamViec"));
 		updatedCandidate.setEmail(requestObj.getString("email"));
 		updatedCandidate.setMoTa(requestObj.getString("moTa"));
