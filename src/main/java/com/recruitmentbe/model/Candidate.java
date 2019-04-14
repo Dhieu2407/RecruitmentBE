@@ -42,6 +42,15 @@ public class Candidate {
 	
 	@Column(name = "trinhDoDaiHoc")
 	private String trinhDoDaiHoc;
+
+    @Column(name = "luongMongMuon")
+    private long luongMongMuon;
+
+    @Column(name = "diaDiem")
+    private String diaDiem;
+
+    @Column(name = "moTa")
+    private String moTa;
 	
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UngVienChungChi> chungChi = new ArrayList<>();
@@ -57,7 +66,7 @@ public class Candidate {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "ungVien")
 	private List<Company> congTy = new ArrayList<>();
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
 	private Major nganh;
 
@@ -109,6 +118,22 @@ public class Candidate {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+    public long getLuongMongMuon() {
+        return luongMongMuon;
+    }
+    public void setLuongMongMuon(long luongMongMuon) {
+        this.luongMongMuon = luongMongMuon;
+    }
+    public String getDiaDiem() {
+        return diaDiem;
+    }
+    public void setDiaDiem(String diaDiem) {
+        this.diaDiem = diaDiem;
+    }
+    public String getMoTa() {
+        return moTa;
+    }
+    public void setMoTa(String moTa) {this.moTa = moTa;}
 	public List<UngVienChungChi> getChungChi() {
 		return chungChi;
 	}
