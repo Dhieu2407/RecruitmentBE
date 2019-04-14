@@ -15,6 +15,7 @@ import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.service.PasswordService;
 
 @RestController
+@RequestMapping("/api")
 public class PasswordController {
 
 
