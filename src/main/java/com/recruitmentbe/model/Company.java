@@ -33,6 +33,9 @@ public class Company {
 	@Column(name = "email")
 	private String email;
 	
+	@Column(name = "password")
+	private String password;
+	
 	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Job> tinTuyenDung = new ArrayList<>();
 	
@@ -82,6 +85,38 @@ public class Company {
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public List<Job> getTinTuyenDung() {
+		return tinTuyenDung;
+	}
+
+	public void setTinTuyenDung(List<Job> tinTuyenDung) {
+		this.tinTuyenDung = tinTuyenDung;
+	}
+
+	public List<HistoryCompany> getLichSuHanhDong() {
+		return lichSuHanhDong;
+	}
+
+	public void setLichSuHanhDong(List<HistoryCompany> lichSuHanhDong) {
+		this.lichSuHanhDong = lichSuHanhDong;
+	}
+
+	public List<Candidate> getUngVien() {
+		return ungVien;
+	}
+
+	public void setUngVien(List<Candidate> ungVien) {
+		this.ungVien = ungVien;
 	}
 	
 

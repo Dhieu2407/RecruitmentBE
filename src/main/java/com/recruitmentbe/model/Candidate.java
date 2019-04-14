@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.google.gson.*;
@@ -56,6 +57,9 @@ public class Candidate {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "ungVien")
 	private List<Company> congTy = new ArrayList<>();
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "nganhId")
+	private Major nganh;
 
 	// check lai
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
@@ -130,6 +134,18 @@ public class Candidate {
 		this.congTy = congTy;
 	}
 	
+	public Major getNganh() {
+		return nganh;
+	}
+	public void setNganh(Major nganh) {
+		this.nganh = nganh;
+	}
+	public List<Skill> getKiNang() {
+		return kiNang;
+	}
+	public void setKiNang(List<Skill> kiNang) {
+		this.kiNang = kiNang;
+	}
 	public String convertToJson(){
 		Candidate c = new Candidate();
 		c.setEmail(this.getEmail());

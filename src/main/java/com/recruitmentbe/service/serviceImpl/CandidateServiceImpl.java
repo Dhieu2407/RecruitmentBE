@@ -1,12 +1,16 @@
 package com.recruitmentbe.service.serviceImpl;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Major;
 import com.recruitmentbe.repository.CandidateRepository;
+import com.recruitmentbe.repository.MajorRepository;
 import com.recruitmentbe.service.CandidateService;
 
 @Service
@@ -14,7 +18,10 @@ public class CandidateServiceImpl implements CandidateService{
 
 	@Autowired
 	private CandidateRepository candidateRepo;
-	
+
+	@Autowired
+	private MajorRepository majorRepo;
+
 	@Override
 	public List<Candidate> getAllCandidate() {
 		return candidateRepo.findAll();
@@ -27,7 +34,11 @@ public class CandidateServiceImpl implements CandidateService{
 		candidate.setTenUngVien(username);
 		candidate.setPassword(password);
 		List<Candidate> allCandidates= candidateRepo.findAll();
-		candidate.setUngVienId(allCandidates.get(allCandidates.size() - 1).getUngVienId() + 1);
+		if(allCandidates.size() == 0) {
+			candidate.setUngVienId(0);
+		}else {
+			candidate.setUngVienId(allCandidates.get(allCandidates.size() - 1).getUngVienId() + 1);
+		}
 		try {
 			candidateRepo.save(candidate);
 			return candidate;
@@ -37,4 +48,57 @@ public class CandidateServiceImpl implements CandidateService{
 		return null;
 	}
 
+	@Override
+	public List<Candidate> findCandidateByConditions(String body) {
+		JSONObject obj = new JSONObject(body);
+		String username;
+		List<Candidate> resultListCandidates = candidateRepo.findAll();
+		List<Candidate> searchByCondition = new ArrayList<>();
+		List<Candidate> notContained = new ArrayList<>();
+		try {
+			username = obj.getString("username");
+			searchByCondition = candidateRepo.findByTenUngVienContaining(username);
+			notContained = new ArrayList<>(resultListCandidates);
+			notContained.removeAll(searchByCondition);
+			resultListCandidates.removeAll(notContained);
+			notContained.clear();
+			searchByCondition.clear();
+		} catch (Exception e1) {
+			
+		}
+		String email;
+		try {
+			email = obj.getString("email");
+			searchByCondition = candidateRepo.findByEmailContaining(email);
+			notContained = new ArrayList<>(resultListCandidates);
+			notContained.removeAll(searchByCondition);
+			resultListCandidates.removeAll(notContained);
+			notContained.clear();
+			searchByCondition.clear();
+		} catch (Exception e1) {
+			
+		}
+		String tenNganh;
+		try {
+			tenNganh = obj.getString("major");
+			List<Major> majorSearchedByCondition = majorRepo.findByTenNganhContaining(tenNganh);
+			if(majorSearchedByCondition.size() > 0) {
+				List<Candidate> allCandidates = candidateRepo.findAll();
+				searchByCondition = new ArrayList<Candidate>();
+				for(Candidate c : allCandidates) {
+					if(c.getNganh().getNganhId() == majorSearchedByCondition.get(0).getNganhId()) {
+						searchByCondition.add(c);
+					}
+				}
+				notContained = new ArrayList<>(resultListCandidates);
+				notContained.removeAll(searchByCondition);
+				resultListCandidates.removeAll(notContained);
+				notContained.clear();
+				searchByCondition.clear();
+			}
+		} catch (Exception e1) {
+			
+		}
+		return resultListCandidates;
+	}
 }
