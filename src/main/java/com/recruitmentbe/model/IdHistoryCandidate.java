@@ -2,6 +2,7 @@ package com.recruitmentbe.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 import javax.persistence.Embeddable;
 
@@ -53,6 +54,11 @@ public class IdHistoryCandidate implements Serializable {
     	IdHistoryCandidate that = (IdHistoryCandidate) o;
         
         return ungVien ==  that.getUngVien() && hanhDong ==  that.getHanhDong() && that.getThoiGian().equals(thoiGian);
+    }
+	
+	@Override
+    public int hashCode() {
+        return Objects.hash(ungVien, hanhDong);
     }
 
 }

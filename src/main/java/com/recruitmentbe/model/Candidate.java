@@ -149,4 +149,16 @@ public class Candidate {
 		c.setDiaChi(this.getDiaChi());
 		return c;
 	}
+	
+	@Override
+	public boolean equals(Object otherCandidate) {
+		if (this == otherCandidate) return true;
+		 
+        if (otherCandidate == null || getClass() != otherCandidate.getClass())
+            return false;
+ 
+    	Candidate that = (Candidate) otherCandidate;
+        
+        return this.ungVienId ==  that.getUngVienId();
+	}
 }

@@ -1,6 +1,7 @@
 package com.recruitmentbe.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -22,8 +23,7 @@ public class CandidateController {
 	private CandidateService candidateServiceImpl;
 
 	@PostMapping(value = "/candidateRegister")
-	public byte[] addNews(@RequestBody String body) throws Exception {
-		System.out.println("add candidate");
+	public byte[] addCandidate(@RequestBody String body) throws Exception {
 		JSONObject obj = new JSONObject(body);
 		String username;
 		try {
@@ -53,22 +53,56 @@ public class CandidateController {
 		}
 	}
 
-	@GetMapping(value = "/datn/allCandidates")
-	public List<Candidate> getAllNews() {
+	@GetMapping(value = "/getAllCandidates")
+	public List<Candidate> getAllCandidates() {
 		System.out.println("all");
 		List<Candidate> allCandidates = candidateServiceImpl.getAllCandidate();
-//		try {
-//			return (new JSONArray(allCandidates)).toString().getBytes("UTF-8");
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//			return "".getBytes();
-//		}
 		return allCandidates;
 	}
 
-	@GetMapping(value = "/all")
-	public String test() {
-		System.out.println("test");
+	@GetMapping(value = "/searchCandidates")
+	public String searchCandidates(@RequestBody String body) {
+		JSONObject obj = new JSONObject(body);
+		String username;
+		List<Candidate> resultListCandidates = candidateServiceImpl.getAllCandidate();
+		List<Candidate> searchByCondition = new ArrayList<>();
+		List<Candidate> notContained = new ArrayList<>();
+//		try {
+//			username = obj.getString("username");
+//			searchByCondition = candidateServiceImpl.findByTenUngVien();
+//			notContained = new ArrayList<>(resultListCandidates);
+//			notContained.removeAll(searchByCondition);
+//			resultListCandidates.removeAll(notContained);
+//			notContained.clear();
+//			searchByCondition.clear();
+//		} catch (Exception e1) {
+//			username = "";
+//		}
+//		String email;
+//		try {
+//			email = obj.getString("email");
+//			searchByCondition = candidateServiceImpl.findByEmail();
+//			notContained = new ArrayList<>(resultListCandidates);
+//			notContained.removeAll(searchByCondition);
+//			resultListCandidates.removeAll(notContained);
+//			notContained.clear();
+//			searchByCondition.clear();
+//		} catch (Exception e1) {
+//			email = "";
+//		}
+//		String tenNganh;
+//		try {
+//			tenNganh = obj.getString("major");
+//			searchByCondition = candidateServiceImpl.findByEmail();
+//			notContained = new ArrayList<>(resultListCandidates);
+//			notContained.removeAll(searchByCondition);
+//			resultListCandidates.removeAll(notContained);
+//			notContained.clear();
+//			searchByCondition.clear();
+//		} catch (Exception e1) {
+//			password = "";
+//		}
+//		
 		return "";
 	}
 

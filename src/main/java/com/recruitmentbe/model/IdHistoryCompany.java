@@ -2,6 +2,7 @@ package com.recruitmentbe.model;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Objects;
 
 public class IdHistoryCompany implements Serializable {
 	private long congTy;
@@ -50,6 +51,11 @@ public class IdHistoryCompany implements Serializable {
     	IdHistoryCompany that = (IdHistoryCompany) o;
         
         return congTy ==  that.getCongTy() && hanhDong ==  that.getHanhDong() && that.getThoiGian().equals(thoiGian);
+    }
+	
+	@Override
+    public int hashCode() {
+        return Objects.hash(congTy, hanhDong);
     }
 
 }
