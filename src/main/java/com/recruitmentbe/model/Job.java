@@ -51,6 +51,9 @@ public class Job {
 	
 	@Column(name="ngayDang")
 	private Date ngayDang;
+
+	@Column(name="tgLamViec")
+    private int tgLamViec;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
@@ -199,5 +202,13 @@ public class Job {
 
     public void setTinTuyenDung(List<Candidate> tinTuyenDung) {
         this.tinTuyenDung = tinTuyenDung;
+    }
+
+    public int getTgLamViec() {
+        return tgLamViec;
+    }
+
+    public void setTgLamViec(int tgLamViec) {
+        this.tgLamViec = tgLamViec;
     }
 }

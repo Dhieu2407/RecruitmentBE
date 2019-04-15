@@ -7,3 +7,8 @@ ADD COLUMN moTA VARCHAR(45) NULL
 CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL;
 
 alter table congTy add column password varchar(30);
+
+<---phucnh them cột vào DB bảng job 4/15/2019
+ALTER TABLE datn.`job`
+ADD COLUMN tgLamViec int NULL
+--->
