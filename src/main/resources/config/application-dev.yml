@@ -67,6 +67,15 @@ spring:
     thymeleaf:
         cache: false
 
+    servlet:
+        multipart:
+            enabled: true
+            file-size-threshold: 2KB
+            max-file-size: 200MB
+            max-request-size: 215MB
+file:
+    upload-dir: ./uploads
+
 # ===================================================================
 # To enable SSL, generate a certificate using:
 # keytool -genkey -alias recruitmentbe -storetype PKCS12 -keyalg RSA -keysize 2048 -keystore keystore.p12 -validity 3650
