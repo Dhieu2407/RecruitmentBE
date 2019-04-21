@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.http.ResponseEntity;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.service.CandidateService;
@@ -59,6 +61,16 @@ public class CandidateController {
 		List<Candidate> allCandidates = candidateServiceImpl.getAllCandidate();
 		return allCandidates;
 	}
+
+    @GetMapping(value = "/getCandidate/{id}")
+    public Candidate getCandidate(@PathVariable("id") String idString) {
+	    Long id = Long.parseLong(idString);
+        Candidate candidate = candidateServiceImpl.findByUngVienId(id);
+        if(candidate == null) {
+            ResponseEntity.notFound().build();
+        }
+        return candidate;
+    }
 
 	@PostMapping(value = "/searchCandidates")
 	public List<Candidate> searchCandidates(@RequestBody String body) {

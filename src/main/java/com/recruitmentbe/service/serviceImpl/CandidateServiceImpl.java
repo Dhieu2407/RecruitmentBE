@@ -32,6 +32,11 @@ public class CandidateServiceImpl implements CandidateService{
 		return candidateRepo.findAll();
 	}
 
+    @Override
+    public Candidate findByUngVienId(Long id) {
+        return candidateRepo.findByUngVienId(id);
+    }
+
 	@Override
 	public Candidate registerCandidate(String username, String email, String password) {
 		Candidate candidate = new Candidate();
