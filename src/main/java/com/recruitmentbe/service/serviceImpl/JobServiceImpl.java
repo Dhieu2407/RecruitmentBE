@@ -3,6 +3,7 @@ package com.recruitmentbe.service.serviceImpl;
 import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.Major;
+import com.recruitmentbe.model.Position;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
@@ -164,6 +165,33 @@ public class JobServiceImpl implements JobService {
         }else {
             return null;
         }
+    }
+
+    @Override
+    public Job addJob(Job job) {
+        List<Job> allJob = jobRepository.findAll();
+        Job addJob = new Job();
+        Position position = new Position();
+        position.setChucVuId(1);
+        addJob.setChucVu(position);
+        addJob.setTenJob("Tuyen Ky Su Khoa Hoc May Tinh Machine Learning");
+        if(allJob.size()==0){
+            job.setJobId(0l);
+        }else {
+            job.setJobId(allJob.get(allJob.size()-1).getJobId()+1);
+        }
+        try {
+            jobRepository.save(job);
+            return job;
+        }catch (Exception ex){
+            ex.printStackTrace();
+        }
+        return null;
+    }
+
+    @Override
+    public Job addJobStringBody(String body) {
+        return null;
     }
 
    /* {

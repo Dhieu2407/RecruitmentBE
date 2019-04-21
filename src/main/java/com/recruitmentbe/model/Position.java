@@ -28,4 +28,36 @@ public class Position {
 	
 	@OneToMany(mappedBy = "chucVu", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Job> tinTuyenDung;
+
+    public long getChucVuId() {
+        return chucVuId;
+    }
+
+    public void setChucVuId(long chucVuId) {
+        this.chucVuId = chucVuId;
+    }
+
+    public String getTenChucVu() {
+        return tenChucVu;
+    }
+
+    public void setTenChucVu(String tenChucVu) {
+        this.tenChucVu = tenChucVu;
+    }
+
+    public Major getNganh() {
+        return nganh;
+    }
+
+    public void setNganh(Major nganh) {
+        this.nganh = nganh;
+    }
+
+    public List<Job> getTinTuyenDung() {
+        return tinTuyenDung;
+    }
+
+    public void setTinTuyenDung(List<Job> tinTuyenDung) {
+        this.tinTuyenDung = tinTuyenDung;
+    }
 }

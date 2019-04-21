@@ -54,6 +54,21 @@ public class Job {
 
 	@Column(name="tgLamViec")
     private int tgLamViec;
+
+	@Column(name="quyenLoi")
+    private String quyenLoi;
+
+	@Column(name="yeuCauCongViec")
+    private String yeuCauCongViec;
+
+	@Column(name="yeuCauHoSo")
+    private String yeuCauHoSo;
+
+	@Column(name = "gioiTinh")
+    private int gioiTinh;
+
+	@Column(name ="chucVuLamViec")
+	private String chucVu1;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
@@ -204,11 +219,51 @@ public class Job {
         this.tinTuyenDung = tinTuyenDung;
     }
 
+    public String getQuyenLoi() {
+        return quyenLoi;
+    }
+
+    public void setQuyenLoi(String quyenLoi) {
+        this.quyenLoi = quyenLoi;
+    }
+
+    public String getYeuCauCongViec() {
+        return yeuCauCongViec;
+    }
+
+    public void setYeuCauCongViec(String yeuCauCongViec) {
+        this.yeuCauCongViec = yeuCauCongViec;
+    }
+
+    public String getYeuCauHoSo() {
+        return yeuCauHoSo;
+    }
+
+    public void setYeuCauHoSo(String yeuCauHoSo) {
+        this.yeuCauHoSo = yeuCauHoSo;
+    }
+
     public int getTgLamViec() {
         return tgLamViec;
     }
 
     public void setTgLamViec(int tgLamViec) {
         this.tgLamViec = tgLamViec;
+    }
+
+    public int getGioiTinh() {
+        return gioiTinh;
+    }
+
+    public void setGioiTinh(int gioiTinh) {
+        this.gioiTinh = gioiTinh;
+    }
+
+    public String getChucVu1() {
+        return chucVu1;
+    }
+
+    public void setChucVu1(String chucVu1) {
+        this.chucVu1 = chucVu1;
     }
 }
