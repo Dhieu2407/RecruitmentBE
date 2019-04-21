@@ -41,5 +41,15 @@ public class JobController {
         return jobService.findJob(body);
     }
 
+    @PostMapping(value = "/getJobById")
+    public Job findJobByIdJob(@RequestBody String body){
+        return jobService.findJobById(body);
+    }
+
+    @PostMapping(value = "/getListJobRelate")
+    public List<Job> listJobRelate(@RequestBody String body){
+        return jobService.findJobRelate(body);
+    }
+
 
 }

@@ -127,10 +127,43 @@ public class JobServiceImpl implements JobService {
 
         }
 
-
-
-
         return resultListJobs;
+    }
+
+    @Override
+    public Job findJobById(String body) {
+        JSONObject obj = new JSONObject(body);
+        String id = obj.getString("id");
+        long idJob = Long.parseLong(id);
+        return jobRepository.findByJobId(idJob);
+    }
+
+    @Override
+    public List<Job> findJobRelate(String body) {
+        JSONObject obj = new JSONObject(body);
+        String id = obj.getString("id");
+        long idNganh = Long.parseLong(id);
+        Major major = majorRepository.findByNganhId(idNganh);
+        if (major != null) {
+            List<Job> allJobs = jobRepository.findAll();
+            List<Job> listJobRelate1 = new ArrayList<>();
+            List<Job> listJobRelate2 = new ArrayList<>();
+            for (Job job : allJobs) {
+                if (job.getNganh().getTenNganh().equals(major.getTenNganh())) {
+                    listJobRelate1.add(job);
+                }
+            }
+            if (listJobRelate1.size() > 3) {
+                for (int i = 0; i < 3; i++) {
+                    listJobRelate2.add(listJobRelate1.get(i));
+                }
+                return listJobRelate2;
+            } else {
+                return listJobRelate1;
+            }
+        }else {
+            return null;
+        }
     }
 
    /* {

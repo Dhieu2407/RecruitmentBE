@@ -9,4 +9,6 @@ import java.util.List;
 public interface JobService{
     public List<Job> getAllJob();
     public List<Job> findJob(String body);
+    public Job findJobById(String body);
+    public List<Job> findJobRelate(String body);
 }

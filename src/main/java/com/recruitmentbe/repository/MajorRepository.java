@@ -11,4 +11,5 @@ import com.recruitmentbe.model.Major;
 public interface MajorRepository extends JpaRepository<Major, Integer>{
 	public List<Major> findAll();
 	public List<Major> findByTenNganhContaining(String name);
+	public Major findByNganhId(long id);
 }
