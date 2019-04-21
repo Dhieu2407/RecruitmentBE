@@ -40,7 +40,7 @@ public class CandidateServiceImpl implements CandidateService{
 		candidate.setPassword(password);
 		List<Candidate> allCandidates= candidateRepo.findAll();
 		if(allCandidates.size() == 0) {
-			candidate.setUngVienId(0);
+			candidate.setUngVienId(0L);
 		}else {
 			candidate.setUngVienId(allCandidates.get(allCandidates.size() - 1).getUngVienId() + 1);
 		}
@@ -63,18 +63,18 @@ public class CandidateServiceImpl implements CandidateService{
 		try {
 			username = obj.getString("username");
 			searchByCondition = candidateRepo.findByTenUngVienContaining(username);
-			notContained = new ArrayList<>(resultListCandidates);
-			notContained.removeAll(searchByCondition);
-			resultListCandidates.removeAll(notContained);
-			notContained.clear();
-			searchByCondition.clear();
+//			notContained = new ArrayList<>(resultListCandidates);
+//			notContained.removeAll(searchByCondition);
+//			resultListCandidates.removeAll(notContained);
+//			notContained.clear();
+//			searchByCondition.clear();
 		} catch (Exception e1) {
 			
 		}
 		String email;
 		try {
 			email = obj.getString("email");
-			searchByCondition = candidateRepo.findByEmailContaining(email);
+			searchByCondition.addAll(candidateRepo.findByEmailContaining(email));
 			notContained = new ArrayList<>(resultListCandidates);
 			notContained.removeAll(searchByCondition);
 			resultListCandidates.removeAll(notContained);

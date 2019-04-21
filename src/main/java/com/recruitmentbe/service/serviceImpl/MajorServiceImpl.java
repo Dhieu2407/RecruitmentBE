@@ -3,11 +3,13 @@ package com.recruitmentbe.service.serviceImpl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Major;
 import com.recruitmentbe.repository.MajorRepository;
 import com.recruitmentbe.service.MajorService;
 
+@Service
 public class MajorServiceImpl implements MajorService {
 
 	@Autowired

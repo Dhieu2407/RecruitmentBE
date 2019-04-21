@@ -22,7 +22,7 @@ import org.json.JSONObject;
 public class Candidate {
 	@Id
 	@Column(name="ungVienId")
-	private long ungVienId;
+	private Long ungVienId;
 	
 	@Column(name = "tenUngVien")
 	private String tenUngVien;
@@ -44,7 +44,7 @@ public class Candidate {
 	private String trinhDoDaiHoc;
 
     @Column(name = "luongMongMuon")
-    private long luongMongMuon;
+    private Long luongMongMuon;
 
     @Column(name = "diaDiem")
     private String diaDiem;
@@ -76,10 +76,10 @@ public class Candidate {
 			@JoinColumn(name = "kinangId") })
 	private List<Skill> kiNang = new ArrayList<>();
 	
-	public long getUngVienId() {
+	public Long getUngVienId() {
 		return ungVienId;
 	}
-	public void setUngVienId(long ungVienId) {
+	public void setUngVienId(Long ungVienId) {
 		this.ungVienId = ungVienId;
 	}
 	public String getTenUngVien() {
@@ -118,10 +118,10 @@ public class Candidate {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-    public long getLuongMongMuon() {
+    public Long getLuongMongMuon() {
         return luongMongMuon;
     }
-    public void setLuongMongMuon(long luongMongMuon) {
+    public void setLuongMongMuon(Long luongMongMuon) {
         this.luongMongMuon = luongMongMuon;
     }
     public String getDiaDiem() {
