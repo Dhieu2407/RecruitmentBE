@@ -86,21 +86,23 @@ public class CandidateServiceImpl implements CandidateService{
 		String tenNganh;
 		try {
 			tenNganh = obj.getString("major");
-			List<Major> majorSearchedByCondition = majorRepo.findByTenNganhContaining(tenNganh);
-			if(majorSearchedByCondition.size() > 0) {
-				List<Candidate> allCandidates = candidateRepo.findAll();
-				searchByCondition = new ArrayList<Candidate>();
-				for(Candidate c : allCandidates) {
-					if(c.getNganh().getNganhId() == majorSearchedByCondition.get(0).getNganhId()) {
-						searchByCondition.add(c);
+			if(tenNganh.trim().length() != 0) {
+				List<Major> majorSearchedByCondition = majorRepo.findByTenNganhContaining(tenNganh);
+				if(majorSearchedByCondition.size() > 0) {
+					List<Candidate> allCandidates = candidateRepo.findAll();
+					searchByCondition = new ArrayList<Candidate>();
+					for(Candidate c : allCandidates) {
+						if(c.getNganh().getNganhId() == majorSearchedByCondition.get(0).getNganhId()) {
+							searchByCondition.add(c);
+						}
 					}
+					notContained = new ArrayList<>(resultListCandidates);
+					notContained.removeAll(searchByCondition);
+					resultListCandidates.removeAll(notContained);
+					notContained.clear();
+					searchByCondition.clear();
 				}
-				notContained = new ArrayList<>(resultListCandidates);
-				notContained.removeAll(searchByCondition);
-				resultListCandidates.removeAll(notContained);
-				notContained.clear();
-				searchByCondition.clear();
-			}
+			} 
 		} catch (Exception e1) {
 			
 		}
