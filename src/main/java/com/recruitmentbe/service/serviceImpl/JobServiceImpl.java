@@ -141,7 +141,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<Job> findJobRelate(String body) {
         JSONObject obj = new JSONObject(body);
-        String id = obj.getString("id");
+        String id = obj.getString("nganhId");
         long idNganh = Long.parseLong(id);
         Major major = majorRepository.findByNganhId(idNganh);
         if (major != null) {
