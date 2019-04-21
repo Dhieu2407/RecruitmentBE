@@ -6,10 +6,10 @@ import java.util.Objects;
 import javax.persistence.Embeddable;
 
 @Embeddable
-public class IdUngVienChungChi implements Serializable{
+public class IdUngVienKiNang  implements Serializable{
 	private long ungVien;
 
-	private long chungChi;
+	private long kiNang;
 
 	public long getUngVien() {
 		return ungVien;
@@ -19,12 +19,12 @@ public class IdUngVienChungChi implements Serializable{
 		this.ungVien = ungVienId;
 	}
 
-	public long getChungChi() {
-		return chungChi;
+	public long getKiNang() {
+		return kiNang;
 	}
 
-	public void setChungChi(long chungChiId) {
-		this.chungChi = chungChiId;
+	public void setKiNang(long kiNangId) {
+		this.kiNang = kiNangId;
 	}
 	
 	@Override
@@ -34,14 +34,13 @@ public class IdUngVienChungChi implements Serializable{
         if (o == null || getClass() != o.getClass())
             return false;
  
-    	IdUngVienChungChi that = (IdUngVienChungChi) o;
+    	IdUngVienKiNang that = (IdUngVienKiNang) o;
         
-        return ungVien ==  that.getUngVien() && chungChi ==  that.getChungChi();
+        return ungVien ==  that.getUngVien() && kiNang ==  that.getKiNang();
     }
 	
 	@Override
     public int hashCode() {
-        return Objects.hash(ungVien, chungChi);
+        return Objects.hash(ungVien, kiNang);
     }
-	
 }

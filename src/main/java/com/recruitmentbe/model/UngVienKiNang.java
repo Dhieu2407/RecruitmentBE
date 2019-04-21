@@ -9,9 +9,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "ungvien_ngoaingu")
-@IdClass(IdUngVienChungChi.class)
-public class UngVienChungChi {
+@Table(name = "ungvien_kinang")
+@IdClass(IdUngVienKiNang.class)
+public class UngVienKiNang {
 	@Id
     @ManyToOne
     @JoinColumn(name = "ungvienId")
@@ -19,11 +19,11 @@ public class UngVienChungChi {
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "chungChiId")
-    private Certificate chungChi;
+    @JoinColumn(name = "kiNangId")
+    private Skill kiNang;
 
-    @Column(name = "diemSo")
-    private String diemSo;
+    @Column(name = "soNamKinhNghiem")
+    private int soNamKinhNghiem;
 
 	public Candidate getUngVien() {
 		return ungVien;
@@ -33,22 +33,20 @@ public class UngVienChungChi {
 		this.ungVien = ungVien;
 	}
 
-	public Certificate getChungChi() {
-		return chungChi;
+	public Skill getKiNang() {
+		return kiNang;
 	}
 
-	public void setChungChi(Certificate chungChi) {
-		this.chungChi = chungChi;
+	public void setKiNang(Skill kiNang) {
+		this.kiNang = kiNang;
 	}
 
-	public String getDiemSo() {
-		return diemSo;
+	public int getSoNamKinhNghiem() {
+		return soNamKinhNghiem;
 	}
 
-	public void setDiemSo(String diemSo) {
-		this.diemSo = diemSo;
+	public void setSoNamKinhNghiem(int soNamKinhNghiem) {
+		this.soNamKinhNghiem = soNamKinhNghiem;
 	}
     
-    
-
 }

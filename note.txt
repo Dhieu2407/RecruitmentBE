@@ -12,3 +12,25 @@ alter table congTy add column password varchar(30);
 ALTER TABLE datn.`job`
 ADD COLUMN tgLamViec int NULL
 --->
+ALTER TABLE datn.`job` 
+ADD COLUMN quyenLoi text NULL;
+
+ALTER TABLE datn.`job` 
+ADD COLUMN yeuCauCongViec text NULL;
+
+ALTER TABLE datn.`job` 
+ADD COLUMN yeuCauHoSo text NULL
+;
+
+
+ALTER TABLE `datn`.`ungvien_ngoaingu` 
+CHANGE COLUMN `diemSo` `diemSo` VARCHAR(10) NULL DEFAULT NULL ;
+;
+
+
+ALTER TABLE datn.ungVien 
+ADD COLUMN lichSuLamViec text NULL
+;
+
+
+alter table datn.ungvien add column mucTieuNgheNghiep text null

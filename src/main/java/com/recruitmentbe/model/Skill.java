@@ -11,7 +11,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "kinang")
@@ -30,8 +33,10 @@ public class Skill {
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "kiNang")
 	private List<Job> tinTuyenDung = new ArrayList<>();
 
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "kiNang")
-	private List<Candidate> ungVien = new ArrayList<>();
+	@OneToMany(mappedBy = "kiNang", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("kiNang")
+	private List<UngVienKiNang> ungVien = new ArrayList<>();
+	
 	
 	public long getKinangId() {
 		return kinangId;
@@ -56,5 +61,22 @@ public class Skill {
 	public void setNganh(Major nganh) {
 		this.nganh = nganh;
 	}
+
+	public List<Job> getTinTuyenDung() {
+		return tinTuyenDung;
+	}
+
+	public void setTinTuyenDung(List<Job> tinTuyenDung) {
+		this.tinTuyenDung = tinTuyenDung;
+	}
+
+	public List<UngVienKiNang> getUngVien() {
+		return ungVien;
+	}
+
+	public void setUngVien(List<UngVienKiNang> ungVien) {
+		this.ungVien = ungVien;
+	}
+	
 	
 }

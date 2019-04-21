@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Major;
 import com.recruitmentbe.model.Skill;
+import com.recruitmentbe.model.UngVienKiNang;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.MajorRepository;
 import com.recruitmentbe.repository.SkillRepository;
@@ -127,7 +128,9 @@ public class CandidateServiceImpl implements CandidateService{
 		updatedCandidate.setSdt(requestObj.getString("sdt"));
 		updatedCandidate.setLuongMongMuon(requestObj.getBigDecimal("luongMongMuon").longValue());
 		String[] cacKiNang = requestObj.getString("kiNang").split(",");
+		String[] kinhNghiemKiNang = requestObj.getString("kinhNghiemKiNang").split(",");
 		ArrayList<Skill> listKiNang = new ArrayList<>();
+		ArrayList<UngVienKiNang> listFkSkill = new ArrayList<>();
 		for(String s : cacKiNang) {
 			try {
 				listKiNang.add(skillRepo.findByTenKiNang(s).get(0));
@@ -135,7 +138,15 @@ public class CandidateServiceImpl implements CandidateService{
 				e.printStackTrace();
 			}
 		}
-		updatedCandidate.setKiNang(listKiNang);
+		for(int i = 0 ; i < listKiNang.size() ; ++i) {
+			Skill s = listKiNang.get(i);
+			UngVienKiNang uk = new UngVienKiNang();
+			uk.setKiNang(s);
+			uk.setUngVien(updatedCandidate);
+			uk.setSoNamKinhNghiem(Integer.parseInt(kinhNghiemKiNang[i]));
+			listFkSkill.add(uk);
+		}
+		updatedCandidate.setKiNang(listFkSkill);
 		try {
 			candidateRepo.save(updatedCandidate);
 			return updatedCandidate;

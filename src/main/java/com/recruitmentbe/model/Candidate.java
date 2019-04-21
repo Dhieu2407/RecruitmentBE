@@ -14,8 +14,12 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-import com.google.gson.*;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.json.JSONObject;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "ungvien")
@@ -51,8 +55,16 @@ public class Candidate {
 
     @Column(name = "moTa")
     private String moTa;
+    
+    @Column(name = "lichSuLamViec")
+    private String lichSuLamViec;
+    
+    @Column(name= "mucTieuNgheNghiep")
+    private String mucTieuNgheNghiep;
 	
-	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("ungVien")
+	@Fetch(value = FetchMode.SUBSELECT)
 	private List<UngVienChungChi> chungChi = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true)
@@ -71,10 +83,17 @@ public class Candidate {
 	private Major nganh;
 
 	// check lai
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "ungvien_kinang", joinColumns = { @JoinColumn(name = "ungVienId") }, inverseJoinColumns = {
-			@JoinColumn(name = "kinangId") })
-	private List<Skill> kiNang = new ArrayList<>();
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+//	@JoinTable(name = "ungvien_kinang", joinColumns = { @JoinColumn(name = "ungVienId") }, inverseJoinColumns = {
+//			@JoinColumn(name = "kinangId") })
+//	private List<Skill> kiNang = new ArrayList<>();
+	
+
+	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("ungVien")
+	@Fetch(value = FetchMode.SUBSELECT) 
+	private List<UngVienKiNang> kiNang = new ArrayList<>();
+	
 	
 	public Long getUngVienId() {
 		return ungVienId;
@@ -165,11 +184,24 @@ public class Candidate {
 	public void setNganh(Major nganh) {
 		this.nganh = nganh;
 	}
-	public List<Skill> getKiNang() {
+	public List<UngVienKiNang> getKiNang() {
 		return kiNang;
 	}
-	public void setKiNang(List<Skill> kiNang) {
+	public void setKiNang(List<UngVienKiNang> kiNang) {
 		this.kiNang = kiNang;
+	}
+	
+	public String getLichSuLamViec() {
+		return lichSuLamViec;
+	}
+	public void setLichSuLamViec(String lichSuLamViec) {
+		this.lichSuLamViec = lichSuLamViec;
+	}
+	public String getMucTieuNgheNghiep() {
+		return mucTieuNgheNghiep;
+	}
+	public void setMucTieuNgheNghiep(String mucTieuNgheNghiep) {
+		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
 	}
 	public String convertToJson(){
 		Candidate c = new Candidate();
