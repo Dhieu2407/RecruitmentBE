@@ -9,10 +9,14 @@ import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
 import com.recruitmentbe.service.JobService;
 import org.json.JSONObject;
+import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 @Service
 public class JobServiceImpl implements JobService {
@@ -168,30 +172,82 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job addJob(Job job) {
-        List<Job> allJob = jobRepository.findAll();
-        Job addJob = new Job();
-        Position position = new Position();
-        position.setChucVuId(1);
-        addJob.setChucVu(position);
-        addJob.setTenJob("Tuyen Ky Su Khoa Hoc May Tinh Machine Learning");
-        if(allJob.size()==0){
-            job.setJobId(0l);
-        }else {
-            job.setJobId(allJob.get(allJob.size()-1).getJobId()+1);
-        }
-        try {
-            jobRepository.save(job);
-            return job;
-        }catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return null;
-    }
-
-    @Override
     public Job addJobStringBody(String body) {
-        return null;
+
+        JSONObject obj = new JSONObject(body);
+        Job addJob = new Job();
+        Company company = companyRepository.findByCongtyId(1);
+        addJob.setCongTy(company);
+        long luongToiThieu = obj.getLong("salaryMin");
+        long luongToiDa = obj.getLong("salaryMax");
+        addJob.setLuongToiThieu(luongToiThieu);
+        addJob.setLuongToiDa(luongToiDa);
+
+        String tenJob = obj.getString("titleJob");
+        addJob.setTenJob(tenJob);
+
+        String chucVu = obj.getString("chucVu1");
+        addJob.setChucVu1(chucVu);
+
+        String diaDiem = obj.getString("location");
+        addJob.setDiaChi(diaDiem);
+
+        String moTaJob = obj.getString("description");
+        addJob.setChiTiet(moTaJob);
+
+        String yeuCauUngVien = obj.getString("requireCadiate");
+        addJob.setYeuCauCongViec(yeuCauUngVien);
+
+        String quyenLoi = obj.getString("quyenLoi");
+        addJob.setQuyenLoi(quyenLoi);
+
+        String yeuCauHoSo = obj.getString("yeuCauHoSo");
+        addJob.setYeuCauHoSo(yeuCauHoSo);
+
+        int soNamKinhNghiem = obj.getInt("requireYear");
+        addJob.setKnToiThieu(soNamKinhNghiem);
+
+        int yeuCauGioiTinh = obj.getInt("yeuCauGioiTinh");
+        addJob.setGioiTinh(yeuCauGioiTinh);
+
+        int soLuong = obj.getInt("soLuong");
+        addJob.setSoLuong(soLuong);
+
+
+        int tgLamViec = obj.getInt("tgLamViec");
+        addJob.setTgLamViec(tgLamViec);
+
+        Date hanCuoi = new Date();
+        try {
+             hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        java.sql.Date sqlHanCuoi = new java.sql.Date(hanCuoi.getTime());
+        addJob.setHanCuoi((java.sql.Date) sqlHanCuoi);
+//
+        Date ngayDang = new Date();
+        java.sql.Date sqlNgayDang = new java.sql.Date(ngayDang.getTime());
+        addJob.setNgayDang((java.sql.Date) sqlNgayDang);
+
+        Major major = majorRepository.findByNganhId(1);
+        addJob.setNganh(major);
+
+        List<Job> allJob = jobRepository.findAll();
+        if(allJob.size()==0){
+            addJob.setJobId(1);
+        }else {
+            addJob.setJobId(allJob.get(allJob.size()-1).getJobId()+1);
+        }
+
+        try {
+            jobRepository.save(addJob);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        return addJob;
     }
 
    /* {
@@ -199,6 +255,29 @@ public class JobServiceImpl implements JobService {
        "tenCongty": "VNG",
        "diaChi"  : "",
        "tenNgannh":""
+
+        {
+        {
+    "chucVu1": "4",
+    "description": "4",
+    "duedate": "2019-04-10",
+    "location": "4",
+    "major": "IT & Engineering",
+    "quyenLoi": "4",
+    "requireCadiate": "4",
+    "requireYear": "4",
+    "salaryMax": "4",
+    "salaryMin": "4",
+    "soLuong": "4",
+    "tgLamViec": "1",
+    "titleJob": "4",
+    "yeuCauGioiTinh": "2",
+    "yeuCauHoSo": "4"}
+        }
+
+
+
+
 
     }*/
 }

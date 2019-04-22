@@ -52,15 +52,17 @@ public class JobController {
     }
 
     @PostMapping(value = "/addJob")
-    public String addJob(@RequestBody Job job){
-        Job jobResult = jobService.addJob(job);
+    public Job addJob(@RequestBody String body){
+        Job jobResult = jobService.addJobStringBody(body);
         if(jobResult!=null){
-            return "0k";
+            return jobResult;
         }else {
-            return "failed";
+            return null;
         }
 
     }
+
+
 
 
 }
