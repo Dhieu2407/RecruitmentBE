@@ -78,3 +78,12 @@ insert into datn.ungvien_kinang values(1,2,1);
 insert into datn.ungvien_kinang values(1,4,3);
 insert into datn.ungvien_kinang values(3,5,1);
 
+alter table datn.ungVien CHANGE COLUMN `trinhDoDaiHoc` `trinhDoDaiHoc` VARCHAR(300) NULL DEFAULT NULL ;
+
+
+update datn.ungVien set trinhDoDaiHoc = '[{"daihoc" : "Bách Khoa Hà Nội", "GPA" : "3.2","chuyennganh" : "Khoa học máy tính" , "batdau" : "8/2014", "ketthuc" : "8/2019"},	
+									{"daihoc" : "Học Viện Tài Chính", "GPA" : "3.4","chuyennganh" : "Kế toán" , "batdau" : "8/2019", "ketthuc" : "8/2021"}]' where ungVienId = 1;
+                                    ;
+update datn.ungVien set lichSuLamViec = '[{"congTy" : "FPT", "vitri" : "dev", "batdau" : "8/2022", "ketthuc" : "5/2023"},	
+									{"congTy" : "Vin corp", "vitri" : "sale", "batdau" : "6/2023", "ketthuc" : "1/2024"}]' where ungVienId = 1;
+                                    
