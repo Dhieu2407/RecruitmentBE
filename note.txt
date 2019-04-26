@@ -1,44 +1,49 @@
 use datn;
 alter table ungvien
 add nganhId int references nganh(nganhId);
-ADD COLUMN luongMongMuon INT(45) NULL
-ADD COLUMN diaDiem VARCHAR(45) NULL
-ADD COLUMN moTA VARCHAR(45) NULL
+alter table ungvien
+ADD COLUMN luongMongMuon INT(45) NULL;
+alter table ungvien
+ADD COLUMN diaDiem VARCHAR(45) NULL;
+alter table ungvien
+ADD COLUMN moTA VARCHAR(45) NULL;
+alter table ungvien
 CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL;
 
 alter table congTy add column password varchar(30);
 
-<---phucnh them cột vào DB bảng job 4/15/2019
 ALTER TABLE datn.`job`
-ADD COLUMN tgLamViec int NULL
---->
-ALTER TABLE datn.`job` 
+ADD COLUMN tgLamViec int NULL;
+
+ALTER TABLE datn.`job`
 ADD COLUMN quyenLoi text NULL;
 
-ALTER TABLE datn.`job` 
+ALTER TABLE datn.`job`
 ADD COLUMN yeuCauCongViec text NULL;
 
-ALTER TABLE datn.`job` 
-ADD COLUMN yeuCauHoSo text NULL
-;
+ALTER TABLE datn.`job`
+ADD COLUMN yeuCauHoSo text NULL;
 
 
-ALTER TABLE `datn`.`ungvien_ngoaingu` 
+ALTER TABLE `datn`.`ungvien_ngoaingu`
 CHANGE COLUMN `diemSo` `diemSo` VARCHAR(10) NULL DEFAULT NULL ;
-;
+
+ALTER TABLE datn.ungVien
+ADD COLUMN lichSuLamViec text NULL;
 
 
-ALTER TABLE datn.ungVien 
-ADD COLUMN lichSuLamViec text NULL
-;
+alter table datn.ungvien add column mucTieuNgheNghiep text null;
 
-
-alter table datn.ungvien add column mucTieuNgheNghiep text null
-
-;
 INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_MANAGER');
 INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_CANDIDATE');
 INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_EMPLOYER');
+
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('1', 'IT');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('2', 'Business');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('3', 'Law');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('4', 'Architecture');
+
+
 INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('1', 'lead', '1');
 INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('2', 'dev', '1');
 INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('3', 'sale', '2');
@@ -86,4 +91,4 @@ update datn.ungVien set trinhDoDaiHoc = '[{"daihoc" : "Bách Khoa Hà Nội", "G
                                     ;
 update datn.ungVien set lichSuLamViec = '[{"congTy" : "FPT", "vitri" : "dev", "batdau" : "8/2022", "ketthuc" : "5/2023"},	
 									{"congTy" : "Vin corp", "vitri" : "sale", "batdau" : "6/2023", "ketthuc" : "1/2024"}]' where ungVienId = 1;
-                                    
+
