@@ -178,6 +178,9 @@ public class JobServiceImpl implements JobService {
         Job addJob = new Job();
         Company company = companyRepository.findByCongtyId(1);
         addJob.setCongTy(company);
+        long idMajor = Long.parseLong(obj.getString("major"));
+        Major major = majorRepository.findByNganhId(idMajor);
+        addJob.setNganh(major);
         long luongToiThieu = obj.getLong("salaryMin");
         long luongToiDa = obj.getLong("salaryMax");
         addJob.setLuongToiThieu(luongToiThieu);
@@ -230,9 +233,6 @@ public class JobServiceImpl implements JobService {
         Date ngayDang = new Date();
         java.sql.Date sqlNgayDang = new java.sql.Date(ngayDang.getTime());
         addJob.setNgayDang((java.sql.Date) sqlNgayDang);
-
-        Major major = majorRepository.findByNganhId(1);
-        addJob.setNganh(major);
 
         List<Job> allJob = jobRepository.findAll();
         if(allJob.size()==0){

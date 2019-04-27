@@ -2,10 +2,12 @@ package com.recruitmentbe.controller;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.Major;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.service.CandidateService;
 import com.recruitmentbe.service.JobService;
+import com.recruitmentbe.service.MajorService;
 import org.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,6 +23,9 @@ public class JobController {
 
     @Autowired
     JobService jobService;
+
+    @Autowired
+    MajorService majorService;
 
     @GetMapping(value = "/getAllCandidates1")
     public List<Candidate> getAllCandidates() {
@@ -60,6 +65,12 @@ public class JobController {
             return null;
         }
 
+    }
+
+    @GetMapping(value = "/getAllMajor1")
+    public List<Major> getAllMajor(){
+        List<Major> listMajor = majorService.getAllMajor();
+        return listMajor;
     }
 
 
