@@ -13,5 +13,6 @@ public interface CandidateRepository extends JpaRepository<Candidate, Integer> {
 	public List<Candidate> findByEmailContaining(String email);
 	public List<Candidate> findByTenUngVienContaining(String email);
 	public Candidate findByUngVienId(long ungVienId);
+	public Candidate findByEmail(String email);
 
 }

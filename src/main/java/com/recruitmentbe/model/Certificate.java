@@ -9,7 +9,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -19,7 +18,7 @@ import javax.persistence.Table;
 public class Certificate {
 	@Id
 	@Column(name= "chungChiId")
-	private String chungChiId;
+	private long chungChiId;
 	
 	@Column(name="tenChungChi")
 	private String tenChungChi;
@@ -31,16 +30,24 @@ public class Certificate {
 	@OneToMany(mappedBy = "chungChi", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<UngVienChungChi> ungVien = new ArrayList<>();
 	
-	public String getChungChiId() {
+	public String getTenChungChi() {
+		return tenChungChi;
+	}
+
+	public long getChungChiId() {
 		return chungChiId;
 	}
 
-	public void setChungChiId(String chungChiId) {
+	public void setChungChiId(long chungChiId) {
 		this.chungChiId = chungChiId;
 	}
 
-	public String getTenChungChi() {
-		return tenChungChi;
+	public List<UngVienChungChi> getUngVien() {
+		return ungVien; 
+	}
+
+	public void setUngVien(List<UngVienChungChi> ungVien) {
+		this.ungVien = ungVien;
 	}
 
 	public void setTenChungChi(String tenChungChi) {
