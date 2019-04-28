@@ -24,6 +24,11 @@ ADD COLUMN yeuCauCongViec text NULL;
 ALTER TABLE datn.`job`
 ADD COLUMN yeuCauHoSo text NULL;
 
+ALTER TABLE datn.`job`
+ADD COLUMN chucVuLamViec varchar(100);
+
+ALTER TABLE datn.`job`
+ADD COLUMN gioiTinh int NULL;
 
 ALTER TABLE `datn`.`ungvien_ngoaingu`
 CHANGE COLUMN `diemSo` `diemSo` VARCHAR(10) NULL DEFAULT NULL ;
@@ -91,4 +96,8 @@ update datn.ungVien set trinhDoDaiHoc = '[{"daihoc" : "Bách Khoa Hà Nội", "G
                                     ;
 update datn.ungVien set lichSuLamViec = '[{"congTy" : "FPT", "vitri" : "dev", "batdau" : "8/2022", "ketthuc" : "5/2023"},	
 									{"congTy" : "Vin corp", "vitri" : "sale", "batdau" : "6/2023", "ketthuc" : "1/2024"}]' where ungVienId = 1;
+
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('1', 'Công Ty VNG Hà Nội', 'Cau Giay, Ha Noi', '0123456789', 'vng@gmail.com');
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('2', 'Công ty SYMC SAMSUNG Viet Nam', 'PVB, Cau Giay', '0961626344', 'svmc@gmail.com');
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('3', 'Công ty Dịch Vụ Tài Chính', 'Ha Noi', '0996654123', 'finamcalvn@gmail.com');
 
