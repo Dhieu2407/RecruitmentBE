@@ -101,3 +101,5 @@ INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES
 INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('2', 'Công ty SYMC SAMSUNG Viet Nam', 'PVB, Cau Giay', '0961626344', 'svmc@gmail.com');
 INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('3', 'Công ty Dịch Vụ Tài Chính', 'Ha Noi', '0996654123', 'finamcalvn@gmail.com');
 
+ALTER TABLE datn.`job` MODIFY tenJob VARCHAR(200);
+ALTER TABLE datn.`job` ADD COLUMN trangThai int null; // 0: dang cho duyet, 1: da duyet, 2: bi tu choi
