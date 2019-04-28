@@ -69,6 +69,9 @@ public class Job {
 
 	@Column(name ="chucVuLamViec")
 	private String chucVu1;
+
+	@Column(name = "trangThai")
+    private int trangThai;
 	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
@@ -265,5 +268,13 @@ public class Job {
 
     public void setChucVu1(String chucVu1) {
         this.chucVu1 = chucVu1;
+    }
+
+    public int getTrangThai() {
+        return trangThai;
+    }
+
+    public void setTrangThai(int trangThai) {
+        this.trangThai = trangThai;
     }
 }

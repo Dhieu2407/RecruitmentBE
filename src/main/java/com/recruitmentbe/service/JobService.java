@@ -12,4 +12,6 @@ public interface JobService{
     public Job findJobById(String body);
     public List<Job> findJobRelate(String body);
     public Job addJobStringBody(String body);
+    public List<Job> findJobByIdCompany(String body);
+    public Job deleteJob(String body);
 }

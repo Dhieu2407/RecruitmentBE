@@ -172,6 +172,31 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
+    public List<Job> findJobByIdCompany(String body) {
+        JSONObject obj = new JSONObject(body);
+        long idCompanyLong = obj.getLong("id");
+        Company company = companyRepository.findByCongtyId(idCompanyLong);
+        List<Job> listJobOfCompany = new ArrayList<>();
+        if(company!=null){
+            List<Job> allJob = jobRepository.findAll();
+            for (Job job : allJob){
+                if(job.getCongTy().getCongtyId()==company.getCongtyId()){
+                    listJobOfCompany.add(job);
+                }
+            }
+        }
+        return listJobOfCompany;
+    }
+
+    @Override
+    public Job deleteJob(String body) {
+        JSONObject obj = new JSONObject(body);
+        long idJob = obj.getLong("id");
+
+        return jobRepository.deleteByJobId(idJob);
+    }
+
+    @Override
     public Job addJobStringBody(String body) {
 
         JSONObject obj = new JSONObject(body);
@@ -249,6 +274,7 @@ public class JobServiceImpl implements JobService {
 
         return addJob;
     }
+
 
    /* {
         "tenJob": "WEB",
