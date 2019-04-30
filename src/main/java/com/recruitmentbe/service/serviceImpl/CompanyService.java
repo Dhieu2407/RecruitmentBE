@@ -8,4 +8,5 @@ public interface CompanyService {
 	public List<Company> getAllCompany();
 	public byte[] registerCompany(String body);
 	public Company updateProfileCompany(String body);
+	public Company findByCongTyId(Long id);
 }

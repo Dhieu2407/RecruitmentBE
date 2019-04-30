@@ -69,11 +69,17 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public Company updateProfileCompany(String body) {
 		JSONObject requestObj = new JSONObject(body);
-		String companyId = requestObj.getString("id");
-		Company updatedCompany = companyRepo.findByCongtyId(Long.parseLong(companyId));
+		Long companyId = requestObj.getLong("id");
+		Company updatedCompany ;
+		updatedCompany = companyRepo.findByCongtyId(companyId);
+		if(updatedCompany == null) {
+			updatedCompany = new Company();
+			updatedCompany.setCongtyId(companyId);
+		}
 		updatedCompany.setEmail(requestObj.getString("email"));
 		updatedCompany.setDiaChi(requestObj.getString("diaChi"));
 		updatedCompany.setSdt(requestObj.getString("sdt"));
+		updatedCompany.setTenCongTy(requestObj.getString("tenCongTy"));
 		try {
 			companyRepo.save(updatedCompany);
 			return updatedCompany;
@@ -81,6 +87,13 @@ public class CompanyServiceImpl implements CompanyService{
 			return null;
 		}
 	}
+
+	@Override
+	public Company findByCongTyId(Long id) {
+		return companyRepo.findByCongtyId(id);
+	}
+	
+	
 	
 
 }
