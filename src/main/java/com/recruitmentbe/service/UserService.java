@@ -100,13 +100,18 @@ public class UserService {
         newUser.setEmail(userDTO.getEmail());
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
-        // new user is not active
-        newUser.setActivated(false);
+        // new user is active
+        newUser.setActivated(true);
         // new user gets registration key
-        newUser.setActivationKey(RandomUtil.generateActivationKey());
-        Set<Authority> authorities = new HashSet<>();
-        authorityRepository.findById(AuthoritiesConstants.USER).ifPresent(authorities::add);
-        newUser.setAuthorities(authorities);
+        // newUser.setActivationKey(RandomUtil.generateActivationKey());
+        if (userDTO.getAuthorities() != null) {
+            Set<Authority> authorities = userDTO.getAuthorities().stream()
+                .map(authorityRepository::findById)
+                .filter(Optional::isPresent)
+                .map(Optional::get)
+                .collect(Collectors.toSet());
+            newUser.setAuthorities(authorities);
+        }
         userRepository.save(newUser);
         this.clearUserCaches(newUser);
         log.debug("Created Information for User: {}", newUser);
