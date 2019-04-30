@@ -10,6 +10,7 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public Job findByJobId(long id);
     public List<Job> findByTenJobContaining(String tenUngVien);
     public List<Job> findByDiaChiContaining(String diachi);
-    public void removeByJobId(long id);
+    public Long removeByJobId(long idJob);
+
 
 }

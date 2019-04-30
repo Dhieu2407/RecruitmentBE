@@ -12,12 +12,17 @@ import org.json.JSONObject;
 import org.omg.PortableInterceptor.INACTIVE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.ui.Model;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
+
+@Transactional
 @Service
 public class JobServiceImpl implements JobService {
 
@@ -189,10 +194,65 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public void deleteJob(String body) {
+    public Long deleteJob(String body) {
         JSONObject obj = new JSONObject(body);
         long idJob = obj.getLong("id");
-        jobRepository.removeByJobId(idJob);
+        Job deletedJob = jobRepository.findByJobId(idJob);
+        return jobRepository.removeByJobId(idJob);
+    }
+
+    @Override
+    public Job updateJob(String body) {
+        JSONObject obj = new JSONObject(body);
+
+
+        long idJob = obj.getLong("id");
+        Job updateJob = jobRepository.findByJobId(idJob);
+
+        long luongToiThieu = obj.getLong("salaryMin");
+        long luongToiDa = obj.getLong("salaryMax");
+        updateJob.setLuongToiThieu(luongToiThieu);
+        updateJob.setLuongToiDa(luongToiDa);
+
+        String tenJob = obj.getString("titleJob");
+        updateJob.setTenJob(tenJob);
+
+        String chucVu = obj.getString("chucVu1");
+        updateJob.setChucVu1(chucVu);
+
+        String diaDiem = obj.getString("location");
+        updateJob.setDiaChi(diaDiem);
+
+        String moTaJob = obj.getString("description");
+        updateJob.setChiTiet(moTaJob);
+
+        String yeuCauUngVien = obj.getString("requireCadiate");
+        updateJob.setYeuCauCongViec(yeuCauUngVien);
+
+        String quyenLoi = obj.getString("quyenLoi");
+        updateJob.setQuyenLoi(quyenLoi);
+
+        String yeuCauHoSo = obj.getString("yeuCauHoSo");
+        updateJob.setYeuCauHoSo(yeuCauHoSo);
+
+        int soNamKinhNghiem = obj.getInt("requireYear");
+        updateJob.setKnToiThieu(soNamKinhNghiem);
+
+
+        int soLuong = obj.getInt("soLuong");
+        updateJob.setSoLuong(soLuong);
+
+
+        Date hanCuoi = new Date();
+        try {
+            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        java.sql.Date sqlHanCuoi = new java.sql.Date(hanCuoi.getTime());
+        updateJob.setHanCuoi((java.sql.Date) sqlHanCuoi);
+        return jobRepository.save(updateJob);
     }
 
     @Override

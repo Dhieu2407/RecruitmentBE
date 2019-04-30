@@ -80,10 +80,15 @@ public class JobController {
 
 
     @PostMapping(value = "/deleteJobById")
-    public String deleteJobById(@RequestBody String body){
+    public Long deleteJobById(@RequestBody String body){
 
-        jobService.deleteJob(body);
-        return "0k";
+        return jobService.deleteJob(body);
+
+    }
+
+    @PostMapping(value = "/updateJob")
+    public Job updateJob(@RequestBody String body){
+        return jobService.updateJob(body);
     }
 
 
