@@ -121,7 +121,18 @@ public class CandidateServiceImpl implements CandidateService {
 	public Candidate updateProfileCandidates(String body) {
 		JSONObject requestObj = new JSONObject(body);
 		long ungVienId = requestObj.getLong("id");
-		Candidate updatedCandidate = candidateRepo.findByUngVienId(ungVienId);
+		Candidate updatedCandidate = null;
+		updatedCandidate = candidateRepo.findByUngVienId(ungVienId);
+		if (updatedCandidate == null) {
+			updatedCandidate = new Candidate();
+			updatedCandidate.setUngVienId(ungVienId);
+		}
+
+		try {
+			updatedCandidate.setTenUngVien(requestObj.getString("name"));
+		} catch (Exception e) {
+
+		}
 		try {
 			updatedCandidate.setDiaDiem(requestObj.getString("diaDiemLamViec"));
 		} catch (Exception e) {
@@ -148,7 +159,12 @@ public class CandidateServiceImpl implements CandidateService {
 
 		}
 		try {
-			updatedCandidate.setSdt(requestObj.getString("phone"));
+			updatedCandidate.setSdt(requestObj.getString("phone")); 
+		} catch (Exception e) {
+
+		}
+		try {
+			updatedCandidate.setMucTieuNgheNghiep(requestObj.getString("careerGoals"));
 		} catch (Exception e) {
 
 		}
@@ -199,9 +215,9 @@ public class CandidateServiceImpl implements CandidateService {
 //		updatedCandidate.getNganh().getUngvien().add(updatedCandidate);
 //		System.out.println(new JSONObject(updatedCandidate).toString());
 		System.out.println(updatedCandidate.getUngVienId());
-		System.out.println(updatedCandidate.getChungChi().get(0).getChungChi().getTenChungChi());
+//		System.out.println(updatedCandidate.getChungChi().get(0).getChungChi().getTenChungChi());
 		try {
-			candidateRepo.save(updatedCandidate);
+			candidateRepo.save(updatedCandidate); 
 			return updatedCandidate;
 		} catch (Exception e) {
 			e.printStackTrace();
