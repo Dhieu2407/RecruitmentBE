@@ -189,11 +189,10 @@ public class JobServiceImpl implements JobService {
     }
 
     @Override
-    public Job deleteJob(String body) {
+    public void deleteJob(String body) {
         JSONObject obj = new JSONObject(body);
         long idJob = obj.getLong("id");
-
-        return jobRepository.deleteByJobId(idJob);
+        jobRepository.removeByJobId(idJob);
     }
 
     @Override
