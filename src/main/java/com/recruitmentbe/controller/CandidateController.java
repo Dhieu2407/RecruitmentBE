@@ -1,20 +1,20 @@
 package com.recruitmentbe.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.http.ResponseEntity;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Job;
 import com.recruitmentbe.service.CandidateService;
 
 
@@ -80,6 +80,17 @@ public class CandidateController {
 	@PostMapping(value = "/updateProfileCandidates")
 	public Candidate updateProfileCandidates(@RequestBody String body) {
 		return candidateServiceImpl.updateProfileCandidates(body);
+	}
+	
+	@PostMapping(value = "/bookmarkJob")
+	public byte[] candidateBookmarkJob(@RequestBody String body) {
+		return candidateServiceImpl.candidateBookmarkJob(body);
+	}
+	
+	@GetMapping(value = "/getBookmarkedJobs/{candidateId}")
+	public List<Job> getBookmarkedJobs (@PathVariable("candidateId") String idString){
+		Candidate currentCandidate = candidateServiceImpl.findByUngVienId(Long.parseLong(idString));
+		return currentCandidate.getTinTuyenDung();
 	}
 
 }

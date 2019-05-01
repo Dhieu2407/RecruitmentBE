@@ -1,5 +1,6 @@
 package com.recruitmentbe.model;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,6 +62,10 @@ public class Candidate {
     
     @Column(name= "mucTieuNgheNghiep")
     private String mucTieuNgheNghiep;
+    
+
+    @Column(name= "modify_date")
+    private Date modifyDate;
 	
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("ungVien")
@@ -70,7 +75,7 @@ public class Candidate {
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<HistoryCandidate> lichSuHanhDong = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+	@ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
 	@JoinTable(name = "ungvienSaveJob", joinColumns = { @JoinColumn(name = "ungVienId") }, inverseJoinColumns = {
 			@JoinColumn(name = "jobId") })
 	private List<Job> tinTuyenDung = new ArrayList<>();
@@ -202,6 +207,14 @@ public class Candidate {
 	}
 	public void setMucTieuNgheNghiep(String mucTieuNgheNghiep) {
 		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
+	}
+	
+	
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
 	}
 	public String convertToJson(){
 		Candidate c = new Candidate();

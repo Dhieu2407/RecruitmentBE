@@ -10,4 +10,5 @@ public interface CandidateService {
     public Candidate findByUngVienId(Long id);
 	public List<Candidate> findCandidateByConditions(String body);
 	public Candidate updateProfileCandidates(String body);
+	public byte[] candidateBookmarkJob(String body);
 }

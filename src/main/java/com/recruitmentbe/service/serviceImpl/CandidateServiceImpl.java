@@ -1,5 +1,6 @@
 package com.recruitmentbe.service.serviceImpl;
 
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,11 +10,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.Major;
 import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.model.UngVienChungChi;
 import com.recruitmentbe.model.UngVienKiNang;
 import com.recruitmentbe.repository.CandidateRepository;
+import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
 import com.recruitmentbe.repository.SkillRepository;
 import com.recruitmentbe.service.CandidateService;
@@ -29,6 +32,9 @@ public class CandidateServiceImpl implements CandidateService {
 
 	@Autowired
 	private SkillRepository skillRepo;
+	
+	@Autowired
+	private JobRepository jobRepo;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -154,7 +160,7 @@ public class CandidateServiceImpl implements CandidateService {
 
 		}
 		try {
-			updatedCandidate.setDiaChi(requestObj.getString(""));
+			updatedCandidate.setDiaChi(requestObj.getString("address"));
 		} catch (Exception e) {
 
 		}
@@ -217,6 +223,7 @@ public class CandidateServiceImpl implements CandidateService {
 		System.out.println(updatedCandidate.getUngVienId());
 //		System.out.println(updatedCandidate.getChungChi().get(0).getChungChi().getTenChungChi());
 		try {
+			updatedCandidate.setModifyDate(new Date((new java.util.Date()).getTime()));
 			candidateRepo.save(updatedCandidate); 
 			return updatedCandidate;
 		} catch (Exception e) {
@@ -224,5 +231,41 @@ public class CandidateServiceImpl implements CandidateService {
 			return null;
 		}
 	}
+
+	@Override
+	public byte[] candidateBookmarkJob(String body) {
+		JSONObject obj = new JSONObject(body);
+		Long candidateId = obj.getLong("candidateId");
+		Long jobId = obj.getLong("jobId");
+		Candidate candidate = candidateRepo.findByUngVienId(candidateId);
+		Job job = jobRepo.findByJobId(jobId);
+		if(candidate.getTinTuyenDung() == null || candidate.getTinTuyenDung().size() == 0) {
+			List<Job> jobs = new ArrayList<>();
+			candidate.setTinTuyenDung(jobs);
+		}
+		int duplicate = -1;
+		for(int i = 0 ; i < candidate.getTinTuyenDung().size() ; ++i) {
+			Job j = candidate.getTinTuyenDung().get(i);
+			if(j.getJobId() == jobId) {
+				duplicate = i;
+				break;
+			}
+		}
+		if(duplicate != -1) {
+			candidate.getTinTuyenDung().remove(duplicate);
+		}else {
+			candidate.getTinTuyenDung().add(job);
+		}
+		try {
+			candidateRepo.save(candidate);
+			JSONObject returnObj = new JSONObject("{\"status\" : \"success\"}");
+			return returnObj.toString().getBytes("UTF-8");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "".getBytes();
+		}
+	}
+	
+	
 
 }
