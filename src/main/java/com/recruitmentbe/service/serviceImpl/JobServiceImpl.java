@@ -305,7 +305,8 @@ public class JobServiceImpl implements JobService {
 
         JSONObject obj = new JSONObject(body);
         Job addJob = new Job();
-        Company company = companyRepository.findByCongtyId(1);
+        long idCompany = obj.getLong("idCongTy");
+        Company company = companyRepository.findByCongtyId(idCompany);
         addJob.setCongTy(company);
         long idMajor = Long.parseLong(obj.getString("major"));
         Major major = majorRepository.findByNganhId(idMajor);
