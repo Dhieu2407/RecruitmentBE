@@ -51,41 +51,84 @@ public class JobServiceImpl implements JobService {
         List<Job> searchByCondition = new ArrayList<>();
         List<Job> notContained = new ArrayList<>();
 
+        // tenJob bao tim kim theo tenJob,tenCongTy, va Mota
+        if(!obj.getString("tenJob").equals("")){
+            try {
 
-        try {
+                tenJob = obj.getString("tenJob");
+                resultListJobs = jobRepository.findByTenJobContaining(tenJob);
 
-            tenJob = obj.getString("tenJob");
-            resultListJobs = jobRepository.findByTenJobContaining(tenJob);
+            }catch (Exception ex){
+            }
+            // tim kiem theo ten cong
+            try{
+                tenCongty = obj.getString("tenJob");
+                List<Company> listCompany = companyRepository.findByTenCongTyContaining(tenCongty);
 
-        }catch (Exception ex){
-        }
-        try{
-            tenCongty = obj.getString("tenCongty");
-            List<Company> listCompany = companyRepository.findByTenCongTyContaining(tenCongty);
-
-            if(listCompany.size() > 0) {
-                List<Job> allJobs = jobRepository.findAll();
-                searchByCondition = new ArrayList<Job>();
-                for(Job job : allJobs) {
-                    if(job.getCongTy().getTenCongTy().equals(listCompany.get(0).getTenCongTy())) {
-                        searchByCondition.add(job);
-                    }
-                }
-                List<Job> listJobTemp = new ArrayList<>();
-                for(Job jobSearch : searchByCondition){
-                    for(Job jobResult : resultListJobs){
-                        if(jobSearch.getJobId()==jobResult.getJobId()){
-                            listJobTemp.add(jobSearch);
+                if(listCompany.size() > 0) {
+                    List<Job> allJobs = jobRepository.findAll();
+                    searchByCondition = new ArrayList<Job>();
+                    for(Job job : allJobs) {
+                        if(job.getCongTy().getTenCongTy().equals(listCompany.get(0).getTenCongTy())) {
+                            searchByCondition.add(job);
                         }
                     }
-                }
-                searchByCondition.clear();
-                resultListJobs.clear();
-                resultListJobs = listJobTemp;
-            }
+                    List<Job> listJobTemp = new ArrayList<>(resultListJobs);
+                    if(resultListJobs.size()>0){
+                        for(Job jobSearch : searchByCondition){
+                            for(Job jobResult : resultListJobs){
+                                if(jobSearch.getJobId()!=jobResult.getJobId()){
+                                    listJobTemp.add(jobSearch);
+                                    break;
+                                }
+                            }
+                        }
+                        searchByCondition.clear();
+                        resultListJobs.clear();
+                        resultListJobs = listJobTemp;
+                    }else {
+                        resultListJobs = searchByCondition;
+                    }
 
-        }catch (Exception ex){
+
+                }
+
+            }catch (Exception ex){
+            }
+            //tim kiem theo mo ta
+            try{
+                String moTa = obj.getString("tenJob");
+                searchByCondition= jobRepository.findByChiTietContaining(moTa);
+
+
+                List<Job> listJobTemp = new ArrayList<>(resultListJobs);
+                if(resultListJobs.size()>0){
+                    for(Job jobSearch : searchByCondition){
+                        for(Job jobResult : resultListJobs){
+                            if(jobSearch.getJobId()!=jobResult.getJobId()){
+                                listJobTemp.add(jobSearch);
+                                break;
+                            }
+                        }
+                    }
+                    searchByCondition.clear();
+                    resultListJobs.clear();
+                    resultListJobs = listJobTemp;
+                }else {
+                    resultListJobs = searchByCondition;
+                }
+
+
+
+
+            }catch (Exception ex){
+            }
+        }else {
+            resultListJobs = jobRepository.findAll();
         }
+
+
+
 
         try{
             diaChi = obj.getString("diaChi");
@@ -106,36 +149,38 @@ public class JobServiceImpl implements JobService {
         }catch (Exception ex){
 
         }
-
-        try{
-            tenNgannh = obj.getString("tenNgannh");
-            List<Major> listMajor = majorRepository.findByTenNganhContaining(tenNgannh);
-
-            if(listMajor.size() > 0) {
-                List<Job> allJobs = new ArrayList<>(resultListJobs);
-                searchByCondition = new ArrayList<Job>();
-                for(Job job : allJobs) {
-                    if(job.getNganh().getTenNganh().equals(listMajor.get(0).getTenNganh())) {
-                        searchByCondition.add(job);
-                    }
-                }
-                List<Job> listJobTemp = new ArrayList<>();
-                for(Job jobSearch : searchByCondition){
-                    for(Job jobResult : resultListJobs){
-                        if(jobSearch.getJobId()==jobResult.getJobId()){
-                            listJobTemp.add(jobSearch);
+        tenNgannh = obj.getString("tenNgannh");
+        if(tenNgannh.equals("") || tenNgannh.equals("0")){
+            tenNgannh = "";
+        }else {
+            try{
+                long idMajor = Long.parseLong(tenNgannh);
+                Major major = majorRepository.findByNganhId(idMajor);
+                if(major != null) {
+                    List<Job> allJobs = new ArrayList<>(resultListJobs);
+                    searchByCondition = new ArrayList<Job>();
+                    for(Job job : allJobs) {
+                        if(job.getNganh().getTenNganh().equals(major.getTenNganh())) {
+                            searchByCondition.add(job);
                         }
                     }
+                    List<Job> listJobTemp = new ArrayList<>();
+                    for(Job jobSearch : searchByCondition){
+                        for(Job jobResult : resultListJobs){
+                            if(jobSearch.getJobId()==jobResult.getJobId()){
+                                listJobTemp.add(jobSearch);
+                            }
+                        }
+                    }
+                    searchByCondition.clear();
+                    resultListJobs.clear();
+                    resultListJobs = listJobTemp;
                 }
-                searchByCondition.clear();
-                resultListJobs.clear();
-                resultListJobs = listJobTemp;
+            }catch (Exception ex){
+
             }
-
-
-        }catch (Exception ex){
-
         }
+
 
         return resultListJobs;
     }
@@ -260,7 +305,7 @@ public class JobServiceImpl implements JobService {
 
         JSONObject obj = new JSONObject(body);
         Job addJob = new Job();
-        Company company = companyRepository.findByCongtyId(obj.getLong("congTy")); 
+        Company company = companyRepository.findByCongtyId(1);
         addJob.setCongTy(company);
         long idMajor = Long.parseLong(obj.getString("major"));
         Major major = majorRepository.findByNganhId(idMajor);
@@ -306,7 +351,7 @@ public class JobServiceImpl implements JobService {
 
         Date hanCuoi = new Date();
         try {
-             hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
+            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
