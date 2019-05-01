@@ -349,6 +349,8 @@ public class JobServiceImpl implements JobService {
         int tgLamViec = obj.getInt("tgLamViec");
         addJob.setTgLamViec(tgLamViec);
 
+        addJob.setTrangThai(0);
+
         Date hanCuoi = new Date();
         try {
             hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
