@@ -112,4 +112,4 @@ DROP INDEX `trangThaiId` ;
 ;
 ALTER TABLE `datn`.`ungtuyen` 
 CHANGE COLUMN `trangThaiId` `trangThai` INT(11) NULL DEFAULT NULL ;
-
+alter table datn.ungVien add column imgUrl varchar(1000) null;

@@ -8,16 +8,25 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.Skill;
+import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.UngTuyen;
+import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
+import com.recruitmentbe.repository.JobRepository;
 
 @Service
 public class CompanyServiceImpl implements CompanyService{
 
 	@Autowired
 	CompanyRepository companyRepo;
+
+	@Autowired
+	JobRepository jobRepo;
+	
+	@Autowired
+	CandidateRepository candidateRepo;
 	
 	@Override
 	public List<Company> getAllCompany() {
@@ -92,8 +101,26 @@ public class CompanyServiceImpl implements CompanyService{
 	public Company findByCongTyId(Long id) {
 		return companyRepo.findByCongtyId(id);
 	}
-	
-	
-	
 
+	@Override
+	public List<Candidate> getCandidateByCompany(String id) {
+		List<Job> allJobs = jobRepo.findAll();
+		List<Long> allJobsRelatedToCompany = new ArrayList<Long>();
+		for(Job j : allJobs) {
+			if(j.getCongTy().getCongtyId() == Long.parseLong(id)) {
+				allJobsRelatedToCompany.add(j.getJobId());
+			}
+		}
+		List<Candidate> allCandidates = candidateRepo.findAll();
+		List<Candidate> allCandidateRelatedToCompany = new ArrayList<Candidate>();
+		for(Candidate c : allCandidates) {
+			for(UngTuyen ut : c.getTinTuyenDungUngTuyen()) {
+				if(allJobsRelatedToCompany.contains(ut.getJob().getJobId())) {
+					allCandidateRelatedToCompany.add(c); 
+					break;
+				}
+			}
+		}
+		return allCandidateRelatedToCompany;
+	}
 }

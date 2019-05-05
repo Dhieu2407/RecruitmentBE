@@ -66,6 +66,10 @@ public class Candidate {
 
     @Column(name= "modify_date")
     private Date modifyDate;
+    
+
+    @Column(name= "imgUrl")
+    private String imgUrl;
 	
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("ungVien")
@@ -228,6 +232,12 @@ public class Candidate {
 	}
 	public void setModifyDate(Date modifyDate) {
 		this.modifyDate = modifyDate;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
 	}
 	public String convertToJson(){
 		Candidate c = new Candidate();

@@ -171,6 +171,11 @@ public class CandidateServiceImpl implements CandidateService {
 
 		}
 		try {
+			updatedCandidate.setImgUrl(requestObj.getString("imgUrl")); 
+		} catch (Exception e) {
+
+		}
+		try {
 			updatedCandidate.setMucTieuNgheNghiep(requestObj.getString("careerGoals"));
 		} catch (Exception e) {
 
