@@ -11,13 +11,13 @@ import com.recruitmentbe.model.Major;
 import com.recruitmentbe.service.MajorService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/major")
 public class MajorController {
 	
 	@Autowired
 	MajorService majorServiceImpl;
 	@GetMapping(value = "/getAllMajors")
-	public List<Major> getAllCandidates() {
+	public List<Major> getAllMajors() {
 		List<Major> allMajors = majorServiceImpl.getAllMajor();
 		return allMajors;
 	}

@@ -185,6 +185,7 @@ public class JobServiceImpl implements JobService {
         return resultListJobs;
     }
 
+
     @Override
     public Job findJobById(String body) {
         JSONObject obj = new JSONObject(body);
@@ -219,6 +220,14 @@ public class JobServiceImpl implements JobService {
         }else {
             return null;
         }
+    }
+
+    @Override
+    public List<Job> findByTrangThai(String body) {
+        JSONObject obj = new JSONObject(body);
+        String trangThaiString = obj.getString("trangThai");
+        int trangThai = Integer.parseInt(trangThaiString);
+        return jobRepository.findByTrangThai(trangThai);
     }
 
     @Override

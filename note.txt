@@ -109,7 +109,9 @@ ALTER TABLE `datn`.`ungtuyen`
 DROP FOREIGN KEY `ungtuyen_ibfk_2`;
 ALTER TABLE `datn`.`ungtuyen` 
 DROP INDEX `trangThaiId` ;
-;
+
 ALTER TABLE `datn`.`ungtuyen` 
 CHANGE COLUMN `trangThaiId` `trangThai` INT(11) NULL DEFAULT NULL ;
 alter table datn.ungVien add column imgUrl varchar(1000) null;
+
+DROP TABLE `datn`.`trangthai`;
