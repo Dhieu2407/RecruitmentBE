@@ -1,7 +1,7 @@
 package com.recruitmentbe.controller;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -50,7 +50,7 @@ public class CompanyController {
 	
 
 	@GetMapping(value = "/getCandidateByCompany/{id}")
-    public List<Candidate> getCandidateByCompany(@PathVariable("id") String idString) {
+    public Set<Candidate> getCandidateByCompany(@PathVariable("id") String idString) {
 		return companyServiceImpl.getCandidateByCompany(idString);
     }
 }

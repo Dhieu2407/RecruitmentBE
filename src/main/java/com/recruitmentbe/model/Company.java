@@ -35,6 +35,18 @@ public class Company {
 	
 	@Column(name = "password")
 	private String password;
+
+	@Column(name = "moTa")
+	private String moTa;
+	
+	@Column(name = "phucLoi")
+	private String phucLoi;
+	
+	@Column(name = "quyMo")
+	private Integer quyMo;
+
+	@Column(name = "imgUrl")
+	private String imgUrl;
 	
 	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Job> tinTuyenDung = new ArrayList<>();
@@ -118,6 +130,36 @@ public class Company {
 	public void setUngVien(List<Candidate> ungVien) {
 		this.ungVien = ungVien;
 	}
-	
 
+	public String getMoTa() {
+		return moTa;
+	}
+
+	public void setMoTa(String moTa) {
+		this.moTa = moTa;
+	}
+
+	public String getPhucLoi() {
+		return phucLoi;
+	}
+
+	public void setPhucLoi(String phucLoi) {
+		this.phucLoi = phucLoi;
+	}
+
+	public Integer getQuyMo() {
+		return quyMo;
+	}
+
+	public void setQuyMo(Integer quyMo) {
+		this.quyMo = quyMo;
+	}
+
+	public String getImgUrl() {
+		return imgUrl;
+	}
+
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 }
