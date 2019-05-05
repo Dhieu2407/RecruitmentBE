@@ -2,6 +2,7 @@ package com.recruitmentbe.service;
 
 import 	java.util.List;
 
+import com.recruitmentbe.model.UngTuyen;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,4 +21,5 @@ public interface CandidateService {
 	public byte[] candidateApplyJob(String body);
 	public List<Job> getAppliedJobs (String idString);
 	public List<Candidate> getApplicants (String idString);
+	public List<UngTuyen> getListUngTuyen(String body);
 }

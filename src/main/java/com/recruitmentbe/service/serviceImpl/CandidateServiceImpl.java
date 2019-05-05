@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.recruitmentbe.repository.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,10 +17,6 @@ import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.model.UngVienChungChi;
 import com.recruitmentbe.model.UngVienKiNang;
-import com.recruitmentbe.repository.CandidateRepository;
-import com.recruitmentbe.repository.JobRepository;
-import com.recruitmentbe.repository.MajorRepository;
-import com.recruitmentbe.repository.SkillRepository;
 import com.recruitmentbe.service.CandidateService;
 
 @Service
@@ -36,6 +33,9 @@ public class CandidateServiceImpl implements CandidateService {
 	
 	@Autowired
 	private JobRepository jobRepo;
+
+	@Autowired
+    private UngTuyenRepository ungTuyenRepository;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -336,5 +336,14 @@ public class CandidateServiceImpl implements CandidateService {
 		return null;
 		
 	}
+
+    @Override
+    public List<UngTuyen> getListUngTuyen(String body) {
+	    JSONObject obj = new JSONObject(body);
+	    long idUngTuyen = obj.getLong("id");
+        Job job = jobRepo.findByJobId(idUngTuyen);
+	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
+        return list;
+    }
 
 }
