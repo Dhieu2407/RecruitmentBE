@@ -25,6 +25,9 @@ public class UngTuyen {
     @Column(name = "trangThai")
     private long trangThai;
 
+    @Column(name="lyDo")
+    private String lyDo;
+
 	public Candidate getUngVien() {
 		return ungVien;
 	}
@@ -48,7 +51,12 @@ public class UngTuyen {
 	public void setTrangThai(long trangThai) {
 		this.trangThai = trangThai;
 	}
-    
-    
 
+    public String getLyDo() {
+        return lyDo;
+    }
+
+    public void setLyDo(String lyDo) {
+        this.lyDo = lyDo;
+    }
 }
