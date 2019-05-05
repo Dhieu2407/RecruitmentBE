@@ -13,6 +13,7 @@ import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.Major;
 import com.recruitmentbe.model.Skill;
+import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.model.UngVienChungChi;
 import com.recruitmentbe.model.UngVienKiNang;
 import com.recruitmentbe.repository.CandidateRepository;
@@ -267,5 +268,68 @@ public class CandidateServiceImpl implements CandidateService {
 	}
 	
 	
+	
+	
+	
+	@Override
+	public byte[] candidateApplyJob(String body) {
+		JSONObject obj = new JSONObject(body);
+		Long candidateId = obj.getLong("candidateId");
+		Long jobId = obj.getLong("jobId");
+		Candidate candidate = candidateRepo.findByUngVienId(candidateId);
+		Job job = jobRepo.findByJobId(jobId);
+		if(candidate.getTinTuyenDungUngTuyen() == null || candidate.getTinTuyenDungUngTuyen().size() == 0) {
+			List<UngTuyen> tinTuyenDungUngTuyen = new ArrayList<>();
+			candidate.setTinTuyenDungUngTuyen(tinTuyenDungUngTuyen);
+		}
+		int duplicate = -1;
+		for(int i = 0 ; i < candidate.getTinTuyenDungUngTuyen().size() ; ++i) {
+			UngTuyen j = candidate.getTinTuyenDungUngTuyen().get(i);
+			if(j.getJob().getJobId() == jobId) {
+				duplicate = i;
+				break;
+			}
+		}
+		if(duplicate != -1) {
+			candidate.getTinTuyenDungUngTuyen().remove(duplicate);
+//			int duplicateCandidate = -1;
+//			for(int i = 0 ; i < job.getNguoiUngTuyen().size() ; ++i) {
+//				UngTuyen ut = job.getNguoiUngTuyen().get(i);
+//				if(ut.getUngVien().getUngVienId() == candidateId) {
+//					duplicateCandidate = i;
+//					break;
+//				}
+//			}
+//			job.getNguoiUngTuyen().remove(duplicateCandidate);
+		}else {
+			UngTuyen ut = new UngTuyen();
+			ut.setUngVien(candidate);
+			ut.setJob(job);
+			ut.setTrangThai(0);
+			candidate.getTinTuyenDungUngTuyen().add(ut);
+		}
+		try {
+			candidateRepo.save(candidate);
+//			jobRepo.save(job);
+			JSONObject returnObj = new JSONObject("{\"status\" : \"success\"}");
+			return returnObj.toString().getBytes("UTF-8");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "".getBytes();
+		}
+		
+	}
+	
+	@Override
+	public List<Job> getAppliedJobs (String idString){
+		return null;
+		
+	}
+	
+	@Override
+	public List<Candidate> getApplicants (String idString){
+		return null;
+		
+	}
 
 }

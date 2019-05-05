@@ -72,6 +72,15 @@ public class Candidate {
 	@Fetch(value = FetchMode.SUBSELECT)
 	private List<UngVienChungChi> chungChi = new ArrayList<>();
 	
+	
+	
+	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("ungVien")
+	@Fetch(value = FetchMode.SUBSELECT)
+	private List<UngTuyen> tinTuyenDungUngTuyen = new ArrayList<>();
+	
+	
+	
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<HistoryCandidate> lichSuHanhDong = new ArrayList<>();
 	
@@ -208,8 +217,12 @@ public class Candidate {
 	public void setMucTieuNgheNghiep(String mucTieuNgheNghiep) {
 		this.mucTieuNgheNghiep = mucTieuNgheNghiep;
 	}
-	
-	
+	public List<UngTuyen> getTinTuyenDungUngTuyen() {
+		return tinTuyenDungUngTuyen;
+	}
+	public void setTinTuyenDungUngTuyen(List<UngTuyen> tinTuyenDungUngTuyen) {
+		this.tinTuyenDungUngTuyen = tinTuyenDungUngTuyen;
+	}
 	public Date getModifyDate() {
 		return modifyDate;
 	}

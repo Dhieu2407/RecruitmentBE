@@ -1,6 +1,7 @@
 package com.recruitmentbe.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.json.JSONObject;
@@ -15,7 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.service.CandidateService;
+import com.recruitmentbe.service.JobService;
 
 
 @RestController
@@ -23,6 +26,8 @@ import com.recruitmentbe.service.CandidateService;
 public class CandidateController {
 	@Autowired
 	private CandidateService candidateServiceImpl;
+	@Autowired
+	private JobService jobServiceImpl;
 
 	@PostMapping(value = "/candidateRegister")
 	public byte[] addCandidate(@RequestBody String body) throws Exception {
@@ -91,6 +96,34 @@ public class CandidateController {
 	public List<Job> getBookmarkedJobs (@PathVariable("candidateId") String idString){
 		Candidate currentCandidate = candidateServiceImpl.findByUngVienId(Long.parseLong(idString));
 		return currentCandidate.getTinTuyenDung();
+	}
+	
+	
+	@PostMapping(value = "/applyJob")
+	public byte[] candidateApplyJob(@RequestBody String body) {
+		return candidateServiceImpl.candidateApplyJob(body);
+	}
+	
+	@GetMapping(value = "/getAppliedJobs/{candidateId}")
+	public List<Job> getAppliedJobs (@PathVariable("candidateId") String idString){
+		Candidate currentCandidate = candidateServiceImpl.findByUngVienId(Long.parseLong(idString));
+		List<UngTuyen> utList = currentCandidate.getTinTuyenDungUngTuyen();
+		List<Job> tinTuyenDungUngTuyen = new ArrayList<Job>();
+		for(UngTuyen ut : utList) {
+			tinTuyenDungUngTuyen.add(ut.getJob());
+		}
+		return tinTuyenDungUngTuyen;
+	}	
+
+	@GetMapping(value = "/getApplicants/{jobId}")
+	public List<Candidate> getApplicants (@PathVariable("jobId") String idString){
+		Job currentJob = jobServiceImpl.findJobById(idString);
+		List<UngTuyen> utList = currentJob.getNguoiUngTuyen();
+		List<Candidate> listUngVien = new ArrayList<Candidate>();
+		for(UngTuyen ut : utList) {
+			listUngVien.add(ut.getUngVien()); 
+		}
+		return listUngVien;
 	}
 
 }

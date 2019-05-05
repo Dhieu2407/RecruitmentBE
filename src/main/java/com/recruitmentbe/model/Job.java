@@ -12,7 +12,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name="job")
@@ -93,6 +99,15 @@ public class Job {
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tinTuyenDung")
 	private List<Candidate> tinTuyenDung = new ArrayList<>();
+	
+
+//	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+//	@JsonIgnoreProperties("job")
+//	@Fetch(value = FetchMode.SUBSELECT)
+//	private List<UngTuyen> nguoiUngTuyen = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<UngTuyen> nguoiUngTuyen = new ArrayList<>();
 
     public long getJobId() {
         return jobId;
@@ -277,4 +292,12 @@ public class Job {
     public void setTrangThai(int trangThai) {
         this.trangThai = trangThai;
     }
+
+	public List<UngTuyen> getNguoiUngTuyen() {
+		return nguoiUngTuyen;
+	}
+
+	public void setNguoiUngTuyen(List<UngTuyen> nguoiUngTuyen) {
+		this.nguoiUngTuyen = nguoiUngTuyen;
+	}
 }

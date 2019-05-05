@@ -104,3 +104,12 @@ INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES
 ALTER TABLE datn.`job` MODIFY tenJob VARCHAR(200);
 ALTER TABLE datn.`job` ADD COLUMN trangThai int null; // 0: dang cho duyet, 1: da duyet, 2: bi tu choi
 alter table datn.ungvien add column modify_date date;
+
+ALTER TABLE `datn`.`ungtuyen` 
+DROP FOREIGN KEY `ungtuyen_ibfk_2`;
+ALTER TABLE `datn`.`ungtuyen` 
+DROP INDEX `trangThaiId` ;
+;
+ALTER TABLE `datn`.`ungtuyen` 
+CHANGE COLUMN `trangThaiId` `trangThai` INT(11) NULL DEFAULT NULL ;
+
