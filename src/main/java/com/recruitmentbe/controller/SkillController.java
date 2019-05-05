@@ -11,7 +11,7 @@ import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.service.SkillService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/skill")
 public class SkillController {
 	@Autowired
 	SkillService skillServiceImpl;

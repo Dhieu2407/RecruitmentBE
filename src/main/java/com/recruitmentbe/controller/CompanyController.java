@@ -17,7 +17,7 @@ import com.recruitmentbe.model.Company;
 import com.recruitmentbe.service.serviceImpl.CompanyService;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/company")
 public class CompanyController {
 	@Autowired
 	CompanyService companyServiceImpl;

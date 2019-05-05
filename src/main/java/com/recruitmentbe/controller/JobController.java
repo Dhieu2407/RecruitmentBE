@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/job")
 public class JobController {
 
     @Autowired
@@ -27,22 +27,15 @@ public class JobController {
     @Autowired
     MajorService majorService;
 
-    @GetMapping(value = "/getAllCandidates1")
-    public List<Candidate> getAllCandidates() {
-        System.out.println("all");
-        List<Candidate> allCandidates = candidateRepository.getAllCandidate();
-        return allCandidates;
-    }
-
     @GetMapping(value = "/getJob")
     public List<Job> getAllJobs() {
         System.out.println("all");
-        List<Job> allJOb = jobService.getAllJob();
-        return allJOb;
+        List<Job> allJob = jobService.getAllJob();
+        return allJob;
     }
 
     @PostMapping(value = "/searchJobs")
-    public List<Job> searchCandidates(@RequestBody String body) {
+    public List<Job> searchJobs(@RequestBody String body) {
         return jobService.findJob(body);
     }
 
@@ -67,10 +60,9 @@ public class JobController {
 
     }
 
-    @GetMapping(value = "/getAllMajor1")
-    public List<Major> getAllMajor(){
-        List<Major> listMajor = majorService.getAllMajor();
-        return listMajor;
+    @PostMapping(value = "/findByTrangThai")
+    public List<Job> findByTrangThai(@RequestBody String body){
+        return jobService.findByTrangThai(body);
     }
 
     @PostMapping(value = "/getListJobOfCompany")

@@ -22,7 +22,7 @@ import com.recruitmentbe.service.JobService;
 
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/candidate")
 public class CandidateController {
 	@Autowired
 	private CandidateService candidateServiceImpl;
