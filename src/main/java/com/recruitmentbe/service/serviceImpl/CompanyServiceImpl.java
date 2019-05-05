@@ -2,7 +2,9 @@ package com.recruitmentbe.service.serviceImpl;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +19,17 @@ import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 
 @Service
-public class CompanyServiceImpl implements CompanyService{
+public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	CompanyRepository companyRepo;
 
 	@Autowired
 	JobRepository jobRepo;
-	
+
 	@Autowired
 	CandidateRepository candidateRepo;
-	
+
 	@Override
 	public List<Company> getAllCompany() {
 		return companyRepo.findAll();
@@ -54,15 +56,15 @@ public class CompanyServiceImpl implements CompanyService{
 		} catch (Exception e1) {
 			password = "";
 		}
-		
+
 		Company newCompany = new Company();
 		newCompany.setEmail(email);
 		newCompany.setTenCongTy(username);
 		newCompany.setPassword(password);
-		List<Company> allCompanys= companyRepo.findAll();
-		if(allCompanys.size() == 0) {
+		List<Company> allCompanys = companyRepo.findAll();
+		if (allCompanys.size() == 0) {
 			newCompany.setCongtyId(0);
-		}else {
+		} else {
 			newCompany.setCongtyId(allCompanys.get(allCompanys.size() - 1).getCongtyId() + 1);
 		}
 		try {
@@ -74,25 +76,57 @@ public class CompanyServiceImpl implements CompanyService{
 			return "".getBytes();
 		}
 	}
-	
+
 	@Override
 	public Company updateProfileCompany(String body) {
 		JSONObject requestObj = new JSONObject(body);
 		Long companyId = requestObj.getLong("id");
-		Company updatedCompany ;
+		Company updatedCompany;
 		updatedCompany = companyRepo.findByCongtyId(companyId);
-		if(updatedCompany == null) {
+		if (updatedCompany == null) {
 			updatedCompany = new Company();
 			updatedCompany.setCongtyId(companyId);
 		}
-		updatedCompany.setEmail(requestObj.getString("email"));
-		updatedCompany.setDiaChi(requestObj.getString("diaChi"));
-		updatedCompany.setSdt(requestObj.getString("sdt"));
-		updatedCompany.setTenCongTy(requestObj.getString("tenCongTy"));
+		try {
+			updatedCompany.setEmail(requestObj.getString("email"));
+		} catch (Exception e) {
+		}
+		try {
+			updatedCompany.setDiaChi(requestObj.getString("diaChi"));
+		} catch (Exception e) {
+		}
+		try {
+			updatedCompany.setSdt(requestObj.getString("sdt"));
+		} catch (Exception e) {
+		}
+		try {
+			updatedCompany.setTenCongTy(requestObj.getString("tenCongTy"));
+		} catch (Exception e) {
+		}
+
+		try {
+			updatedCompany.setMoTa(requestObj.getString("moTa"));
+		} catch (Exception e) {
+		}
+
+		try {
+			updatedCompany.setPhucLoi(requestObj.getString("phucLoi"));
+		} catch (Exception e) {
+		}
+
+		try {
+			updatedCompany.setQuyMo(requestObj.getInt("quyMo"));
+		} catch (Exception e) {
+		}
+		
+		try {
+			updatedCompany.setImgUrl(requestObj.getString("imgUrl"));
+		} catch (Exception e) {
+		}
 		try {
 			companyRepo.save(updatedCompany);
 			return updatedCompany;
-		}catch(Exception e) {
+		} catch (Exception e) {
 			return null;
 		}
 	}
@@ -103,20 +137,20 @@ public class CompanyServiceImpl implements CompanyService{
 	}
 
 	@Override
-	public List<Candidate> getCandidateByCompany(String id) {
+	public Set<Candidate> getCandidateByCompany(String id) {
 		List<Job> allJobs = jobRepo.findAll();
 		List<Long> allJobsRelatedToCompany = new ArrayList<Long>();
-		for(Job j : allJobs) {
-			if(j.getCongTy().getCongtyId() == Long.parseLong(id)) {
+		for (Job j : allJobs) {
+			if (j.getCongTy().getCongtyId() == Long.parseLong(id)) {
 				allJobsRelatedToCompany.add(j.getJobId());
 			}
 		}
 		List<Candidate> allCandidates = candidateRepo.findAll();
-		List<Candidate> allCandidateRelatedToCompany = new ArrayList<Candidate>();
-		for(Candidate c : allCandidates) {
-			for(UngTuyen ut : c.getTinTuyenDungUngTuyen()) {
-				if(allJobsRelatedToCompany.contains(ut.getJob().getJobId())) {
-					allCandidateRelatedToCompany.add(c); 
+		Set<Candidate> allCandidateRelatedToCompany = new HashSet<Candidate>();
+		for (Candidate c : allCandidates) {
+			for (UngTuyen ut : c.getTinTuyenDungUngTuyen()) {
+				if (allJobsRelatedToCompany.contains(ut.getJob().getJobId())) {
+					allCandidateRelatedToCompany.add(c);
 					break;
 				}
 			}

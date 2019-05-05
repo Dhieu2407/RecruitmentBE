@@ -114,4 +114,12 @@ ALTER TABLE `datn`.`ungtuyen`
 CHANGE COLUMN `trangThaiId` `trangThai` INT(11) NULL DEFAULT NULL ;
 alter table datn.ungVien add column imgUrl varchar(1000) null;
 
+<<<<<<< HEAD
+
+alter table datn.congTy add column moTa text null;
+alter table datn.congTy add column phucLoi text null;
+alter table datn.congTy add column quyMo int null;
+alter table datn.congTy add column imgUrl varchar(1000) null;
+=======
 DROP TABLE `datn`.`trangthai`;
+>>>>>>> branch 'master' of https://github.com/Dhieu2407/RecruitmentBE.git
