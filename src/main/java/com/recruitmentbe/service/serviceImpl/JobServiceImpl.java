@@ -232,7 +232,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public List<Job> findJobByIdCompany(String body) {
         JSONObject obj = new JSONObject(body);
-        long idCompanyLong = obj.getLong("congTyId");
+        long idCompanyLong = obj.getLong("id");
         Company company = companyRepository.findByCongtyId(idCompanyLong);
         List<Job> listJobOfCompany = new ArrayList<>();
         if(company!=null){
@@ -313,7 +313,7 @@ public class JobServiceImpl implements JobService {
 
         JSONObject obj = new JSONObject(body);
         Job addJob = new Job();
-        long idCompany = obj.getLong("congTyId");
+        long idCompany = obj.getLong("id");
         Company company = companyRepository.findByCongtyId(idCompany);
         addJob.setCongTy(company);
         long idMajor = Long.parseLong(obj.getString("tenNganh"));
