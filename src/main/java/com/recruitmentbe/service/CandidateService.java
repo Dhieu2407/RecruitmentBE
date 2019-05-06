@@ -21,5 +21,5 @@ public interface CandidateService {
 	public byte[] candidateApplyJob(String body);
 	public List<Job> getAppliedJobs (String idString);
 	public List<Candidate> getApplicants (String idString);
-	public List<UngTuyen> getListUngTuyen(String body);
+	// public List<UngTuyen> getListUngTuyen(String body);
 }

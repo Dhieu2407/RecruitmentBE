@@ -126,9 +126,9 @@ public class CandidateController {
 		return listUngVien;
 	}
 
-	@PostMapping(value = "/getListUngTuyen")
-    public List<UngTuyen> getListUngTuyen(@RequestBody String body){
-	    return candidateServiceImpl.getListUngTuyen(body);
-    }
+//	@PostMapping(value = "/getListUngTuyen")
+//    public List<UngTuyen> getListUngTuyen(@RequestBody String body){
+//	    return candidateServiceImpl.getListUngTuyen(body);
+//    }
 
 }
