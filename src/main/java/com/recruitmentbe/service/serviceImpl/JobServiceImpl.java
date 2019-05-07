@@ -288,6 +288,9 @@ public class JobServiceImpl implements JobService {
         String yeuCauHoSo = obj.getString("yeuCauHoSo");
         updateJob.setYeuCauHoSo(yeuCauHoSo);
 
+        int trangThai = Integer.parseInt(obj.getString("trangThai"));
+        updateJob.setTrangThai(trangThai);
+
         int soNamKinhNghiem = obj.getInt("knToiThieu");
         updateJob.setKnToiThieu(soNamKinhNghiem);
 

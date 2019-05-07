@@ -34,8 +34,8 @@ public class CandidateServiceImpl implements CandidateService {
 	@Autowired
 	private JobRepository jobRepo;
 
-//	@Autowired
-//    private UngTuyenRepository ungTuyenRepository;
+	@Autowired
+    private UngTuyenRepository ungTuyenRepository;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -337,13 +337,13 @@ public class CandidateServiceImpl implements CandidateService {
 		
 	}
 
-//    @Override
-//    public List<UngTuyen> getListUngTuyen(String body) {
-//	    JSONObject obj = new JSONObject(body);
-//	    long idUngTuyen = obj.getLong("id");
-//        Job job = jobRepo.findByJobId(idUngTuyen);
-//	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
-//        return list;
-//    }
+    @Override
+    public List<UngTuyen> getListUngTuyen(String body) {
+	    JSONObject obj = new JSONObject(body);
+	    long idUngTuyen = obj.getLong("id");
+        Job job = jobRepo.findByJobId(idUngTuyen);
+	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
+        return list;
+    }
 
 }
