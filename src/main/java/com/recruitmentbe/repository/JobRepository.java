@@ -13,6 +13,4 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findByDiaChiContaining(String diachi);
     public List<Job> findByChiTietContaining(String moTa);
     public Long removeByJobId(long idJob);
-
-
 }

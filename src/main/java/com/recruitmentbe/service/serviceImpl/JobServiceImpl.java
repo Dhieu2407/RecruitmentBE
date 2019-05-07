@@ -44,8 +44,8 @@ public class JobServiceImpl implements JobService {
         JSONObject obj = new JSONObject(body);
         String tenJob;
         String diaChi;
-        String tenNgannh;
-        String tenCongty;
+        String tenNganh;
+        String tenCongTy;
 
         List<Job> resultListJobs = new ArrayList<>();
         List<Job> searchByCondition = new ArrayList<>();
@@ -54,7 +54,6 @@ public class JobServiceImpl implements JobService {
         // tenJob bao tim kim theo tenJob,tenCongTy, va Mota
         if(!obj.getString("tenJob").equals("")){
             try {
-
                 tenJob = obj.getString("tenJob");
                 resultListJobs = jobRepository.findByTenJobContaining(tenJob);
 
@@ -62,8 +61,8 @@ public class JobServiceImpl implements JobService {
             }
             // tim kiem theo ten cong
             try{
-                tenCongty = obj.getString("tenJob");
-                List<Company> listCompany = companyRepository.findByTenCongTyContaining(tenCongty);
+                tenCongTy = obj.getString("tenJob");
+                List<Company> listCompany = companyRepository.findByTenCongTyContaining(tenCongTy);
 
                 if(listCompany.size() > 0) {
                     List<Job> allJobs = jobRepository.findAll();
@@ -149,12 +148,12 @@ public class JobServiceImpl implements JobService {
         }catch (Exception ex){
 
         }
-        tenNgannh = obj.getString("tenNgannh");
-        if(tenNgannh.equals("") || tenNgannh.equals("0")){
-            tenNgannh = "";
+        tenNganh = obj.getString("tenNganh");
+        if(tenNganh.equals("") || tenNganh.equals("0")){
+            tenNganh = "";
         }else {
             try{
-                long idMajor = Long.parseLong(tenNgannh);
+                long idMajor = Long.parseLong(tenNganh);
                 Major major = majorRepository.findByNganhId(idMajor);
                 if(major != null) {
                     List<Job> allJobs = new ArrayList<>(resultListJobs);
@@ -189,7 +188,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public Job findJobById(String body) {
         JSONObject obj = new JSONObject(body);
-        String id = obj.getString("id");
+        String id = obj.getString("jobId");
         long idJob = Long.parseLong(id);
         return jobRepository.findByJobId(idJob);
     }
@@ -250,7 +249,7 @@ public class JobServiceImpl implements JobService {
     @Override
     public Long deleteJob(String body) {
         JSONObject obj = new JSONObject(body);
-        long idJob = obj.getLong("id");
+        long idJob = obj.getLong("jobId");
         Job deletedJob = jobRepository.findByJobId(idJob);
         return jobRepository.removeByJobId(idJob);
     }
@@ -260,27 +259,27 @@ public class JobServiceImpl implements JobService {
         JSONObject obj = new JSONObject(body);
 
 
-        long idJob = obj.getLong("id");
+        long idJob = obj.getLong("jobId");
         Job updateJob = jobRepository.findByJobId(idJob);
 
-        long luongToiThieu = obj.getLong("salaryMin");
-        long luongToiDa = obj.getLong("salaryMax");
+        long luongToiThieu = obj.getLong("luongToiThieu");
+        long luongToiDa = obj.getLong("luongToiDa");
         updateJob.setLuongToiThieu(luongToiThieu);
         updateJob.setLuongToiDa(luongToiDa);
 
-        String tenJob = obj.getString("titleJob");
+        String tenJob = obj.getString("tenJob");
         updateJob.setTenJob(tenJob);
 
         String chucVu = obj.getString("chucVu1");
         updateJob.setChucVu1(chucVu);
 
-        String diaDiem = obj.getString("location");
+        String diaDiem = obj.getString("diaChi");
         updateJob.setDiaChi(diaDiem);
 
-        String moTaJob = obj.getString("description");
+        String moTaJob = obj.getString("chiTiet");
         updateJob.setChiTiet(moTaJob);
 
-        String yeuCauUngVien = obj.getString("requireCadiate");
+        String yeuCauUngVien = obj.getString("yeuCauUngVien");
         updateJob.setYeuCauCongViec(yeuCauUngVien);
 
         String quyenLoi = obj.getString("quyenLoi");
@@ -289,7 +288,10 @@ public class JobServiceImpl implements JobService {
         String yeuCauHoSo = obj.getString("yeuCauHoSo");
         updateJob.setYeuCauHoSo(yeuCauHoSo);
 
-        int soNamKinhNghiem = obj.getInt("requireYear");
+        int trangThai = Integer.parseInt(obj.getString("trangThai"));
+        updateJob.setTrangThai(trangThai);
+
+        int soNamKinhNghiem = obj.getInt("knToiThieu");
         updateJob.setKnToiThieu(soNamKinhNghiem);
 
 
@@ -299,7 +301,7 @@ public class JobServiceImpl implements JobService {
 
         Date hanCuoi = new Date();
         try {
-            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
+            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("hanCuoi"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -314,30 +316,30 @@ public class JobServiceImpl implements JobService {
 
         JSONObject obj = new JSONObject(body);
         Job addJob = new Job();
-        long idCompany = obj.getLong("idCongTy");
+        long idCompany = obj.getLong("id");
         Company company = companyRepository.findByCongtyId(idCompany);
         addJob.setCongTy(company);
-        long idMajor = Long.parseLong(obj.getString("major"));
+        long idMajor = Long.parseLong(obj.getString("tenNganh"));
         Major major = majorRepository.findByNganhId(idMajor);
         addJob.setNganh(major);
-        long luongToiThieu = obj.getLong("salaryMin");
-        long luongToiDa = obj.getLong("salaryMax");
+        long luongToiThieu = obj.getLong("luongToiThieu");
+        long luongToiDa = obj.getLong("luongToiDa");
         addJob.setLuongToiThieu(luongToiThieu);
         addJob.setLuongToiDa(luongToiDa);
 
-        String tenJob = obj.getString("titleJob");
+        String tenJob = obj.getString("tenJob");
         addJob.setTenJob(tenJob);
 
         String chucVu = obj.getString("chucVu1");
         addJob.setChucVu1(chucVu);
 
-        String diaDiem = obj.getString("location");
+        String diaDiem = obj.getString("diaChi");
         addJob.setDiaChi(diaDiem);
 
-        String moTaJob = obj.getString("description");
+        String moTaJob = obj.getString("chiTiet");
         addJob.setChiTiet(moTaJob);
 
-        String yeuCauUngVien = obj.getString("requireCadiate");
+        String yeuCauUngVien = obj.getString("yeuCauUngVien");
         addJob.setYeuCauCongViec(yeuCauUngVien);
 
         String quyenLoi = obj.getString("quyenLoi");
@@ -346,10 +348,10 @@ public class JobServiceImpl implements JobService {
         String yeuCauHoSo = obj.getString("yeuCauHoSo");
         addJob.setYeuCauHoSo(yeuCauHoSo);
 
-        int soNamKinhNghiem = obj.getInt("requireYear");
+        int soNamKinhNghiem = obj.getInt("knToiThieu");
         addJob.setKnToiThieu(soNamKinhNghiem);
 
-        int yeuCauGioiTinh = obj.getInt("yeuCauGioiTinh");
+        int yeuCauGioiTinh = obj.getInt("gioiTinh");
         addJob.setGioiTinh(yeuCauGioiTinh);
 
         int soLuong = obj.getInt("soLuong");
@@ -363,7 +365,7 @@ public class JobServiceImpl implements JobService {
 
         Date hanCuoi = new Date();
         try {
-            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("duedate"));
+            hanCuoi=new SimpleDateFormat("yyyy-MM-dd").parse(obj.getString("hanCuoi"));
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -394,9 +396,9 @@ public class JobServiceImpl implements JobService {
 
    /* {
         "tenJob": "WEB",
-       "tenCongty": "VNG",
+       "tenCongTy": "VNG",
        "diaChi"  : "",
-       "tenNgannh":""
+       "tenNganh":""
 
         {
         {
