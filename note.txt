@@ -121,3 +121,6 @@ alter table datn.congTy add column imgUrl varchar(1000) null;
 
 DROP TABLE `datn`.`trangthai`;
 
+ALTER TABLE `datn`.`ungtuyen`
+ADD COLUMN `lyDo` VARCHAR(100) NULL AFTER `trangThai`;
+
