@@ -1,0 +1,116 @@
+use datn;
+alter table ungvien
+add nganhId int references nganh(nganhId);
+alter table ungvien
+ADD COLUMN luongMongMuon INT(45) NULL;
+alter table ungvien
+ADD COLUMN diaDiem VARCHAR(45) NULL;
+alter table ungvien
+ADD COLUMN moTA VARCHAR(45) NULL;
+alter table ungvien
+CHANGE COLUMN ten tenUngVien VARCHAR(30) NULL DEFAULT NULL;
+
+alter table congTy add column password varchar(30);
+
+ALTER TABLE datn.`job`
+ADD COLUMN tgLamViec int NULL;
+
+ALTER TABLE datn.`job`
+ADD COLUMN quyenLoi text NULL;
+
+ALTER TABLE datn.`job`
+ADD COLUMN yeuCauCongViec text NULL;
+
+ALTER TABLE datn.`job`
+ADD COLUMN yeuCauHoSo text NULL;
+
+ALTER TABLE datn.`job`
+ADD COLUMN chucVuLamViec varchar(100);
+
+ALTER TABLE datn.`job`
+ADD COLUMN gioiTinh int NULL;
+
+ALTER TABLE `datn`.`ungvien_ngoaingu`
+CHANGE COLUMN `diemSo` `diemSo` VARCHAR(10) NULL DEFAULT NULL ;
+
+ALTER TABLE datn.ungVien
+ADD COLUMN lichSuLamViec text NULL;
+
+
+alter table datn.ungvien add column mucTieuNgheNghiep text null;
+
+INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_MANAGER');
+INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_CANDIDATE');
+INSERT INTO `datn`.`jhi_authority` (`name`) VALUES ('ROLE_EMPLOYER');
+
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('1', 'IT');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('2', 'Business');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('3', 'Law');
+INSERT INTO `datn`.`nganh` (`nganhId`, `tenNganh`) VALUES ('4', 'Architecture');
+
+
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('1', 'lead', '1');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('2', 'dev', '1');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('3', 'sale', '2');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('4', 'ceo', '2');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('5', 'Luật thương mại', '3');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('6', 'Luật Xây dựng', '3');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('7', 'Kỹ sư', '4');
+INSERT INTO `datn`.`chucvu` (`chucVuId`, `tenChucVu`, `nganhId`) VALUES ('8', 'Kiến trúc sư', '4');
+
+
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('1', 'Java', '1');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('2', 'Js', '1');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('3', 'Sale', '2');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('4', 'Kế toán', '2');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('5', 'Autocad', '4');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('6', 'Luật an ninh', '3');
+INSERT INTO `datn`.`kinang` (`kinangId`, `ten`, `nganhId`) VALUES ('7', 'Luật dân sự', '3');
+
+
+INSERT INTO `datn`.`ngoaingu` (`ngoaiNguId`, `tenNgoaiNgu`) VALUES ('1', 'English');
+INSERT INTO `datn`.`ngoaingu` (`ngoaiNguId`, `tenNgoaiNgu`) VALUES ('2', 'Japan');
+INSERT INTO `datn`.`ngoaingu` (`ngoaiNguId`, `tenNgoaiNgu`) VALUES ('3', 'Korean');
+INSERT INTO `datn`.`ngoaingu` (`ngoaiNguId`, `tenNgoaiNgu`) VALUES ('4', 'Spanish');
+
+INSERT INTO `datn`.`chungchingoaingu` (`chungChiId`, `tenChungChi`, `ngoaiNguId`) VALUES ('1', 'IELTS', '1');
+INSERT INTO `datn`.`chungchingoaingu` (`chungChiId`, `tenChungChi`, `ngoaiNguId`) VALUES ('2', 'TOEIC', '1');
+INSERT INTO `datn`.`chungchingoaingu` (`chungChiId`, `tenChungChi`, `ngoaiNguId`) VALUES ('3', 'JLPT', '2');
+INSERT INTO `datn`.`chungchingoaingu` (`chungChiId`, `tenChungChi`, `ngoaiNguId`) VALUES ('4', 'NATTEST', '2');
+
+insert into datn.ungvien_ngoaingu values (1,1,7.5);
+insert into datn.ungvien_ngoaingu values (2,2,110);
+insert into datn.ungvien_ngoaingu values (3,3,'N3');
+
+
+insert into datn.ungvien_kinang values(1,1,1);
+insert into datn.ungvien_kinang values(1,2,1);
+insert into datn.ungvien_kinang values(1,4,3);
+insert into datn.ungvien_kinang values(3,5,1);
+
+alter table datn.ungVien CHANGE COLUMN `trinhDoDaiHoc` `trinhDoDaiHoc` VARCHAR(300) NULL DEFAULT NULL ;
+
+
+update datn.ungVien set trinhDoDaiHoc = '[{"daihoc" : "Bách Khoa Hà Nội", "GPA" : "3.2","chuyennganh" : "Khoa học máy tính" , "batdau" : "8/2014", "ketthuc" : "8/2019"},	
+									{"daihoc" : "Học Viện Tài Chính", "GPA" : "3.4","chuyennganh" : "Kế toán" , "batdau" : "8/2019", "ketthuc" : "8/2021"}]' where ungVienId = 1;
+                                    ;
+update datn.ungVien set lichSuLamViec = '[{"congTy" : "FPT", "vitri" : "dev", "batdau" : "8/2022", "ketthuc" : "5/2023"},	
+									{"congTy" : "Vin corp", "vitri" : "sale", "batdau" : "6/2023", "ketthuc" : "1/2024"}]' where ungVienId = 1;
+
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('1', 'Công Ty VNG Hà Nội', 'Cau Giay, Ha Noi', '0123456789', 'vng@gmail.com');
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('2', 'Công ty SYMC SAMSUNG Viet Nam', 'PVB, Cau Giay', '0961626344', 'svmc@gmail.com');
+INSERT INTO `datn`.`congty` (`congTyId`, `ten`, `diachi`, `sdt`, `email`) VALUES ('3', 'Công ty Dịch Vụ Tài Chính', 'Ha Noi', '0996654123', 'finamcalvn@gmail.com');
+
+ALTER TABLE datn.`job` MODIFY tenJob VARCHAR(200);
+ALTER TABLE datn.`job` ADD COLUMN trangThai int null; // 0: dang cho duyet, 1: da duyet, 2: bi tu choi
+alter table datn.ungvien add column modify_date date;
+
+ALTER TABLE `datn`.`ungtuyen` 
+DROP FOREIGN KEY `ungtuyen_ibfk_2`;
+ALTER TABLE `datn`.`ungtuyen` 
+DROP INDEX `trangThaiId` ;
+;
+ALTER TABLE `datn`.`ungtuyen` 
+CHANGE COLUMN `trangThaiId` `trangThai` INT(11) NULL DEFAULT NULL ;
+ALTER TABLE datn.`ungtuyen` ADD COLUMN lyDo nvarchar(300) null;
+
