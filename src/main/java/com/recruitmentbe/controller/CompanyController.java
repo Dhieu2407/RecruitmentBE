@@ -53,4 +53,9 @@ public class CompanyController {
     public Set<Candidate> getCandidateByCompany(@PathVariable("id") String idString) {
 		return companyServiceImpl.getCandidateByCompany(idString);
     }
+	
+	@PostMapping(value = "/saveCandidate")
+	public byte[] saveCandidate(@RequestBody String body) {
+		return companyServiceImpl.companySaveCandidate(body);
+	}
 }

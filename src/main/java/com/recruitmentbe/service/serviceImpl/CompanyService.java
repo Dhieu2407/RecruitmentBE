@@ -12,4 +12,5 @@ public interface CompanyService {
 	public Company updateProfileCompany(String body);
 	public Company findByCongTyId(Long id);
 	public Set<Candidate> getCandidateByCompany(String id);
+	public byte[] companySaveCandidate(String body);
 }

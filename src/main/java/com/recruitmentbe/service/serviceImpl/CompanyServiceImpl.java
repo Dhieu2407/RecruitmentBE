@@ -1,6 +1,7 @@
 package com.recruitmentbe.service.serviceImpl;
 
 import java.io.UnsupportedEncodingException;
+import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Company;
+import com.recruitmentbe.model.CongTySaveUngVien;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.repository.CandidateRepository;
@@ -156,5 +158,45 @@ public class CompanyServiceImpl implements CompanyService {
 			}
 		}
 		return allCandidateRelatedToCompany;
+	}
+	
+	@Override
+	public byte[] companySaveCandidate(String body) {
+		JSONObject obj = new JSONObject(body);
+		Long candidateId = obj.getLong("candidateId");
+		Long companyId = obj.getLong("companyId");
+		Candidate candidate = candidateRepo.findByUngVienId(candidateId);
+		Company company = companyRepo.findByCongtyId(companyId);
+		if(company.getUngVienSaved() == null || company.getUngVienSaved().size() == 0) {
+			List<CongTySaveUngVien> ungVienSaved = new ArrayList<CongTySaveUngVien>();
+			company.setUngVienSaved(ungVienSaved);
+		}
+		int duplicate = -1;
+		for(int i = 0 ; i < company.getUngVienSaved().size() ; ++i) {
+			CongTySaveUngVien ungVien = company.getUngVienSaved().get(i);
+			if(ungVien.getUngVien().getUngVienId() == candidateId) {
+				duplicate = i;
+				break;
+			}
+		}
+		
+		if(duplicate != -1) {
+			company.getUngVienSaved().remove(duplicate);
+		}else {
+			CongTySaveUngVien candidateWillBeSaved = new CongTySaveUngVien();
+			candidateWillBeSaved.setCongTy(company);
+			candidateWillBeSaved.setUngVien(candidate);
+			candidateWillBeSaved.setNgaySave(new java.sql.Date((new java.util.Date()).getTime()));
+			company.getUngVienSaved().add(candidateWillBeSaved);
+		}
+
+		try {
+			companyRepo.save(company);
+			JSONObject returnObj = new JSONObject("{\"status\" : \"success\"}");
+			return returnObj.toString().getBytes("UTF-8");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "".getBytes();
+		}
 	}
 }

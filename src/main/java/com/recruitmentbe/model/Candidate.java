@@ -93,8 +93,10 @@ public class Candidate {
 			@JoinColumn(name = "jobId") })
 	private List<Job> tinTuyenDung = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "ungVien")
-	private List<Company> congTy = new ArrayList<>();
+
+	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("ungVien")
+	private List<CongTySaveUngVien> congTy = new ArrayList<>();
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
@@ -189,13 +191,12 @@ public class Candidate {
 	public void setTinTuyenDung(List<Job> tinTuyenDung) {
 		this.tinTuyenDung = tinTuyenDung;
 	}
-	public List<Company> getCongTy() {
+	public List<CongTySaveUngVien> getCongTy() {
 		return congTy;
 	}
-	public void setCongTy(List<Company> congTy) {
+	public void setCongTy(List<CongTySaveUngVien> congTy) {
 		this.congTy = congTy;
 	}
-	
 	public Major getNganh() {
 		return nganh;
 	}

@@ -14,6 +14,11 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name = "congty")
 public class Company {
@@ -54,10 +59,15 @@ public class Company {
 	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<HistoryCompany> lichSuHanhDong = new ArrayList<>();
 	
-	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-	@JoinTable(name = "congTySaveUngVien", joinColumns = { @JoinColumn(name = "congTyId") }, inverseJoinColumns = {
-			@JoinColumn(name = "ungVienId") })
-	private List<Candidate> ungVien = new ArrayList<>();
+//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+//	@JoinTable(name = "congTySaveUngVien", joinColumns = { @JoinColumn(name = "congTyId") }, inverseJoinColumns = {
+//			@JoinColumn(name = "ungVienId") })
+//	private List<Candidate> ungVien = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("congTy")
+	@Fetch(value = FetchMode.SUBSELECT) 
+	private List<CongTySaveUngVien> ungVienSaved = new ArrayList<>();
 
 	public long getCongtyId() {
 		return congtyId;
@@ -122,13 +132,13 @@ public class Company {
 	public void setLichSuHanhDong(List<HistoryCompany> lichSuHanhDong) {
 		this.lichSuHanhDong = lichSuHanhDong;
 	}
-
-	public List<Candidate> getUngVien() {
-		return ungVien;
+	
+	public List<CongTySaveUngVien> getUngVienSaved() {
+		return ungVienSaved;
 	}
 
-	public void setUngVien(List<Candidate> ungVien) {
-		this.ungVien = ungVien;
+	public void setUngVienSaved(List<CongTySaveUngVien> ungVienSaved) {
+		this.ungVienSaved = ungVienSaved;
 	}
 
 	public String getMoTa() {
