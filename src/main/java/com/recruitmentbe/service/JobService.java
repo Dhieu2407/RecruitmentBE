@@ -1,6 +1,7 @@
 package com.recruitmentbe.service;
 
 
+import com.recruitmentbe.model.Gmail;
 import com.recruitmentbe.model.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -1,9 +1,6 @@
 package com.recruitmentbe.service.serviceImpl;
 
-import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.Job;
-import com.recruitmentbe.model.Major;
-import com.recruitmentbe.model.Position;
+import com.recruitmentbe.model.*;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
@@ -311,6 +308,7 @@ public class JobServiceImpl implements JobService {
         return jobRepository.save(updateJob);
     }
 
+
     @Override
     public Job addJobStringBody(String body) {
 
@@ -392,6 +390,7 @@ public class JobServiceImpl implements JobService {
 
         return addJob;
     }
+
 
 
    /* {

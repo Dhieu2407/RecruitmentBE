@@ -1,23 +1,25 @@
 package com.recruitmentbe.controller;
 
+import com.recruitmentbe.model.Gmail;
+import com.recruitmentbe.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/api/email")
 public class EmailController {
 
     @Autowired
     public JavaMailSender emailSender;
 
+    @Autowired
+    public JobService jobService;
+
     @ResponseBody
-    @RequestMapping(value="/sendSimpleEmail", method = RequestMethod.GET)
+    @RequestMapping(value="/sendemailcandidate", method = RequestMethod.GET)
     public String sendSimpleEmail(@RequestParam(value="email")String email,@RequestParam(value="username")String username) {
 
         // Create a Simple MailMessage.
@@ -32,6 +34,31 @@ public class EmailController {
         this.emailSender.send(message);
 
         return "Email Sent!";
+    }
+    @ResponseBody
+    @PostMapping(value = "/sendEmail")
+    public Gmail sendEmail(@RequestBody String body){
+        Gmail gmail = new Gmail();
+        SimpleMailMessage message = new SimpleMailMessage();
+
+        message.setTo(gmail.getEmailCandiate());
+        message.setSubject("["+gmail.getCompany().getTenCongTy()+"] Tuyển dụng: "+gmail.getJob().getTenJob());
+        String text =gmail.getContentMail();
+        String b =
+            gmail.getCompany().getTenCongTy()+"\n" +
+            "Office address  : "+gmail.getCompany().getDiaChi()+" Str.,\n" +
+            "Mobile               : +"+gmail.getCompany().getSdt()+"\n" +
+            "E-mail                : "+gmail.getCompany().getEmail()+"\n";
+            String a = "Trân trọng thông báo,\n" +
+            "Bộ phận nhân sự - "+gmail.getCompany().getTenCongTy();
+            String c = b+a;
+            text = text+c;
+        message.setText(text);
+
+
+        // Send Message!
+        this.emailSender.send(message);
+        return gmail;
     }
 
 }

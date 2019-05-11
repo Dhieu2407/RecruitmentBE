@@ -340,7 +340,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public List<UngTuyen> getListUngTuyen(String body) {
 	    JSONObject obj = new JSONObject(body);
-	    long idUngTuyen = obj.getLong("id");
+	    long idUngTuyen = obj.getLong("jobId");
         Job job = jobRepo.findByJobId(idUngTuyen);
 	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
         return list;
