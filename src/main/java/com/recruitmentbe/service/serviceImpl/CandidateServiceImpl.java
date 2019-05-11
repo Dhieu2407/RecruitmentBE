@@ -4,19 +4,13 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.recruitmentbe.model.*;
 import com.recruitmentbe.repository.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recruitmentbe.model.Candidate;
-import com.recruitmentbe.model.Job;
-import com.recruitmentbe.model.Major;
-import com.recruitmentbe.model.Skill;
-import com.recruitmentbe.model.UngTuyen;
-import com.recruitmentbe.model.UngVienChungChi;
-import com.recruitmentbe.model.UngVienKiNang;
 import com.recruitmentbe.service.CandidateService;
 
 @Service
@@ -36,6 +30,9 @@ public class CandidateServiceImpl implements CandidateService {
 
 	@Autowired
     private UngTuyenRepository ungTuyenRepository;
+
+	@Autowired
+    private CompanyRepository companyRepository;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -344,6 +341,24 @@ public class CandidateServiceImpl implements CandidateService {
         Job job = jobRepo.findByJobId(idUngTuyen);
 	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
         return list;
+    }
+
+    @Override
+    public List<UngTuyen> getListUngTuyenOfCompany(String body) {
+	    JSONObject obj = new JSONObject(body);
+	    long idCompany = obj.getLong("id");
+        Company company = companyRepository.findByCongtyId(idCompany);
+	    List<Job> listJob = jobRepo.findByCongTy(company);
+	    List<UngTuyen> listUngTuyen = new ArrayList<>();
+	    for(Job j : listJob){
+	        List<UngTuyen> list = ungTuyenRepository.findByJob(j);
+	        if(list.size()!=0 && list !=null){
+	            for(UngTuyen ut : list){
+	                listUngTuyen.add(ut);
+                }
+            }
+        }
+        return listUngTuyen;
     }
 
 }

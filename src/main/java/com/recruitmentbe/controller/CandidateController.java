@@ -131,4 +131,9 @@ public class CandidateController {
 	    return candidateServiceImpl.getListUngTuyen(body);
     }
 
+    @PostMapping(value = "/getListUngTuyenOfCompany")
+    public List<UngTuyen> getListUngTuyenOfCompany(@RequestBody String body){
+	    return candidateServiceImpl.getListUngTuyenOfCompany(body);
+    }
+
 }

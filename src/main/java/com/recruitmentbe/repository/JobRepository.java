@@ -1,5 +1,6 @@
 package com.recruitmentbe.repository;
 
+import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Job;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -13,4 +14,5 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findByDiaChiContaining(String diachi);
     public List<Job> findByChiTietContaining(String moTa);
     public Long removeByJobId(long idJob);
+    public List<Job> findByCongTy(Company company);
 }
