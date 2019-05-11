@@ -28,6 +28,9 @@ public class UngTuyen {
     @Column(name="lyDo")
     private String lyDo;
 
+    @Column(name = "trangThaiXem")
+    private int trangThaiXem;
+
 	public Candidate getUngVien() {
 		return ungVien;
 	}
@@ -58,5 +61,13 @@ public class UngTuyen {
 
     public void setLyDo(String lyDo) {
         this.lyDo = lyDo;
+    }
+
+    public int getTrangThaiXem() {
+        return trangThaiXem;
+    }
+
+    public void setTrangThaiXem(int trangThaiXem) {
+        this.trangThaiXem = trangThaiXem;
     }
 }

@@ -123,4 +123,4 @@ DROP TABLE `datn`.`trangthai`;
 
 ALTER TABLE `datn`.`ungtuyen`
 ADD COLUMN `lyDo` VARCHAR(100) NULL AFTER `trangThai`;
-
+ALTER TABLE datn.`ungtuyen` ADD COLUMN trangThaiXem int null;

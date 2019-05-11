@@ -1,6 +1,7 @@
 package com.recruitmentbe.service.serviceImpl;
 
 import com.recruitmentbe.model.*;
+import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
@@ -31,6 +32,9 @@ public class JobServiceImpl implements JobService {
 
     @Autowired
     private CompanyRepository companyRepository;
+
+    @Autowired
+    private CandidateRepository candidateRepository;
     @Override
     public List<Job> getAllJob() {
         return jobRepository.findAll();
@@ -248,6 +252,20 @@ public class JobServiceImpl implements JobService {
         JSONObject obj = new JSONObject(body);
         long idJob = obj.getLong("jobId");
         Job deletedJob = jobRepository.findByJobId(idJob);
+//        for(Candidate c : candidateRepository.findAll()){
+//            int index = -1;
+//            for(int y = 0 ; y < c.getTinTuyenDung().size() ; y++){
+//                Job j = c.getTinTuyenDung().get(y);
+//                if(j.getJobId() == idJob){
+//                    index = y;
+//                    break;
+//                }
+//            }
+//            if(index != -1){
+//                c.getTinTuyenDung().remove(index);
+//            }
+//            candidateRepository.save(c);
+//        }
         return jobRepository.removeByJobId(idJob);
     }
 
@@ -314,7 +332,7 @@ public class JobServiceImpl implements JobService {
 
         JSONObject obj = new JSONObject(body);
         Job addJob = new Job();
-        long idCompany = obj.getLong("id");
+        long idCompany = obj.getLong("congTyId");
         Company company = companyRepository.findByCongtyId(idCompany);
         addJob.setCongTy(company);
         long idMajor = Long.parseLong(obj.getString("tenNganh"));

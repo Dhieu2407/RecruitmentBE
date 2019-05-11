@@ -3,17 +3,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -300,4 +290,18 @@ public class Job {
 	public void setNguoiUngTuyen(List<UngTuyen> nguoiUngTuyen) {
 		this.nguoiUngTuyen = nguoiUngTuyen;
 	}
+    @PreRemove
+    private void removeCandidateSaveThisJob() {
+        List<Candidate> cs = new ArrayList<>();
+        for(UngTuyen ut : this.getNguoiUngTuyen()){
+            int duplicate = -1;
+            for(int i = 0 ; i < ut.getUngVien().getTinTuyenDungUngTuyen().size() ; ++i){
+                if(ut.getUngVien().getTinTuyenDungUngTuyen().get(i).getJob().getJobId() == this.getJobId()){
+                    duplicate = i;
+                    break;
+                }
+            }
+            ut.getUngVien().getTinTuyenDungUngTuyen().remove(duplicate);
+        }
+    }
 }
