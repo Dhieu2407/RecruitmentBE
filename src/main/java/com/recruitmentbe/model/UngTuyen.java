@@ -29,7 +29,7 @@ public class UngTuyen {
     private String lyDo;
 
     @Column(name = "trangThaiXem")
-    private int trangThaiXem;
+    private Integer trangThaiXem;
 
 	public Candidate getUngVien() {
 		return ungVien;
@@ -63,11 +63,11 @@ public class UngTuyen {
         this.lyDo = lyDo;
     }
 
-    public int getTrangThaiXem() {
+    public Integer getTrangThaiXem() {
         return trangThaiXem;
     }
 
-    public void setTrangThaiXem(int trangThaiXem) {
+    public void setTrangThaiXem(Integer trangThaiXem) {
         this.trangThaiXem = trangThaiXem;
     }
 }

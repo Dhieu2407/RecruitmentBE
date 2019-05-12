@@ -2,14 +2,9 @@ package com.recruitmentbe.service;
 
 import 	java.util.List;
 
-import com.recruitmentbe.model.UngTuyen;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.UngTuyen;
 
 public interface CandidateService {
 	public Candidate registerCandidate(String username, String email, String password);
@@ -23,4 +18,5 @@ public interface CandidateService {
 	public List<Candidate> getApplicants (String idString);
 	 public List<UngTuyen> getListUngTuyen(String body);
 	 public List<UngTuyen> getListUngTuyenOfCompany(String body);
+	public byte[] candidateSaveCompany(String body);
 }

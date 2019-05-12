@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.UngTuyen;
+import com.recruitmentbe.model.UngVienSaveCongTy;
 import com.recruitmentbe.service.CandidateService;
 import com.recruitmentbe.service.JobService;
 
@@ -130,10 +132,24 @@ public class CandidateController {
     public List<UngTuyen> getListUngTuyen(@RequestBody String body){
 	    return candidateServiceImpl.getListUngTuyen(body);
     }
-
     @PostMapping(value = "/getListUngTuyenOfCompany")
     public List<UngTuyen> getListUngTuyenOfCompany(@RequestBody String body){
 	    return candidateServiceImpl.getListUngTuyenOfCompany(body);
     }
 
+	@PostMapping(value = "/saveCompany")
+	public byte[] saveCompany(@RequestBody String body) {
+		return candidateServiceImpl.candidateSaveCompany(body);
+	}
+	
+	@PostMapping(value = "/getAllCompaniesSaved/{candidateId}")
+	public List<Company> getAllCompaniesSaved(@PathVariable("candidateId") String idString) {
+		long candidateId = Long.parseLong(idString);
+		Candidate candidate = candidateServiceImpl.findByUngVienId(candidateId);
+		List<Company> allSavedCompanies = new ArrayList<Company>();
+		for(UngVienSaveCongTy uvsct : candidate.getCongTySaved()) {
+			allSavedCompanies.add(uvsct.getCongTy());
+		}
+		return allSavedCompanies;
+	}
 }
