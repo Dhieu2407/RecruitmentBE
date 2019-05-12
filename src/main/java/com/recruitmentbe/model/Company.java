@@ -8,19 +8,19 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "congty")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "congtyId")
 public class Company {
 	@Id
 	@Column(name = "congtyId")
@@ -68,6 +68,10 @@ public class Company {
 	@JsonIgnoreProperties("congTy")
 	@Fetch(value = FetchMode.SUBSELECT) 
 	private List<CongTySaveUngVien> ungVienSaved = new ArrayList<>();
+	
+	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
+	@JsonIgnoreProperties("congTy")
+	private List<UngVienSaveCongTy> ungVien = new ArrayList<>();
 
 	public long getCongtyId() {
 		return congtyId;
@@ -172,4 +176,13 @@ public class Company {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl = imgUrl;
 	}
+
+	public List<UngVienSaveCongTy> getUngVien() {
+		return ungVien;
+	}
+
+	public void setUngVien(List<UngVienSaveCongTy> ungVien) {
+		this.ungVien = ungVien;
+	}
+	
 }

@@ -124,3 +124,10 @@ DROP TABLE `datn`.`trangthai`;
 ALTER TABLE `datn`.`ungtuyen`
 ADD COLUMN `lyDo` VARCHAR(100) NULL AFTER `trangThai`;
 
+create table datn.ungVienSaveCongTy
+(
+ungVienId long references datn.ungVien(ungVienId),
+congTyId long references datn.congTy(congTyId),
+ngaySave date
+)
+

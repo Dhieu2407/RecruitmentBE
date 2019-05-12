@@ -4,19 +4,26 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.recruitmentbe.repository.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.Major;
 import com.recruitmentbe.model.Skill;
 import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.model.UngVienChungChi;
 import com.recruitmentbe.model.UngVienKiNang;
+import com.recruitmentbe.model.UngVienSaveCongTy;
+import com.recruitmentbe.repository.CandidateRepository;
+import com.recruitmentbe.repository.CompanyRepository;
+import com.recruitmentbe.repository.JobRepository;
+import com.recruitmentbe.repository.MajorRepository;
+import com.recruitmentbe.repository.SkillRepository;
+import com.recruitmentbe.repository.UngTuyenRepository;
 import com.recruitmentbe.service.CandidateService;
 
 @Service
@@ -36,6 +43,9 @@ public class CandidateServiceImpl implements CandidateService {
 
 	@Autowired
     private UngTuyenRepository ungTuyenRepository;
+
+	@Autowired
+    private CompanyRepository companyRepo;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -345,5 +355,42 @@ public class CandidateServiceImpl implements CandidateService {
 	    List<UngTuyen> list = ungTuyenRepository.findByJob(job);
         return list;
     }
-
+    
+    @Override
+	public byte[] candidateSaveCompany(String body) {
+		JSONObject obj = new JSONObject(body);
+		Long candidateId = obj.getLong("candidateId");
+		Long companyId = obj.getLong("companyId");
+		Candidate candidate = candidateRepo.findByUngVienId(candidateId);
+		Company company = companyRepo.findByCongtyId(companyId);
+		if(candidate.getCongTySaved() == null || candidate.getCongTySaved().size() == 0) {
+			List<UngVienSaveCongTy> companySaved = new ArrayList<UngVienSaveCongTy>();
+			candidate.setCongTySaved(companySaved);
+		}
+		int duplicate = -1;
+		for(int i = 0 ; i < candidate.getCongTySaved().size() ; ++i) {
+			UngVienSaveCongTy congTy = candidate.getCongTySaved().get(i);
+			if(congTy.getCongTy().getCongtyId() == companyId) {
+				duplicate = i;
+				break;
+			}
+		}
+		if(duplicate != -1) {
+			candidate.getCongTySaved().remove(duplicate);
+		}else {
+			UngVienSaveCongTy congTyWillBeSaved = new UngVienSaveCongTy();
+			congTyWillBeSaved.setCongTy(company);
+			congTyWillBeSaved.setUngVien(candidate);
+			congTyWillBeSaved.setNgaySave(new java.sql.Date((new java.util.Date()).getTime()));
+			candidate.getCongTySaved().add(congTyWillBeSaved);
+		}
+		try {
+			candidateRepo.save(candidate);
+			JSONObject returnObj = new JSONObject("{\"status\" : \"success\"}");
+			return returnObj.toString().getBytes("UTF-8");
+		}catch(Exception e) {
+			e.printStackTrace();
+			return "".getBytes();
+		}
+	}
 }
