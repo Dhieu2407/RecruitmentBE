@@ -8,6 +8,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -72,6 +74,12 @@ public class Company {
 	@OneToMany(mappedBy = "congTy", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
 	@JsonIgnoreProperties("congTy")
 	private List<UngVienSaveCongTy> ungVien = new ArrayList<>();
+	
+	// nghia add
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "nganhId")
+	private Major nganh;
+
 
 	public long getCongtyId() {
 		return congtyId;
@@ -184,5 +192,14 @@ public class Company {
 	public void setUngVien(List<UngVienSaveCongTy> ungVien) {
 		this.ungVien = ungVien;
 	}
+
+	public Major getNganh() {
+		return nganh;
+	}
+
+	public void setNganh(Major nganh) {
+		this.nganh = nganh;
+	}
+	
 	
 }

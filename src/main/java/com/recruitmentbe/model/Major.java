@@ -29,6 +29,11 @@ public class Major {
 	@OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Job> tinTuyenDung = new ArrayList<>();
 
+	// nghia add
+	@OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, orphanRemoval = true)
+	private List<Company> congTy = new ArrayList<>();
+
+
 	@OneToMany(mappedBy = "nganh", cascade = CascadeType.ALL, orphanRemoval = true)
 	private List<Candidate> ungvien = new ArrayList<>();
 
@@ -79,4 +84,13 @@ public class Major {
 	public void setUngvien(List<Candidate> ungvien) {
 		this.ungvien = ungvien;
 	}
+
+	public List<Company> getCongTy() {
+		return congTy;
+	}
+
+	public void setCongTy(List<Company> congTy) {
+		this.congTy = congTy;
+	}
+	
 }

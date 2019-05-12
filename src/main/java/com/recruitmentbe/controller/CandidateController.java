@@ -142,7 +142,7 @@ public class CandidateController {
 		return candidateServiceImpl.candidateSaveCompany(body);
 	}
 	
-	@PostMapping(value = "/getAllCompaniesSaved/{candidateId}")
+	@GetMapping(value = "/getAllCompaniesSaved/{candidateId}")
 	public List<Company> getAllCompaniesSaved(@PathVariable("candidateId") String idString) {
 		long candidateId = Long.parseLong(idString);
 		Candidate candidate = candidateServiceImpl.findByUngVienId(candidateId);
