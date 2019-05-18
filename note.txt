@@ -132,3 +132,5 @@ ungVienId long references datn.ungVien(ungVienId),
 congTyId long references datn.congTy(congTyId),
 ngaySave date
 )
+
+ALTER TABLE datn.congty add column nganhId long references nganh(nganhId);
