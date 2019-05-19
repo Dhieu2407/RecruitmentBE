@@ -1,5 +1,6 @@
 package com.recruitmentbe.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Company;
+import com.recruitmentbe.model.CongTySaveUngVien;
+import com.recruitmentbe.model.Job;
 import com.recruitmentbe.service.serviceImpl.CompanyService;
 
 @RestController
@@ -57,5 +60,16 @@ public class CompanyController {
 	@PostMapping(value = "/saveCandidate")
 	public byte[] saveCandidate(@RequestBody String body) {
 		return companyServiceImpl.companySaveCandidate(body);
+	}
+	@GetMapping(value = "/getSavedCandidate/{companyId}")
+	public List<Candidate> getSavedCandidate (@PathVariable("companyId") String idString){
+		Company currentCompany = companyServiceImpl.findByCongTyId(Long.parseLong(idString));
+//		Candidate currentCandidate = candidateServiceImpl.findByUngVienId(Long.parseLong(idString));
+		List<Candidate> returnResult = new ArrayList<Candidate>();
+		List<CongTySaveUngVien> listCtsuv = currentCompany.getUngVienSaved();
+		for(CongTySaveUngVien ctsuv : listCtsuv) {
+			returnResult.add(ctsuv.getUngVien());
+		}
+		return returnResult;
 	}
 }
