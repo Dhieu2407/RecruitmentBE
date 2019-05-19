@@ -131,6 +131,17 @@ public class CandidateServiceImpl implements CandidateService {
 		} catch (Exception e1) {
 
 		}
+		List<Candidate> tempListCandidate = new ArrayList<>();
+		tempListCandidate.addAll(resultListCandidates);
+		resultListCandidates = new ArrayList<Candidate>();
+		for(Candidate c : tempListCandidate) {
+			Candidate rsCandidate = new Candidate();
+			rsCandidate.setUngVienId(c.getUngVienId());
+			rsCandidate.setSdt(c.getSdt());
+			rsCandidate.setEmail(c.getEmail());
+			rsCandidate.setTenUngVien(c.getTenUngVien());
+			resultListCandidates.add(rsCandidate);
+		}
 		return resultListCandidates;
 	}
 
