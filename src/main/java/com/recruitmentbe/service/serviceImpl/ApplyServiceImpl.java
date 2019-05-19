@@ -1,9 +1,11 @@
 package com.recruitmentbe.service.serviceImpl;
 
 import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Company;
 import com.recruitmentbe.model.Job;
 import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.repository.CandidateRepository;
+import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.UngTuyenRepository;
 import com.recruitmentbe.service.ApplyService;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Transactional
@@ -27,11 +30,29 @@ public class ApplyServiceImpl implements ApplyService {
     @Autowired
     CandidateRepository candidateRepository;
 
+    @Autowired
+    CompanyRepository companyRepository;
+
     @Override
-    public Integer getNumberNotification() {
+    public Integer getNumberNotification(String body) {
         int numberOfNotification = 0;
-        List<UngTuyen>  list = ungTuyenRepository.findByTrangThaiXem(0);
-        numberOfNotification = list.size();
+        JSONObject obj = new JSONObject(body);
+        long idCompany = obj.getLong("id");
+        Company company = companyRepository.findByCongtyId(idCompany);
+        List<Job> listJob = jobRepository.findByCongTy(company);
+        List<UngTuyen> listUngTuyen = new ArrayList<>();
+        for(Job j : listJob){
+            List<UngTuyen> list = ungTuyenRepository.findByJob(j);
+            if(list.size()!=0 && list !=null){
+                for(UngTuyen ut : list){
+                    listUngTuyen.add(ut);
+                    if(ut.getTrangThaiXem()==0){
+                        numberOfNotification++;
+                    }
+                }
+            }
+        }
+
         return numberOfNotification;
     }
 

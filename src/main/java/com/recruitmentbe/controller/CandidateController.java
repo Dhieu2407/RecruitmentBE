@@ -152,4 +152,14 @@ public class CandidateController {
 		}
 		return allSavedCompanies;
 	}
+
+    @PostMapping(value = "/getNumberNotifyTinder")
+    public int getNumberNotifyTinder(@RequestBody String body){
+        return candidateServiceImpl.getNumberNotifyTinder(body);
+    }
+
+    @PostMapping(value = "/getCandidateTinder")
+    public List<Candidate> getListCandidateTinder(@RequestBody String body){
+        return candidateServiceImpl.getCandidateTinder(body);
+    }
 }

@@ -19,4 +19,6 @@ public interface CandidateService {
 	 public List<UngTuyen> getListUngTuyen(String body);
 	 public List<UngTuyen> getListUngTuyenOfCompany(String body);
 	public byte[] candidateSaveCompany(String body);
+	public  int getNumberNotifyTinder(String body);
+	public List<Candidate> getCandidateTinder(String body);
 }

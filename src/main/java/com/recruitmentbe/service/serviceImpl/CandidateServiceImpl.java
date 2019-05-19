@@ -4,20 +4,12 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.recruitmentbe.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recruitmentbe.model.Candidate;
-import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.Job;
-import com.recruitmentbe.model.Major;
-import com.recruitmentbe.model.Skill;
-import com.recruitmentbe.model.UngTuyen;
-import com.recruitmentbe.model.UngVienChungChi;
-import com.recruitmentbe.model.UngVienKiNang;
-import com.recruitmentbe.model.UngVienSaveCongTy;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
@@ -422,4 +414,60 @@ public class CandidateServiceImpl implements CandidateService {
 			return "".getBytes();
 		}
 	}
+
+    @Override
+    public int getNumberNotifyTinder(String body) {
+	    JSONObject obj = new JSONObject(body);
+	    long idCompany = obj.getLong("id");
+	    List<Candidate> listResultCandidate = new ArrayList<>();
+	    Company company = companyRepo.findByCongtyId(idCompany);
+	    List<CongTySaveUngVien> list =  company.getUngVienSaved();
+	    for(CongTySaveUngVien ctsuv : list){
+	        Candidate candidate = ctsuv.getUngVien();
+	        List<UngVienSaveCongTy> listCandidateSaveComp = candidate.getCongTySaved();
+	        for(UngVienSaveCongTy uvsct : listCandidateSaveComp){
+	            if(uvsct.getCongTy().getCongtyId()==idCompany){
+	                Candidate candidate1 = new Candidate();
+	                candidate1.setUngVienId(candidate.getUngVienId());
+	                candidate1.setTenUngVien(candidate.getTenUngVien());
+                    candidate1.setImgUrl(candidate.getImgUrl());
+                    candidate1.setNganh(candidate.getNganh());
+                    candidate1.setKiNang(candidate.getKiNang());
+                    candidate1.setDiaChi(candidate.getDiaChi());
+                    listResultCandidate.add(candidate1);
+                    break;
+                }
+
+            }
+        }
+        return listResultCandidate.size();
+    }
+
+    @Override
+    public List<Candidate> getCandidateTinder(String body) {
+        JSONObject obj = new JSONObject(body);
+        long idCompany = obj.getLong("id");
+        List<Candidate> listResultCandidate = new ArrayList<>();
+        Company company = companyRepo.findByCongtyId(idCompany);
+        List<CongTySaveUngVien> list =  company.getUngVienSaved();
+        for(CongTySaveUngVien ctsuv : list){
+            Candidate candidate = ctsuv.getUngVien();
+            List<UngVienSaveCongTy> listCandidateSaveComp = candidate.getCongTySaved();
+            for(UngVienSaveCongTy uvsct : listCandidateSaveComp){
+                if(uvsct.getCongTy().getCongtyId()==idCompany){
+                    Candidate candidate1 = new Candidate();
+                    candidate1.setUngVienId(candidate.getUngVienId());
+                    candidate1.setTenUngVien(candidate.getTenUngVien());
+                    candidate1.setImgUrl(candidate.getImgUrl());
+                    candidate1.setNganh(candidate.getNganh());
+                    candidate1.setKiNang(candidate.getKiNang());
+                    candidate1.setDiaChi(candidate.getDiaChi());
+                    listResultCandidate.add(candidate1);
+                    break;
+                }
+
+            }
+        }
+        return listResultCandidate;
+    }
 }

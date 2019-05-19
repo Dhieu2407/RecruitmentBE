@@ -12,9 +12,9 @@ public class ApplyController {
     @Autowired
     ApplyServiceImpl applyService;
 
-    @GetMapping(value = "/getNumBerNotify")
-    public Integer getNumberNotifi() {
-        return applyService.getNumberNotification() ;
+    @PostMapping(value = "/getNumBerNotify")
+    public Integer getNumberNotifi(@RequestBody String body) {
+        return applyService.getNumberNotification(body) ;
     }
 
     @PostMapping(value = "/chuyenTrangThaiXem")

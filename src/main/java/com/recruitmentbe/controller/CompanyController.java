@@ -68,8 +68,19 @@ public class CompanyController {
 		List<Candidate> returnResult = new ArrayList<Candidate>();
 		List<CongTySaveUngVien> listCtsuv = currentCompany.getUngVienSaved();
 		for(CongTySaveUngVien ctsuv : listCtsuv) {
-			returnResult.add(ctsuv.getUngVien());
+		    Candidate candidate = new Candidate();
+		    candidate.setUngVienId(ctsuv.getUngVien().getUngVienId());
+		    candidate.setTenUngVien(ctsuv.getUngVien().getTenUngVien());
+		    candidate.setEmail(ctsuv.getUngVien().getEmail());
+		    candidate.setDiaChi(ctsuv.getUngVien().getDiaChi());
+		    candidate.setSdt(ctsuv.getUngVien().getSdt());
+		    candidate.setImgUrl(ctsuv.getUngVien().getImgUrl());
+		    candidate.setKiNang(ctsuv.getUngVien().getKiNang());
+		    candidate.setNganh(ctsuv.getUngVien().getNganh());
+			returnResult.add(candidate);
 		}
 		return returnResult;
 	}
+
+
 }
