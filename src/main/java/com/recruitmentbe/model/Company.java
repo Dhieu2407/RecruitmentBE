@@ -22,7 +22,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "congty")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "congtyId")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "congtyId")
 public class Company {
 	@Id
 	@Column(name = "congtyId")
