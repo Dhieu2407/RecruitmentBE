@@ -13,4 +13,5 @@ public interface CompanyService {
 	public Company findByCongTyId(Long id);
 	public Set<Candidate> getCandidateByCompany(String id);
 	public byte[] companySaveCandidate(String body);
+	public List<Company> searchCompany(String body);
 }

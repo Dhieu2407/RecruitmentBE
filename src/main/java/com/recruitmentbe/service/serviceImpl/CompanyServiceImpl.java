@@ -7,15 +7,12 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.recruitmentbe.model.*;
+import com.recruitmentbe.repository.MajorRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.recruitmentbe.model.Candidate;
-import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.CongTySaveUngVien;
-import com.recruitmentbe.model.Job;
-import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
@@ -31,6 +28,9 @@ public class CompanyServiceImpl implements CompanyService {
 
 	@Autowired
 	CandidateRepository candidateRepo;
+
+	@Autowired
+    MajorRepository majorRepository;
 
 	@Override
 	public List<Company> getAllCompany() {
@@ -199,4 +199,45 @@ public class CompanyServiceImpl implements CompanyService {
 			return "".getBytes();
 		}
 	}
+
+    @Override
+    public List<Company> searchCompany(String body) {
+	    JSONObject obj = new JSONObject(body);
+        String nameCompany = obj.getString("companyName");
+        String strIdNganh = obj.getString("careerId");
+        long idNganh=0;
+        if(strIdNganh.length()!=0){
+            idNganh = Long.parseLong(strIdNganh);
+        }
+        if((nameCompany==null || nameCompany.length()==0) && (strIdNganh==null || strIdNganh.length()==0)){
+            List<Company> listResult = companyRepo.findAll();
+            return listResult;
+        }else{
+            if((nameCompany==null || nameCompany.length()==0) && idNganh!=0){
+                Major major = majorRepository.findByNganhId(idNganh);
+                List<Company> listResult = companyRepo.findByNganh(major);
+                return  listResult;
+            }else if(nameCompany!=null && (strIdNganh==null || strIdNganh.length()==0)){
+                List<Company> listResult = companyRepo.findByTenCongTyContaining(nameCompany);
+                return listResult;
+            }else {
+                Major major = majorRepository.findByNganhId(idNganh);
+                List<Company> listCompanyByMajor = companyRepo.findByNganh(major);
+
+                List<Company> listCompanyByTen = companyRepo.findByTenCongTyContaining(nameCompany);
+
+                List<Company> listResult = new ArrayList<>();
+                for(Company cByTen: listCompanyByTen){
+                    for(Company cByMajor: listCompanyByMajor){
+                        if(cByMajor.getCongtyId()==cByTen.getCongtyId()){
+                            listResult.add(cByMajor);
+                            break;
+                        }
+                    }
+                }
+                return  listResult;
+            }
+        }
+
+    }
 }

@@ -10,9 +10,9 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findAll();
     public List<Job> findByTrangThai(int trangThai);
     public Job findByJobId(long id);
-    public List<Job> findByTenJobContaining(String tenUngVien);
-    public List<Job> findByDiaChiContaining(String diachi);
-    public List<Job> findByChiTietContaining(String moTa);
+    public List<Job> findByTenJobContainingAndTrangThai(String tenUngVien,int tt);
+    public List<Job> findByDiaChiContainingAndTrangThai(String diachi,int tt);
+    public List<Job> findByChiTietContainingAndTrangThai(String moTa,int tt);
     public Long removeByJobId(long idJob);
     public List<Job> findByCongTy(Company company);
 }

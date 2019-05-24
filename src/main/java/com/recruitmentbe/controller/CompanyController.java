@@ -82,5 +82,9 @@ public class CompanyController {
 		return returnResult;
 	}
 
+    @PostMapping(value = "/searchCompany")
+    public List<Company> searchCompany(@RequestBody String body) {
+        return companyServiceImpl.searchCompany(body);
+    }
 
 }

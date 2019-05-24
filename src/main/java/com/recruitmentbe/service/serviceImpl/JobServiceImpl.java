@@ -56,7 +56,7 @@ public class JobServiceImpl implements JobService {
         if(!obj.getString("tenJob").equals("")){
             try {
                 tenJob = obj.getString("tenJob");
-                resultListJobs = jobRepository.findByTenJobContaining(tenJob);
+                resultListJobs = jobRepository.findByTenJobContainingAndTrangThai(tenJob,1);
 
             }catch (Exception ex){
             }
@@ -66,7 +66,7 @@ public class JobServiceImpl implements JobService {
                 List<Company> listCompany = companyRepository.findByTenCongTyContaining(tenCongTy);
 
                 if(listCompany.size() > 0) {
-                    List<Job> allJobs = jobRepository.findAll();
+                    List<Job> allJobs = jobRepository.findByTrangThai(1);
                     searchByCondition = new ArrayList<Job>();
                     for(Job job : allJobs) {
                         if(job.getCongTy().getTenCongTy().equals(listCompany.get(0).getTenCongTy())) {
@@ -98,7 +98,7 @@ public class JobServiceImpl implements JobService {
             //tim kiem theo mo ta
             try{
                 String moTa = obj.getString("tenJob");
-                searchByCondition= jobRepository.findByChiTietContaining(moTa);
+                searchByCondition= jobRepository.findByChiTietContainingAndTrangThai(moTa,1);
 
 
                 List<Job> listJobTemp = new ArrayList<>(resultListJobs);
@@ -124,7 +124,7 @@ public class JobServiceImpl implements JobService {
             }catch (Exception ex){
             }
         }else {
-            resultListJobs = jobRepository.findAll();
+            resultListJobs = jobRepository.findByTrangThai(1);
         }
 
 
@@ -132,7 +132,7 @@ public class JobServiceImpl implements JobService {
 
         try{
             diaChi = obj.getString("diaChi");
-            searchByCondition = jobRepository.findByDiaChiContaining(diaChi);
+            searchByCondition = jobRepository.findByDiaChiContainingAndTrangThai(diaChi,1);
 
             List<Job> listJobTemp = new ArrayList<>();
             for(Job jobSearch : searchByCondition){
