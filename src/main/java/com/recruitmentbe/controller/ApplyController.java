@@ -21,4 +21,14 @@ public class ApplyController {
     public UngTuyen chuyenTTXem(@RequestBody String body){
         return applyService.chuyenTrangThaiXem(body);
     }
+
+    @PostMapping(value = "/approveCandidate")
+    public  UngTuyen approveCandidate(@RequestBody String body){
+        return applyService.approveCandidate(body);
+    }
+
+    @PostMapping(value = "/findApply")
+    public UngTuyen findApply(@RequestBody String body){
+        return applyService.findApply(body);
+    }
 }

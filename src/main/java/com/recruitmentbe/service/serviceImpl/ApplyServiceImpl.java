@@ -65,16 +65,40 @@ public class ApplyServiceImpl implements ApplyService {
         Candidate candidate = candidateRepository.findByUngVienId(idCandidate);
         List<UngTuyen> listByCandidate = ungTuyenRepository.findByUngVien(candidate);
         List<UngTuyen> listByJob = ungTuyenRepository.findByJob(job);
-        UngTuyen ungTuyen = new UngTuyen();
-        for(UngTuyen ut : listByCandidate){
-            for(UngTuyen ut1 : listByJob){
-                if(ut.getJob().getJobId()==ut1.getJob().getJobId() && ut.getUngVien().getUngVienId()==ut1.getUngVien().getUngVienId()){
-                    ungTuyen = ut;
-                    break;
-                }
-            }
-        }
+        UngTuyen ungTuyen = ungTuyenRepository.findByJobAndUngVien(job,candidate);
+//        for(UngTuyen ut : listByCandidate){
+//            for(UngTuyen ut1 : listByJob){
+//                if(ut.getJob().getJobId()==ut1.getJob().getJobId() && ut.getUngVien().getUngVienId()==ut1.getUngVien().getUngVienId()){
+//                    ungTuyen = ut;
+//                    break;
+//                }
+//            }
+//        }
         ungTuyen.setTrangThaiXem(1);
         return ungTuyenRepository.save(ungTuyen);
+    }
+
+    @Override
+    public UngTuyen approveCandidate(String body) {
+        JSONObject obj = new JSONObject(body);
+        Long idJob = obj.getLong("jobId");
+        Long idCandidate = obj.getLong("candidateId");
+        int status = obj.getInt("trangThai");// 1 la chap nhan, 2 la tu choi
+        Job job = jobRepository.findByJobId(idJob);
+        Candidate candidate = candidateRepository.findByUngVienId(idCandidate);
+        UngTuyen ungTuyen = ungTuyenRepository.findByJobAndUngVien(job,candidate);
+        ungTuyen.setTrangThai(status);
+        return ungTuyenRepository.save(ungTuyen);
+    }
+
+    @Override
+    public UngTuyen findApply(String body) {
+        JSONObject obj = new JSONObject(body);
+        Long idJob = obj.getLong("jobId");
+        Long idCandidate = obj.getLong("candidateId");
+        Job job = jobRepository.findByJobId(idJob);
+        Candidate candidate = candidateRepository.findByUngVienId(idCandidate);
+        UngTuyen ungTuyen = ungTuyenRepository.findByJobAndUngVien(job,candidate);
+        return ungTuyen;
     }
 }
