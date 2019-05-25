@@ -138,6 +138,27 @@ public class CandidateServiceImpl implements CandidateService {
 
 		}
 		List<Candidate> tempListCandidate = new ArrayList<>();
+		
+		try {
+			int kiNangIdSearched = obj.getInt("kiNang");
+			tempListCandidate = resultListCandidates;
+			resultListCandidates = new ArrayList<Candidate>();
+			for(Candidate c : tempListCandidate) {
+				if(c.getKiNang() == null || c.getKiNang().size() == 0) {
+					continue;
+				}
+				for(UngVienKiNang uvkn : c.getKiNang()) {
+					if(uvkn.getKiNang().getKinangId() == kiNangIdSearched) {
+						resultListCandidates.add(c);
+						break;
+					}
+				}
+			}
+		}catch(Exception e) {
+			
+		}
+		
+		tempListCandidate = new ArrayList<>();
 		tempListCandidate.addAll(resultListCandidates);
 		resultListCandidates = new ArrayList<Candidate>();
 		for(Candidate c : tempListCandidate) {
@@ -146,8 +167,13 @@ public class CandidateServiceImpl implements CandidateService {
 			rsCandidate.setSdt(c.getSdt());
 			rsCandidate.setEmail(c.getEmail());
 			rsCandidate.setTenUngVien(c.getTenUngVien());
+			rsCandidate.setImgUrl(c.getImgUrl());
+			rsCandidate.setLuongMongMuon(c.getLuongMongMuon());
+			rsCandidate.setDiaChi(c.getDiaChi());
+			rsCandidate.setNganh(c.getNganh());
 			resultListCandidates.add(rsCandidate);
 		}
+		
 		return resultListCandidates;
 	}
 
