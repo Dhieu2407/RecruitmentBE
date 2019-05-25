@@ -4,13 +4,24 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.recruitmentbe.model.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Certificate;
+import com.recruitmentbe.model.Company;
+import com.recruitmentbe.model.CongTySaveUngVien;
+import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.Major;
+import com.recruitmentbe.model.Skill;
+import com.recruitmentbe.model.UngTuyen;
+import com.recruitmentbe.model.UngVienChungChi;
+import com.recruitmentbe.model.UngVienKiNang;
+import com.recruitmentbe.model.UngVienSaveCongTy;
 import com.recruitmentbe.repository.CandidateRepository;
+import com.recruitmentbe.repository.CertificateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
@@ -38,6 +49,9 @@ public class CandidateServiceImpl implements CandidateService {
 
 	@Autowired
     private CompanyRepository companyRepo;
+
+	@Autowired
+    private CertificateRepository certificateRepo;
 
 	@Override
 	public List<Candidate> getAllCandidate() {
@@ -208,6 +222,9 @@ public class CandidateServiceImpl implements CandidateService {
 		} catch (Exception e) {
 
 		}
+		
+		
+		//skill
 		JSONArray cacKiNang = requestObj.getJSONArray("skill");
 		ArrayList<Integer> kinhNghiemKiNang = new ArrayList<Integer>();
 		ArrayList<String> cacTenKiNang = new ArrayList<String>();
@@ -237,10 +254,41 @@ public class CandidateServiceImpl implements CandidateService {
 		for(UngVienChungChi uc : updatedCandidate.getChungChi()) {
 			uc.setUngVien(updatedCandidate);
 		}
-//		updatedCandidate.getNganh().getUngvien().add(updatedCandidate);
-//		System.out.println(new JSONObject(updatedCandidate).toString());
-		System.out.println(updatedCandidate.getUngVienId());
-//		System.out.println(updatedCandidate.getChungChi().get(0).getChungChi().getTenChungChi());
+		
+		
+		
+		
+		//foreign language
+		JSONArray cacChungChi = requestObj.getJSONArray("certificate");
+		ArrayList<String> diemSo = new ArrayList<String>();
+		ArrayList<String> cacTenChungChi = new ArrayList<String>();
+		for (int i = 0; i < cacChungChi.length(); ++i) {
+			JSONObject obj = cacChungChi.getJSONObject(i);
+			diemSo.add(obj.getString("score"));
+			cacTenChungChi.add(obj.getString("certificateName"));
+		}
+		ArrayList<Certificate> listChungChi = new ArrayList<>();
+		ArrayList<UngVienChungChi> listUvcc = new ArrayList<>();
+		for (String s : cacTenChungChi) {
+			try {
+				listChungChi.add(certificateRepo.findByTenChungChi(s).get(0));
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		for (int i = 0; i < listChungChi.size(); ++i) {
+			Certificate c = listChungChi.get(i);
+			UngVienChungChi uc = new UngVienChungChi();
+			uc.setChungChi(c);
+			uc.setUngVien(updatedCandidate);
+			uc.setDiemSo(diemSo.get(i));
+			listUvcc.add(uc);
+		}
+		updatedCandidate.setChungChi(listUvcc);
+		for(UngVienChungChi uc : updatedCandidate.getChungChi()) {
+			uc.setUngVien(updatedCandidate);
+		}
+		
 		try {
 			updatedCandidate.setModifyDate(new Date((new java.util.Date()).getTime()));
 			candidateRepo.save(updatedCandidate); 

@@ -13,6 +13,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity
 @Table(name="chungChiNgoaiNgu")
 public class Certificate {
@@ -27,7 +29,8 @@ public class Certificate {
 	@JoinColumn(name = "ngoaiNguId")
 	private Language ngoaiNgu;
 	
-	@OneToMany(mappedBy = "chungChi", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "chungChi", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@JsonIgnoreProperties("chungChi")
 	private List<UngVienChungChi> ungVien = new ArrayList<>();
 	
 	public String getTenChungChi() {

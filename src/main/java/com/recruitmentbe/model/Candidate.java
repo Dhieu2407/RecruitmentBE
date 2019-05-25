@@ -97,12 +97,6 @@ public class Candidate {
 	@JoinColumn(name = "nganhId")
 	private Major nganh;
 
-	// check lai
-//	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
-//	@JoinTable(name = "ungvien_kinang", joinColumns = { @JoinColumn(name = "ungVienId") }, inverseJoinColumns = {
-//			@JoinColumn(name = "kinangId") })
-//	private List<Skill> kiNang = new ArrayList<>();
-
 	@OneToMany(mappedBy = "ungVien", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
 	@JsonIgnoreProperties("ungVien")
 	@Fetch(value = FetchMode.SUBSELECT)

@@ -134,3 +134,18 @@ ngaySave date
 )
 
 ALTER TABLE datn.congty add column nganhId long references nganh(nganhId);
+
+
+alter table datn.ungviensavecongty
+modify column congTyId int 
+;
+ALTER TABLE datn.ungviensavecongty
+    ADD CONSTRAINT ungVienId
+    FOREIGN KEY(ungVienId)
+    REFERENCES datn.ungVien(ungVienId)
+
+;
+ALTER TABLE datn.ungviensavecongty
+    ADD CONSTRAINT congTyId
+    FOREIGN KEY(congTyId)
+    REFERENCES datn.congTy(congTyId)
