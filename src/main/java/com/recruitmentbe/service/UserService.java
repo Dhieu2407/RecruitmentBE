@@ -101,9 +101,9 @@ public class UserService {
         newUser.setImageUrl(userDTO.getImageUrl());
         newUser.setLangKey(userDTO.getLangKey());
         // new user is active
-        newUser.setActivated(true);
+        newUser.setActivated(false);
         // new user gets registration key
-        // newUser.setActivationKey(RandomUtil.generateActivationKey());
+        newUser.setActivationKey(RandomUtil.generateActivationKey());
         if (userDTO.getAuthorities() != null) {
             Set<Authority> authorities = userDTO.getAuthorities().stream()
                 .map(authorityRepository::findById)
@@ -142,7 +142,7 @@ public class UserService {
         user.setPassword(encryptedPassword);
         user.setResetKey(RandomUtil.generateResetKey());
         user.setResetDate(Instant.now());
-        user.setActivated(true);
+        user.setActivated(false);
         userRepository.save(user);
         this.clearUserCaches(user);
         log.debug("Created Information for User: {}", user);
