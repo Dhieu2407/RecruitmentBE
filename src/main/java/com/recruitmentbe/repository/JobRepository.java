@@ -1,10 +1,12 @@
 package com.recruitmentbe.repository;
 
-import com.recruitmentbe.model.Company;
-import com.recruitmentbe.model.Job;
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
+import com.recruitmentbe.model.Company;
+import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.Major;
 
 public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findAll();
@@ -15,4 +17,5 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findByChiTietContainingAndTrangThai(String moTa,int tt);
     public Long removeByJobId(long idJob);
     public List<Job> findByCongTy(Company company);
+    public List<Job> findByNganh(Major major);
 }
