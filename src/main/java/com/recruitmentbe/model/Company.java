@@ -3,15 +3,7 @@ package com.recruitmentbe.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
@@ -80,6 +72,11 @@ public class Company {
 	@JoinColumn(name = "nganhId")
 	private Major nganh;
 
+	//phucnh
+    @ManyToMany(fetch = FetchType.EAGER, cascade = { CascadeType.PERSIST, CascadeType.MERGE })
+    @JoinTable(name = "congtysaveungvien", joinColumns = { @JoinColumn(name = "congTyID") }, inverseJoinColumns = {
+        @JoinColumn(name = "ungVienId") })
+    private List<Candidate> ungVienSave = new ArrayList<>();
 
 	public long getCongtyId() {
 		return congtyId;
@@ -200,6 +197,12 @@ public class Company {
 	public void setNganh(Major nganh) {
 		this.nganh = nganh;
 	}
-	
-	
+
+    public List<Candidate> getUngVienSave() {
+        return ungVienSave;
+    }
+
+    public void setUngVienSave(List<Candidate> ungVienSave) {
+        this.ungVienSave = ungVienSave;
+    }
 }

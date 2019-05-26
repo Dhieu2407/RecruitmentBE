@@ -448,7 +448,23 @@ public class CandidateServiceImpl implements CandidateService {
                 }
             }
         }
-        return listUngTuyen;
+	    UngTuyen[] list = new UngTuyen[listUngTuyen.size()];
+	    List<UngTuyen> listUt = new ArrayList<>();
+	    for(int i=0;i<listUngTuyen.size();i++){
+	        list[i] = listUngTuyen.get(i);
+        }
+	    for(int i=0;i<listUngTuyen.size()-1;i++){
+	        for(int j=i+1;j<listUngTuyen.size();j++){
+	            if(list[i].getTrangThai()>list[j].getTrangThai()){
+	                UngTuyen temp = list[i];
+	                list[i] = list[j];
+	                list[j] = temp;
+                }
+            }
+            listUt.add(list[i]);
+        }
+	    listUt.add(list[listUngTuyen.size()-1]);
+        return listUt;
     }
     
     @Override

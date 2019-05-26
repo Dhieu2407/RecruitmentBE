@@ -86,5 +86,16 @@ public class CompanyController {
     public List<Company> searchCompany(@RequestBody String body) {
         return companyServiceImpl.searchCompany(body);
     }
-
+    @GetMapping(value = "/getCandidateSave/{companyId}")
+    public List<Candidate> getCandidateSave (@PathVariable("companyId") String idString){
+        Company currentCompany = companyServiceImpl.findByCongTyId(Long.parseLong(idString));
+        List<Candidate> candidateList = currentCompany.getUngVienSave();
+        List<Candidate> resultCandidateSaved = new ArrayList<>();
+        for(Candidate c : candidateList){
+            Candidate candidate = new Candidate();
+            candidate.setUngVienId(c.getUngVienId());
+            resultCandidateSaved.add(candidate);
+        }
+        return resultCandidateSaved;
+    }
 }
