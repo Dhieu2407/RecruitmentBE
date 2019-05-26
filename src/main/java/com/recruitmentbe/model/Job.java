@@ -68,6 +68,9 @@ public class Job {
 	@Column(name = "trangThai")
     private int trangThai;
 	
+	@Column(name = "viewCount")
+    private Integer soLuongView;
+	
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "nganhId")
 	private Major nganh;
@@ -87,7 +90,7 @@ public class Job {
 	private List<Language> ngoaiNgu = new ArrayList<>();
 	
 	@ManyToMany(fetch = FetchType.LAZY, cascade = { CascadeType.PERSIST, CascadeType.MERGE }, mappedBy = "tinTuyenDung")
-	private List<Candidate> tinTuyenDung = new ArrayList<>();
+	private List<Candidate> nguoiLuuTin = new ArrayList<>();
 	
 
 //	@OneToMany(mappedBy = "job", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
@@ -218,12 +221,12 @@ public class Job {
         this.ngoaiNgu = ngoaiNgu;
     }
 
-    public List<Candidate> getTinTuyenDung() {
-        return tinTuyenDung;
+    public List<Candidate> getNguoiLuuTin() {
+        return nguoiLuuTin;
     }
 
-    public void setTinTuyenDung(List<Candidate> tinTuyenDung) {
-        this.tinTuyenDung = tinTuyenDung;
+    public void setNguoiLuuTin(List<Candidate> nguoiLuuTin) {
+        this.nguoiLuuTin = nguoiLuuTin;
     }
 
     public String getQuyenLoi() {
@@ -289,7 +292,16 @@ public class Job {
 	public void setNguoiUngTuyen(List<UngTuyen> nguoiUngTuyen) {
 		this.nguoiUngTuyen = nguoiUngTuyen;
 	}
-    @PreRemove
+	
+    public Integer getSoLuongView() {
+		return soLuongView;
+	}
+
+	public void setSoLuongView(Integer soLuongView) {
+		this.soLuongView = soLuongView;
+	}
+
+	@PreRemove
     private void removeCandidateSaveThisJob() {
         List<Candidate> cs = new ArrayList<>();
         for(UngTuyen ut : this.getNguoiUngTuyen()){

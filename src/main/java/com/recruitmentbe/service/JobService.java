@@ -17,4 +17,5 @@ public interface JobService{
     public List<Job> findJobByIdCompany(String body);
     public Long deleteJob(String body);
     public Job updateJob(String body);
+    public Job updateViewCount(String body);
 }

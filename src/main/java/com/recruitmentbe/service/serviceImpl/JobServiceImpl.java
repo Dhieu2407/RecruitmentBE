@@ -409,6 +409,25 @@ public class JobServiceImpl implements JobService {
         return addJob;
     }
 
+	@Override
+	public Job updateViewCount(String body) {
+		Job updatedJob = findJobById(body);
+		Integer viewCount = updatedJob.getSoLuongView();
+		if(viewCount == null) {
+			viewCount = 0;
+		}
+		viewCount++;
+		updatedJob.setSoLuongView(viewCount);
+		try {
+			jobRepository.save(updatedJob);
+			return updatedJob;
+		}catch(Exception e) {
+			return null;
+		}
+	}
+    
+    
+
 
 
    /* {

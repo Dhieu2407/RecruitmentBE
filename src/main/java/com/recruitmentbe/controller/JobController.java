@@ -83,6 +83,10 @@ public class JobController {
         return jobService.updateJob(body);
     }
 
+    @PostMapping(value = "/updateJobViewCount")
+    public Job updateJobViewCount(@RequestBody String body){
+        return jobService.updateViewCount(body);
+    }
 
 
 }
