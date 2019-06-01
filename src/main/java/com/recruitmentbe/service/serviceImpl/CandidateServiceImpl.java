@@ -30,7 +30,6 @@ import com.recruitmentbe.repository.SkillRepository;
 import com.recruitmentbe.repository.UngTuyenRepository;
 import com.recruitmentbe.service.CandidateService;
 
-@Transactional
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -583,8 +582,9 @@ public class CandidateServiceImpl implements CandidateService {
         }
         return listResultCandidate;
     }
-
-	@Override
+    
+    @Transactional
+    @Override
 	public Candidate deleteCandidate(String body) {
 		JSONObject obj = new JSONObject(body);
         Long ungVienId = obj.getLong("id");
