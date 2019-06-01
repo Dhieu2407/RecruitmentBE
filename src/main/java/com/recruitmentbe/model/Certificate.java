@@ -16,7 +16,7 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@Table(name="chungChiNgoaiNgu")
+@Table(name="chungchingoaingu")
 public class Certificate {
 	@Id
 	@Column(name= "chungChiId")
@@ -29,7 +29,7 @@ public class Certificate {
 	@JoinColumn(name = "ngoaiNguId")
 	private Language ngoaiNgu;
 	
-	@OneToMany(mappedBy = "chungChi", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OneToMany(mappedBy = "chungChi")
 	@JsonIgnoreProperties("chungChi")
 	private List<UngVienChungChi> ungVien = new ArrayList<>();
 	
