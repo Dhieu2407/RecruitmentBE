@@ -442,18 +442,39 @@ public class CandidateServiceImpl implements CandidateService {
         Company company = companyRepo.findByCongtyId(idCompany);
 	    List<Job> listJob = jobRepo.findByCongTy(company);
 	    List<UngTuyen> listUngTuyen = new ArrayList<>();
+	    int index=0;
 	    for(Job j : listJob){
 	        List<UngTuyen> list = ungTuyenRepository.findByJob(j);
 	        if(list.size()!=0 && list !=null){
 	            for(UngTuyen ut : list){
 	                listUngTuyen.add(ut);
+
                 }
             }
         }
 	    UngTuyen[] list = new UngTuyen[listUngTuyen.size()];
 	    List<UngTuyen> listUt = new ArrayList<>();
 	    for(int i=0;i<listUngTuyen.size();i++){
-	        list[i] = listUngTuyen.get(i);
+	        // tao candidate moi
+            Candidate candidate = new Candidate();
+            candidate.setImgUrl(listUngTuyen.get(i).getUngVien().getImgUrl());
+            candidate.setTenUngVien(listUngTuyen.get(i).getUngVien().getTenUngVien());
+            candidate.setNganh(listUngTuyen.get(i).getUngVien().getNganh());
+            candidate.setDiaChi(listUngTuyen.get(i).getUngVien().getDiaChi());
+            candidate.setKiNang(listUngTuyen.get(i).getUngVien().getKiNang());
+            candidate.setUngVienId(listUngTuyen.get(i).getUngVien().getUngVienId());
+            // tao job
+            Job job = new Job();
+            job.setJobId(listUngTuyen.get(i).getJob().getJobId());
+            job.setTenJob(listUngTuyen.get(i).getJob().getTenJob());
+
+            UngTuyen ut = new UngTuyen();
+            ut.setJob(job);
+            ut.setUngVien(candidate);
+            ut.setTrangThai(listUngTuyen.get(i).getTrangThai());
+            ut.setTrangThaiXem(listUngTuyen.get(i).getTrangThaiXem());
+            ut.setLyDo(listUngTuyen.get(i).getLyDo());
+	        list[i] = ut;
         }
 	    for(int i=0;i<listUngTuyen.size()-1;i++){
 	        for(int j=i+1;j<listUngTuyen.size();j++){

@@ -98,4 +98,9 @@ public class CompanyController {
         }
         return resultCandidateSaved;
     }
+
+    @PostMapping(value = "/deleteCompany")
+    public Company deleteCompany(@RequestBody String body) {
+        return companyServiceImpl.deleteCompany(body);
+    }
 }

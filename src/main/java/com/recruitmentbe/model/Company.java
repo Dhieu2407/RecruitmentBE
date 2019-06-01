@@ -205,4 +205,18 @@ public class Company {
     public void setUngVienSave(List<Candidate> ungVienSave) {
         this.ungVienSave = ungVienSave;
     }
+    @PreRemove
+    private void removeCompanySaveThisCandidate(){
+        for (UngVienSaveCongTy uvsct : this.getUngVien()) {
+            int duplicate = -1;
+            Candidate ungVien = uvsct.getUngVien();
+            for (int i = 0; i < ungVien.getCongTySaved().size(); ++i) {
+                if (ungVien.getCongTySaved().get(i).getCongTy().getCongtyId() == this.getCongtyId()) {
+                    duplicate = i;
+                    break;
+                }
+            }
+            ungVien.getCongTySaved().remove(duplicate);
+        }
+    }
 }
