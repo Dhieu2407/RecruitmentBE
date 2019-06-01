@@ -14,5 +14,5 @@ public interface CompanyRepository extends JpaRepository<Company, Integer>{
 	public Company findByCongtyId(long companyId);
     public List<Company> findByNganh(Major major);
     public List<Company> findByTenCongTyContaining(String tenCongTy);
-	public Long removeByCongTyId(long congTyId);
+	public Long removeByCongtyId(long congTyId);
 }

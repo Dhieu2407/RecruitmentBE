@@ -253,7 +253,7 @@ public class CompanyServiceImpl implements CompanyService {
         Long congTyId = obj.getLong("id");
         Company deletedCompany = companyRepo.findByCongtyId(congTyId);
         try {
-        	companyRepo.removeByCongTyId(congTyId);
+        	companyRepo.removeByCongtyId(congTyId);
         	return deletedCompany;
         }catch(Exception e) {
         	e.printStackTrace();
