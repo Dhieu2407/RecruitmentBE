@@ -22,7 +22,6 @@ import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
 import com.recruitmentbe.repository.MajorRepository;
 
-@Transactional
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
@@ -247,6 +246,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     }
 
+    @Transactional
 	@Override
 	public Company deleteCompany(String body) {
 		JSONObject obj = new JSONObject(body);
