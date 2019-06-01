@@ -303,7 +303,6 @@ public class Job {
 
 	@PreRemove
     private void removeCandidateSaveThisJob() {
-        List<Candidate> cs = new ArrayList<>();
         for(UngTuyen ut : this.getNguoiUngTuyen()){
             int duplicate = -1;
             for(int i = 0 ; i < ut.getUngVien().getTinTuyenDungUngTuyen().size() ; ++i){
@@ -313,6 +312,17 @@ public class Job {
                 }
             }
             ut.getUngVien().getTinTuyenDungUngTuyen().remove(duplicate);
+        }
+        
+        for(Candidate ut : this.getNguoiLuuTin()){
+            int duplicate = -1;
+            for(int i = 0 ; i < ut.getTinTuyenDung().size() ; ++i){
+                if(ut.getTinTuyenDung().get(i).getJobId() == this.getJobId()){
+                    duplicate = i;
+                    break;
+                }
+            }
+            ut.getTinTuyenDung().remove(duplicate);
         }
     }
 }
