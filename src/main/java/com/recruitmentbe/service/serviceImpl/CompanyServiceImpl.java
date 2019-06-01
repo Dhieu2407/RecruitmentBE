@@ -1,22 +1,28 @@
 package com.recruitmentbe.service.serviceImpl;
 
 import java.io.UnsupportedEncodingException;
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.recruitmentbe.model.*;
-import com.recruitmentbe.repository.MajorRepository;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.recruitmentbe.model.Candidate;
+import com.recruitmentbe.model.Company;
+import com.recruitmentbe.model.CongTySaveUngVien;
+import com.recruitmentbe.model.Job;
+import com.recruitmentbe.model.Major;
+import com.recruitmentbe.model.UngTuyen;
 import com.recruitmentbe.repository.CandidateRepository;
 import com.recruitmentbe.repository.CompanyRepository;
 import com.recruitmentbe.repository.JobRepository;
+import com.recruitmentbe.repository.MajorRepository;
 
+@Transactional
 @Service
 public class CompanyServiceImpl implements CompanyService {
 
@@ -240,4 +246,20 @@ public class CompanyServiceImpl implements CompanyService {
         }
 
     }
+
+	@Override
+	public Company deleteCompany(String body) {
+		JSONObject obj = new JSONObject(body);
+        Long congTyId = obj.getLong("id");
+        Company deletedCompany = companyRepo.findByCongtyId(congTyId);
+        try {
+        	companyRepo.removeByCongtyId(congTyId);
+        	return deletedCompany;
+        }catch(Exception e) {
+        	e.printStackTrace();
+            return null;
+        }
+	}
+    
+    
 }

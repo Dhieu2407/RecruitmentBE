@@ -14,4 +14,5 @@ public interface CompanyService {
 	public Set<Candidate> getCandidateByCompany(String id);
 	public byte[] companySaveCandidate(String body);
 	public List<Company> searchCompany(String body);
+	public Company deleteCompany(String body);
 }

@@ -8,6 +8,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.recruitmentbe.model.Candidate;
 import com.recruitmentbe.model.Certificate;
@@ -29,6 +30,7 @@ import com.recruitmentbe.repository.SkillRepository;
 import com.recruitmentbe.repository.UngTuyenRepository;
 import com.recruitmentbe.service.CandidateService;
 
+@Transactional
 @Service
 public class CandidateServiceImpl implements CandidateService {
 
@@ -560,4 +562,20 @@ public class CandidateServiceImpl implements CandidateService {
         }
         return listResultCandidate;
     }
+
+	@Override
+	public Candidate deleteCandidate(String body) {
+		JSONObject obj = new JSONObject(body);
+        Long ungVienId = obj.getLong("id");
+        Candidate deletedCandidate = candidateRepo.findByUngVienId(ungVienId);
+        try {
+        	candidateRepo.removeByUngVienId(ungVienId);
+        	return deletedCandidate;
+        }catch(Exception e) {
+        	e.printStackTrace();
+            return null;
+        }
+	}
+    
+    
 }

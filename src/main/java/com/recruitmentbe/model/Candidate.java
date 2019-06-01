@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.PreRemove;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.Fetch;
@@ -315,4 +316,19 @@ public class Candidate {
 
 		return this.ungVienId == that.getUngVienId();
 	}
+	
+	@PreRemove
+    private void removeCompanySaveThisCandidate() {
+		for(CongTySaveUngVien ctsuv : this.getCongTy()) {
+			int duplicate = -1;
+			Company congTy = ctsuv.getCongTy();
+			for(int i = 0 ; i < congTy.getUngVienSaved().size() ; ++i) {
+				if(congTy.getUngVienSaved().get(i).getUngVien().getUngVienId() == this.getUngVienId()) {
+					duplicate = i;
+					break;
+				}
+			}
+			congTy.getUngVienSaved().remove(duplicate);
+		}
+    }
 }
