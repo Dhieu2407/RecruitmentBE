@@ -162,4 +162,9 @@ public class CandidateController {
     public List<Candidate> getListCandidateTinder(@RequestBody String body){
         return candidateServiceImpl.getCandidateTinder(body);
     }
+    
+    @PostMapping(value = "/deleteCandidate")
+    public Candidate deleteCandidate(@RequestBody String body){
+        return candidateServiceImpl.deleteCandidate(body);
+    }
 }

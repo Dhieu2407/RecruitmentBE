@@ -86,5 +86,10 @@ public class CompanyController {
     public List<Company> searchCompany(@RequestBody String body) {
         return companyServiceImpl.searchCompany(body);
     }
+    
+    @PostMapping(value = "/deleteCompany")
+    public Company deleteCompany(@RequestBody String body) {
+        return companyServiceImpl.deleteCompany(body);
+    }
 
 }
