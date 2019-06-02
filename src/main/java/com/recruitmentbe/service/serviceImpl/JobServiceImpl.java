@@ -201,7 +201,7 @@ public class JobServiceImpl implements JobService {
         long idNganh = Long.parseLong(id);
         Major major = majorRepository.findByNganhId(idNganh);
         if (major != null) {
-            List<Job> allJobs = jobRepository.findAll();
+            List<Job> allJobs = jobRepository.findByTrangThai(1);
             List<Job> listJobRelate1 = new ArrayList<>();
             List<Job> listJobRelate2 = new ArrayList<>();
             for (Job job : allJobs) {
@@ -209,8 +209,8 @@ public class JobServiceImpl implements JobService {
                     listJobRelate1.add(job);
                 }
             }
-            if (listJobRelate1.size() > 3) {
-                for (int i = 0; i < 3; i++) {
+            if (listJobRelate1.size() > 4) {
+                for (int i = 0; i < 4; i++) {
                     listJobRelate2.add(listJobRelate1.get(i));
                 }
                 return listJobRelate2;
