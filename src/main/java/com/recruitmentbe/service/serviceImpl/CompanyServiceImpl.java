@@ -88,8 +88,11 @@ public class CompanyServiceImpl implements CompanyService {
 	public Company updateProfileCompany(String body) {
 		JSONObject requestObj = new JSONObject(body);
 		Long companyId = requestObj.getLong("id");
+        Long idNganh = requestObj.getLong("idNganh");
 		Company updatedCompany;
 		updatedCompany = companyRepo.findByCongtyId(companyId);
+        Major major = majorRepository.findByNganhId(idNganh);
+        updatedCompany.setNganh(major);
 		if (updatedCompany == null) {
 			updatedCompany = new Company();
 			updatedCompany.setCongtyId(companyId);
