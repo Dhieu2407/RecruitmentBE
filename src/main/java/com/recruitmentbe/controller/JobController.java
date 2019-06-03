@@ -88,5 +88,10 @@ public class JobController {
         return jobService.updateViewCount(body);
     }
 
+    @PostMapping(value = "/getNumberOfJobApproval")
+    public int getNumberOfJobArrpoval(@RequestBody String body){
+        return jobService.getNumberOfJobRecruimentApproval(body);
+    }
+
 
 }

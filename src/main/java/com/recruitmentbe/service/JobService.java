@@ -15,4 +15,5 @@ public interface JobService{
     public Long deleteJob(String body);
     public Job updateJob(String body);
     public Job updateViewCount(String body);
+    public int getNumberOfJobRecruimentApproval(String body);
 }

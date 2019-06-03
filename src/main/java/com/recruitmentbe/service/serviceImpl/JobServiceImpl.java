@@ -425,6 +425,17 @@ public class JobServiceImpl implements JobService {
 			return null;
 		}
 	}
+
+    @Override
+    public int getNumberOfJobRecruimentApproval(String body) {
+        JSONObject obj = new JSONObject(body);
+        String trangThaiString = obj.getString("trangThai");
+        int trangThai = Integer.parseInt(trangThaiString);
+        List<Job> list = jobRepository.findByTrangThai(trangThai);
+        int number = 0;
+        number = list.size() > 0 ? list.size() : number;
+        return number;
+    }
     
     
 
