@@ -84,10 +84,12 @@ public class ApplyServiceImpl implements ApplyService {
         Long idJob = obj.getLong("jobId");
         Long idCandidate = obj.getLong("candidateId");
         int status = obj.getInt("trangThai");// 1 la chap nhan, 2 la tu choi
+        String reason = obj.getString("reason");
         Job job = jobRepository.findByJobId(idJob);
         Candidate candidate = candidateRepository.findByUngVienId(idCandidate);
         UngTuyen ungTuyen = ungTuyenRepository.findByJobAndUngVien(job,candidate);
         ungTuyen.setTrangThai(status);
+        ungTuyen.setLyDo(reason);
         return ungTuyenRepository.save(ungTuyen);
     }
 

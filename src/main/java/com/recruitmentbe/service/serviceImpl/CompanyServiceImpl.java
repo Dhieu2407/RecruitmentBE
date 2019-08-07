@@ -92,10 +92,11 @@ public class CompanyServiceImpl implements CompanyService {
 		Company updatedCompany;
 		updatedCompany = companyRepo.findByCongtyId(companyId);
         Major major = majorRepository.findByNganhId(idNganh);
-        updatedCompany.setNganh(major);
+       // updatedCompany.setNganh(major);
 		if (updatedCompany == null) {
 			updatedCompany = new Company();
 			updatedCompany.setCongtyId(companyId);
+            updatedCompany.setNganh(major);
 		}
 		try {
 			updatedCompany.setEmail(requestObj.getString("email"));

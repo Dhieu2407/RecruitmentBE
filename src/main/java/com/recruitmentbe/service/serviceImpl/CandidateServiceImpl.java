@@ -399,6 +399,8 @@ public class CandidateServiceImpl implements CandidateService {
 			ut.setUngVien(candidate);
 			ut.setJob(job);
 			ut.setTrangThai(0);
+			ut.setLyDo(" ");
+			ut.setTrangThaiXem(0);
 			candidate.getTinTuyenDungUngTuyen().add(ut);
 		}
 		try {
