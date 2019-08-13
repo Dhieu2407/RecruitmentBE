@@ -115,7 +115,14 @@ public class CandidateController {
 			tinTuyenDungUngTuyen.add(ut.getJob());
 		}
 		return tinTuyenDungUngTuyen;
-	}	
+	}
+    //update phuc.nh
+    @GetMapping(value = "/getAppliedJobs1/{candidateId}")
+    public List<UngTuyen> getAppliedJobs1 (@PathVariable("candidateId") String idString){
+        Candidate currentCandidate = candidateServiceImpl.findByUngVienId(Long.parseLong(idString));
+        List<UngTuyen> utList = currentCandidate.getTinTuyenDungUngTuyen();
+        return utList;
+    }
 
 	@GetMapping(value = "/getApplicants/{jobId}")
 	public List<Candidate> getApplicants (@PathVariable("jobId") String idString){
