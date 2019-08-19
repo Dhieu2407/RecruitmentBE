@@ -16,6 +16,7 @@ public interface JobRepository extends JpaRepository<Job,Integer> {
     public List<Job> findByDiaChiContainingAndTrangThai(String diachi,int tt);
     public List<Job> findByChiTietContainingAndTrangThai(String moTa,int tt);
     public Long removeByJobId(long idJob);
+    public List<Job> findByCongTyAndTrangThai(Company company, int tt);
     public List<Job> findByCongTy(Company company);
     public List<Job> findByNganh(Major major);
 }

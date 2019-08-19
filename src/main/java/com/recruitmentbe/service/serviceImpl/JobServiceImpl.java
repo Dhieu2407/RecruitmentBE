@@ -237,12 +237,13 @@ public class JobServiceImpl implements JobService {
         Company company = companyRepository.findByCongtyId(idCompanyLong);
         List<Job> listJobOfCompany = new ArrayList<>();
         if(company!=null){
-            List<Job> allJob = jobRepository.findAll();
-            for (Job job : allJob){
-                if(job.getCongTy().getCongtyId()==company.getCongtyId()){
-                    listJobOfCompany.add(job);
-                }
-            }
+//            List<Job> allJob = jobRepository.findAll();
+//            for (Job job : allJob){
+//                if(job.getCongTy().getCongtyId()==company.getCongtyId()){
+//                    listJobOfCompany.add(job);
+//                }
+//            }
+            listJobOfCompany = jobRepository.findByCongTyAndTrangThai(company,1);
         }
         return listJobOfCompany;
     }
