@@ -245,6 +245,27 @@ public class JobServiceImpl implements JobService {
 //            }
             listJobOfCompany = jobRepository.findByCongTyAndTrangThai(company,1);
         }
+        if(listJobOfCompany.size()==0 || listJobOfCompany==null){
+            return null;
+        }
+        return listJobOfCompany;
+    }
+
+    @Override
+    public List<Job> findJobByIdCompanyManage(String body) {
+        JSONObject obj = new JSONObject(body);
+        long idCompanyLong = obj.getLong("id");
+        Company company = companyRepository.findByCongtyId(idCompanyLong);
+        List<Job> listJobOfCompany = new ArrayList<>();
+        if(company!=null){
+//            List<Job> allJob = jobRepository.findAll();
+//            for (Job job : allJob){
+//                if(job.getCongTy().getCongtyId()==company.getCongtyId()){
+//                    listJobOfCompany.add(job);
+//                }
+//            }
+            listJobOfCompany = jobRepository.findByCongTy(company);
+        }
         return listJobOfCompany;
     }
 

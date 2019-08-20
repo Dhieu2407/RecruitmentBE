@@ -70,7 +70,10 @@ public class JobController {
         return jobService.findJobByIdCompany(body);
     }
 
-
+    @PostMapping(value = "/getListJobOfCompanyManage")
+    public List<Job> getListJobOfCompanyManage(@RequestBody String body) {
+        return jobService.findJobByIdCompanyManage(body);
+    }
     @PostMapping(value = "/deleteJobById")
     public Long deleteJobById(@RequestBody String body){
 

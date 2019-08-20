@@ -172,6 +172,7 @@ public class CandidateServiceImpl implements CandidateService {
 			rsCandidate.setLuongMongMuon(c.getLuongMongMuon());
 			rsCandidate.setDiaChi(c.getDiaChi());
 			rsCandidate.setNganh(c.getNganh());
+			rsCandidate.setKiNang(c.getKiNang());
 			resultListCandidates.add(rsCandidate);
 		}
 		
